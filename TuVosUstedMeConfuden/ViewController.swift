@@ -23,16 +23,11 @@ class ViewController: UIViewController {
     @IBOutlet weak var formOfYouLabel: UILabel!
     
     let determine = Determine()
+    let constants = Constants()
     var country: String!
     var person: String!
     var region: String?
     var additionalInfo: String?
-    var hi = 0
-    
-    let countriesInEnglish = ["Argentina", "Bolivia", "Chile", "Colombia", "Costa Rica", "Cuba", "Dominican Republic", "Ecuador", "El Salvador", "Equatorial Guinea", "Guatemala", "Honduras", "Mexico", "Nicaragua", "Panama", "Paraguay", "Peru", "Puerto Rico", "Spain", "Uruguay", "Venezuela"]
-    let peopleInEnglish = ["Family Member/Significant Other", "Friend", "Someone your age or older", "Colleague in a formal setting", "An elder"]
-    let countriesEnEspanol = ["Argentina", "Bolivia", "Chile", "Colombia", "Costa Rica", "Cuba", "Ecuador", "El Salvador", "Equatorial Guinea", "España", "Guatemala", "Honduras", "México", "Nicaragua", "Panamá", "Paraguay", "Perú", "Puerto Rico", "República Dominicana", "Uruguay", "Venezuela"]
-    let peopleEnEspanol = ["Pariente/Pareja", "Amigo", "Alguien tu edad o mas joven", "Colega en una ambiente formal", "Un anciano"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -190,28 +185,28 @@ class ViewController: UIViewController {
             englishButton.setTitleColor(UIColor.white, for: .normal)
             spanishButton.setTitleColor(UIColor.black, for: .normal)
             
-            countriesTextButton.titleLabel?.font = UIFont(name: "Meteoritox", size: 22)
+            countriesTextButton.titleLabel?.font = countriesTextButton.titleLabel?.font.withSize(22)
             countriesTextButton.setTitle("What country are you in", for: .normal)
             var country = 0
             while country < 18 {
                 country += 1
                 for horizontalView in countriesDropdown.subviews {
                     for case let label as UILabel in horizontalView.subviews {
-                        label.text = countriesInEnglish[country]
+                        label.text = constants.countriesInEnglish[country]
                         country += 1
-                        label.text = countriesInEnglish[country]
+                        label.text = constants.countriesInEnglish[country]
                     }
                 }
                 
             }
             
-            peopleTextButton.titleLabel?.font = UIFont(name: "Meteoritox", size: 22)
+            peopleTextButton.titleLabel?.font = peopleTextButton.titleLabel?.font.withSize(22)
             peopleTextButton.setTitle("Who are you talking to", for: .normal)
             var person = 0
             while person < 5 {
                 for horizontalView in peopleDropdown.subviews {
                     for case let label as UILabel in horizontalView.subviews {
-                        label.text = peopleInEnglish[person]
+                        label.text = constants.peopleInEnglish[person]
                         person += 1
                     }
                 }
@@ -228,28 +223,28 @@ class ViewController: UIViewController {
             spanishButton.setTitleColor(UIColor.white, for: .normal)
             englishButton.setTitleColor(UIColor.black, for: .normal)
             
-            countriesTextButton.titleLabel?.font = UIFont(name: "Meteoritox", size: 17)
+            //countriesTextButton.titleLabel?.font = UIFont(name: "Meteoritox", size: 17)
             countriesTextButton.setTitle("En que país estás/estáis/está", for: .normal)
             var country = 0
             while country < 18 {
                 country += 1
                 for horizontalView in countriesDropdown.subviews {
                     for case let label as UILabel in horizontalView.subviews {
-                        label.text = countriesEnEspanol[country]
+                        label.text = constants.countriesEnEspanol[country]
                         country += 1
-                        label.text = countriesEnEspanol[country]
+                        label.text = constants.countriesEnEspanol[country]
                     }
                 }
                 
             }
             
-            peopleTextButton.titleLabel?.font = UIFont(name: "Meteoritox", size: 17)
+            //peopleTextButton.titleLabel?.font = UIFont(name: "Meteoritox", size: 17)
             peopleTextButton.setTitle("Con quien hablas/habláis/habla", for: .normal)
             var person = 0
             while person < 5 {
                 for horizontalView in peopleDropdown.subviews {
                     for case let label as UILabel in horizontalView.subviews {
-                        label.text = peopleEnEspanol[person]
+                        label.text = constants.peopleEnEspanol[person]
                         person += 1
                     }
                 }

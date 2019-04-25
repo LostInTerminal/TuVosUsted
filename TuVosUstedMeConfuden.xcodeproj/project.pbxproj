@@ -14,6 +14,8 @@
 		3B11683022263CFE00C2B71A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3B11682E22263CFE00C2B71A /* LaunchScreen.storyboard */; };
 		3B40C1D4222848A9007A93C5 /* Meteoritox.otf in Resources */ = {isa = PBXBuildFile; fileRef = 3B40C1D3222848A9007A93C5 /* Meteoritox.otf */; };
 		3B5B53322229C3DB00A7377B /* Determine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B5B53312229C3DB00A7377B /* Determine.swift */; };
+		3BDBED9522720D2400BDF141 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BDBED9422720D2400BDF141 /* Constants.swift */; };
+		3BDBED9722720D8F00BDF141 /* UIFont+setDefault.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BDBED9622720D8F00BDF141 /* UIFont+setDefault.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +28,8 @@
 		3B11683122263CFE00C2B71A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3B40C1D3222848A9007A93C5 /* Meteoritox.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Meteoritox.otf; sourceTree = "<group>"; };
 		3B5B53312229C3DB00A7377B /* Determine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Determine.swift; sourceTree = "<group>"; };
+		3BDBED9422720D2400BDF141 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		3BDBED9622720D8F00BDF141 /* UIFont+setDefault.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+setDefault.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,6 +70,8 @@
 				3B11682E22263CFE00C2B71A /* LaunchScreen.storyboard */,
 				3B11683122263CFE00C2B71A /* Info.plist */,
 				3B5B53312229C3DB00A7377B /* Determine.swift */,
+				3BDBED9422720D2400BDF141 /* Constants.swift */,
+				3BDBED9622720D8F00BDF141 /* UIFont+setDefault.swift */,
 			);
 			path = TuVosUstedMeConfuden;
 			sourceTree = "<group>";
@@ -152,8 +158,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				3B11682822263CFD00C2B71A /* ViewController.swift in Sources */,
+				3BDBED9722720D8F00BDF141 /* UIFont+setDefault.swift in Sources */,
 				3B5B53322229C3DB00A7377B /* Determine.swift in Sources */,
 				3B11682622263CFD00C2B71A /* AppDelegate.swift in Sources */,
+				3BDBED9522720D2400BDF141 /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
