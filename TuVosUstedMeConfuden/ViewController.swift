@@ -27,6 +27,7 @@ class ViewController: UIViewController {
     var person: String!
     var region: String?
     var additionalInfo: String?
+    var hi = 0
     
     let countriesInEnglish = ["Argentina", "Bolivia", "Chile", "Colombia", "Costa Rica", "Cuba", "Dominican Republic", "Ecuador", "El Salvador", "Equatorial Guinea", "Guatemala", "Honduras", "Mexico", "Nicaragua", "Panama", "Paraguay", "Peru", "Puerto Rico", "Spain", "Uruguay", "Venezuela"]
     let peopleInEnglish = ["Family Member/Significant Other", "Friend", "Someone your age or older", "Colleague in a formal setting", "An elder"]

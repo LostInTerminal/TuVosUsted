@@ -45,7 +45,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <stackView hidden="YES" opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="cNm-n1-XCg">
-                                <rect key="frame" x="82" y="363.5" width="250" height="250"/>
+                                <rect key="frame" x="82" y="351.5" width="250" height="250"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="IP6-yg-Pyp">
                                         <rect key="frame" x="0.0" y="0.0" width="250" height="50"/>
@@ -149,7 +149,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AEH-gI-yTd">
-                                <rect key="frame" x="82" y="313.5" width="250" height="50"/>
+                                <rect key="frame" x="82" y="301.5" width="250" height="50"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UDF-h0-jEl">
                                         <rect key="frame" x="0.0" y="0.0" width="200" height="50"/>
@@ -201,7 +201,7 @@
                                                 </constraints>
                                             </imageView>
                                             <imageView userInteractionEnabled="NO" alpha="0.20000000000000001" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bolivia" translatesAutoresizingMaskIntoConstraints="NO" id="dqW-dk-uSc">
-                                                <rect key="frame" x="125" y="0.0" width="125" height="50.000000000000114"/>
+                                                <rect key="frame" x="125" y="0.0" width="125" height="50"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="50" id="9yv-U5-q0S"/>
                                                     <constraint firstAttribute="width" constant="125" id="yTf-U9-T3N"/>
