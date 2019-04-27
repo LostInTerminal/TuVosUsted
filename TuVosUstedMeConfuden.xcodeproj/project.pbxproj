@@ -14,8 +14,13 @@
 		3B11683022263CFE00C2B71A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3B11682E22263CFE00C2B71A /* LaunchScreen.storyboard */; };
 		3B40C1D4222848A9007A93C5 /* Meteoritox.otf in Resources */ = {isa = PBXBuildFile; fileRef = 3B40C1D3222848A9007A93C5 /* Meteoritox.otf */; };
 		3B5B53322229C3DB00A7377B /* Determine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B5B53312229C3DB00A7377B /* Determine.swift */; };
+		3B92A09B2273BA0C00FE53C0 /* ViewController+DesignDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B92A09A2273BA0C00FE53C0 /* ViewController+DesignDefaults.swift */; };
 		3BDBED9522720D2400BDF141 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BDBED9422720D2400BDF141 /* Constants.swift */; };
 		3BDBED9722720D8F00BDF141 /* UIFont+setDefault.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BDBED9622720D8F00BDF141 /* UIFont+setDefault.swift */; };
+		3BDBED9922721D4900BDF141 /* ViewController+UIViewControllerAnimatedTransitioning.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BDBED9822721D4900BDF141 /* ViewController+UIViewControllerAnimatedTransitioning.swift */; };
+		3BDBED9B22721E1600BDF141 /* ViewController+UIViewControllerTransitioningDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BDBED9A22721E1600BDF141 /* ViewController+UIViewControllerTransitioningDelegate.swift */; };
+		3BEACCF62274C1B500AF8182 /* NSObject+copyObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BEACCF52274C1B500AF8182 /* NSObject+copyObject.swift */; };
+		3BEACCF92274D42200AF8182 /* TertiaryQuestionData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BEACCF82274D42200AF8182 /* TertiaryQuestionData.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,8 +33,13 @@
 		3B11683122263CFE00C2B71A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3B40C1D3222848A9007A93C5 /* Meteoritox.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Meteoritox.otf; sourceTree = "<group>"; };
 		3B5B53312229C3DB00A7377B /* Determine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Determine.swift; sourceTree = "<group>"; };
+		3B92A09A2273BA0C00FE53C0 /* ViewController+DesignDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewController+DesignDefaults.swift"; sourceTree = "<group>"; };
 		3BDBED9422720D2400BDF141 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		3BDBED9622720D8F00BDF141 /* UIFont+setDefault.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+setDefault.swift"; sourceTree = "<group>"; };
+		3BDBED9822721D4900BDF141 /* ViewController+UIViewControllerAnimatedTransitioning.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewController+UIViewControllerAnimatedTransitioning.swift"; sourceTree = "<group>"; };
+		3BDBED9A22721E1600BDF141 /* ViewController+UIViewControllerTransitioningDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewController+UIViewControllerTransitioningDelegate.swift"; sourceTree = "<group>"; };
+		3BEACCF52274C1B500AF8182 /* NSObject+copyObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSObject+copyObject.swift"; sourceTree = "<group>"; };
+		3BEACCF82274D42200AF8182 /* TertiaryQuestionData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TertiaryQuestionData.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,6 +72,8 @@
 		3B11682422263CFD00C2B71A /* TuVosUstedMeConfuden */ = {
 			isa = PBXGroup;
 			children = (
+				3BEACCF72274D40B00AF8182 /* Constants */,
+				3BEACCF42274C19800AF8182 /* Extensions */,
 				3B11683722263DC400C2B71A /* Fonts */,
 				3B11682522263CFD00C2B71A /* AppDelegate.swift */,
 				3B11682722263CFD00C2B71A /* ViewController.swift */,
@@ -71,7 +83,6 @@
 				3B11683122263CFE00C2B71A /* Info.plist */,
 				3B5B53312229C3DB00A7377B /* Determine.swift */,
 				3BDBED9422720D2400BDF141 /* Constants.swift */,
-				3BDBED9622720D8F00BDF141 /* UIFont+setDefault.swift */,
 			);
 			path = TuVosUstedMeConfuden;
 			sourceTree = "<group>";
@@ -82,6 +93,26 @@
 				3B40C1D3222848A9007A93C5 /* Meteoritox.otf */,
 			);
 			path = Fonts;
+			sourceTree = "<group>";
+		};
+		3BEACCF42274C19800AF8182 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				3BEACCF52274C1B500AF8182 /* NSObject+copyObject.swift */,
+				3BDBED9622720D8F00BDF141 /* UIFont+setDefault.swift */,
+				3B92A09A2273BA0C00FE53C0 /* ViewController+DesignDefaults.swift */,
+				3BDBED9A22721E1600BDF141 /* ViewController+UIViewControllerTransitioningDelegate.swift */,
+				3BDBED9822721D4900BDF141 /* ViewController+UIViewControllerAnimatedTransitioning.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		3BEACCF72274D40B00AF8182 /* Constants */ = {
+			isa = PBXGroup;
+			children = (
+				3BEACCF82274D42200AF8182 /* TertiaryQuestionData.swift */,
+			);
+			path = Constants;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -157,11 +188,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3BDBED9922721D4900BDF141 /* ViewController+UIViewControllerAnimatedTransitioning.swift in Sources */,
 				3B11682822263CFD00C2B71A /* ViewController.swift in Sources */,
+				3B92A09B2273BA0C00FE53C0 /* ViewController+DesignDefaults.swift in Sources */,
 				3BDBED9722720D8F00BDF141 /* UIFont+setDefault.swift in Sources */,
 				3B5B53322229C3DB00A7377B /* Determine.swift in Sources */,
 				3B11682622263CFD00C2B71A /* AppDelegate.swift in Sources */,
+				3BDBED9B22721E1600BDF141 /* ViewController+UIViewControllerTransitioningDelegate.swift in Sources */,
+				3BEACCF62274C1B500AF8182 /* NSObject+copyObject.swift in Sources */,
 				3BDBED9522720D2400BDF141 /* Constants.swift in Sources */,
+				3BEACCF92274D42200AF8182 /* TertiaryQuestionData.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

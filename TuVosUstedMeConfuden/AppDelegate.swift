@@ -12,10 +12,23 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
+    
+    override init() {
+        super.init()
+        UIFont.overrideInitialize()
+    }
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        
+        // this line sets the default text color for everything
+        //UILabel.appearance().font = UIFont(name: "Meteoritox", size: 17)
+        //UILabel.appearance().textColor = UIColor.black
+        //UILabel.appearance().textAlignment = .center
+        //UILabel.appearance(whenContainedInInstancesOf: [UIButton.self]).font = UIFont(name: "Meteoritox", size: 17)
+        //UILabel.appearance(whenContainedInInstancesOf: [UIButton.self]).textColor = UIColor.black
+        //UILabel.appearance(whenContainedInInstancesOf: [UIButton.self]).textAlignment = .center
+        
         return true
     }
 

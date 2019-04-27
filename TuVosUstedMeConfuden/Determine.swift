@@ -11,6 +11,9 @@ import Foundation
 class Determine {
     
     func formOfYou(country: String, person: String, region: String?, additionalInfo: String?) -> String {
+        
+        // the function needs to be refactored to account for spanish
+        
         if country == "Argentina" || country == "Paraguay" {
             return "Vos"
         } else if country == "Uruguay" {
@@ -32,6 +35,7 @@ class Determine {
                 }
             }
         } else if country == "Mexico" {
+            print(person)
             if region == "Indigenous villages in Chiapas, Tabasco, Yucatán, or Quintana Roo" {
                 return "Vos"
             } else {
@@ -118,45 +122,48 @@ class Determine {
         
     }
     
-    func ifRegionTextFieldIsNeeded(country: String) -> [String]? {
+    func ifAdditionalTextFieldIsNeeded(language: String, country: String) -> [String] {
         
-        if country == "Colombia" {
-            return ["What region will you be visiting", "Caribbean coast", "Quindío, Risaldo, Antioquia, or Risaralda States", "Pacific coast", "Anywhere Else", "2"]
-            //createFlyInStackView(sectionTitle: "What region will you be visiting", buttonTitles: ["Caribbean coast", "Quindío, Risaldo, Antioquia, or Risaralda States", "Pacific coast", "Anywhere Else"])
-        } else if country == "Cuba" {
-            return ["What region will you be visiting", "Mountainous region or countryside", "Anywhere else", "2"]
-            //createFlyInStackView(sectionTitle: "What region will you be visiting", buttonTitles: ["Mountainous region or countryside", "Anywhere else"])
-        } else if country == "Ecuador" {
-            return ["What region will you be visiting", "North and Central Mountainous Regions", "Anywhere else", "2"]
-            //createFlyInStackView(sectionTitle: "What region will you be visiting", buttonTitles: ["North and Central Mountainous Regions", "Anywhere else"])
-        } else if country == "Mexico" {
-            return ["What region will you be visiting", "Indigenous villages in Chiapas, Tabasco, Yucatán, or Quintana Roo", "Anywhere else", "2"]
-            //createFlyInStackView(sectionTitle: "What region will you be visiting", buttonTitles: ["Indigenous villages in Chiapas, Tabasco, Yucatán, or Quintana Roo", "Anywhere else"])
-        } else if country == "Peru" {
-            return ["What region will you be visiting", "Andean regions or Cajamarca", "Anywhere else", "2"]
-            //createFlyInStackView(sectionTitle: "What region will you be visiting", buttonTitles: ["Andean regions or Cajamarca", "Anywhere else"])
-        } else if country == "Puerto Rico" {
-            return ["What region will you be visiting", "Eastern end of island", "Anywhere else", "2"]
-            //createFlyInStackView(sectionTitle: "What region will you be visiting", buttonTitles: ["Eastern end of island", "Anywhere else"])
-        } else if country == "Uruguay" {
-            return ["What region will you be visiting", "Rocha, Rivera, or areas bordering Brazil", "Anywhere else", "2"]
-            //createFlyInStackView(sectionTitle: "What region will you be visiting", buttonTitles: ["Rocha, Rivera, or areas bordering Brazil", "Anywhere else"])
-        } else if country == "Venezuela" {
-            return ["What region will you be visiting", "Zalia State", "Anywhere else", "2"]
-            //createFlyInStackView(sectionTitle: "What region will you be visiting", buttonTitles: ["Zalia State", "Anywhere else"])
+        let constants = Constants()
+        let tertiary = TertiaryQuestionData()
+        
+        var countryIndex = Array<String>.Index()
+        var questionArray = [String]()
+        let question: String!
+        var optionsSuperarray = [[String]]()
+        let optionsArray: [String]!
+        let position: String!
+        var resultArray = [String]()
+        
+        if language == "English" {
+            countryIndex = tertiary.countriesWithTertiaryOptions.firstIndex(of: country)!
+            questionArray = constants.questionsInEnglish
+            optionsSuperarray = tertiary.englishOptionsArray
+        } else if language == "Espanol" {
+            countryIndex = tertiary.paisesConOpcionesTerciarias.firstIndex(of: country)!
+            questionArray = constants.preguntasEnEspanol
+            optionsSuperarray = tertiary.ordenOpcionesEnEspanol
         }
-        return []
-    }
-    
-    func ifAdditionalInfoTextFieldIsNeeded(country: String) -> [String] {
+        
+        optionsArray = optionsSuperarray[countryIndex]
+        
         if country == "El Salvador" {
-            return ["Which of the following best describes the situation", "Semi-Formal", "Informal", "3"]
-            //createFlyInStackView(sectionTitle: "Which of the following best describes the situation", buttonTitles: ["Semi-Formal", "Informal"])
+            question = questionArray[3]
+            position = "3"
         } else if country == "Guatemala" {
-            return ["Is the conversation between two men", "Yes", "No", "3"]
-            //createFlyInStackView(sectionTitle: "Is the conversation between two men", buttonTitles: ["Yes", "No"])
+            question = questionArray[4]
+            position = "3"
+        } else {
+            question = questionArray[2]
+            position = "2"
+
         }
-        return []
+        
+        resultArray.append(question)
+        resultArray += optionsArray
+        resultArray.append(position)
+        
+        return resultArray
     }
     
 }

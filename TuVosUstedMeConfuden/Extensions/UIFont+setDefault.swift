@@ -12,11 +12,12 @@ extension UIFont {
     
     @objc class func mySystemFont(ofSize size: CGFloat) -> UIFont {
         return UIFont(name: "Meteoritox", size: 17)!
+        //return UIFont(name: "Noteworthy", size: 17)!
     }
     
     @objc convenience init(myCoder aDecoder: NSCoder) {
         let fontDescriptor = aDecoder.decodeObject(forKey: "UIFontDescriptor") as? UIFontDescriptor
-        self.init(name: "", size: ((fontDescriptor?.pointSize)!))!
+        self.init(name: "Meteoritox", size: ((fontDescriptor?.pointSize)!))!
     }
     
     class func overrideInitialize() {
