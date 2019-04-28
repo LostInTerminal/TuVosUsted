@@ -28,6 +28,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //UILabel.appearance(whenContainedInInstancesOf: [UIButton.self]).font = UIFont(name: "Meteoritox", size: 17)
         //UILabel.appearance(whenContainedInInstancesOf: [UIButton.self]).textColor = UIColor.black
         //UILabel.appearance(whenContainedInInstancesOf: [UIButton.self]).textAlignment = .center
+        //UILabel.appearance(whenContainedInInstancesOf: [UIButton.self]).numberOfLines = 2
         
         return true
     }

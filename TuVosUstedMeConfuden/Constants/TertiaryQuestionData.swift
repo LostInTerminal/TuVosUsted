@@ -19,9 +19,9 @@ struct TertiaryQuestionData {
     
     let colombiaOptions = ["Caribbean coast", "Quindío, Risaldo, Antioquia, or Risaralda States", "Pacific coast", "Anywhere Else"]
     let cubaOptions = ["Mountainous region or countryside", "Anywhere else"]
-    let ecuadorOptions = ["What region will you be visiting", "North and Central Mountainous Regions", "Anywhere else"]
-    let mexicoOptions = ["What region will you be visiting", "Indigenous villages in Chiapas, Tabasco, Yucatán, or Quintana Roo", "Anywhere else"]
-    let peruOptions = ["What region will you be visiting", "Andean regions or Cajamarca", "Anywhere else", "2"]
+    let ecuadorOptions = ["North and Central Mountainous Regions", "Anywhere else"]
+    let mexicoOptions = ["Indigenous villages in Chiapas, Tabasco, Yucatán, or Quintana Roo", "Anywhere else"]
+    let peruOptions = ["Andean regions or Cajamarca", "Anywhere else", "2"]
     let puertoRicoOptions = ["Eastern end of island", "Anywhere else"]
     let uruguayOptions = ["Rocha, Rivera, or areas bordering Brazil", "Anywhere else"]
     let venezuelaOptions = ["Zalia State", "Anywhere else"]
