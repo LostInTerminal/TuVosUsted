@@ -6,18 +6,19 @@
 //  Copyright © 2019 Matthew Beynon. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 class Determine {
     
-    func formOfYou(country: String, person: String, region: String?, additionalInfo: String?) -> String {
+    func formOfYou(country: String, person: String, tertiaryDatum: String?) -> String {
         
         // the function needs to be refactored to account for spanish
+        // maybe pass in or find the countries, people, and tertiary arrays
         
         if country == "Argentina" || country == "Paraguay" {
             return "Vos"
         } else if country == "Uruguay" {
-            if region == "Rocha, Rivera, or areas bordering Brazil" {
+            if tertiaryDatum == "Rocha, Rivera, or areas bordering Brazil" {
                 return "Tu"
             } else {
                 return "Vos"
@@ -25,55 +26,54 @@ class Determine {
         } else if country == "Spain" || country == "Equatorial Guinea" || country == "Dominican Republic" || country == "Panama" {
             return "Tú"
         } else if country == "Peru" {
-            if region == "Andean regions or Cajamarca" {
+            if tertiaryDatum == "Andean regions or Cajamarca" {
                 return "Vos"
             } else {
-                if person == "Colleague in a Formal Setting" || person == "An elder" {
+                if person == "Colleague in a formal setting" || person == "An elder" {
                     return "Usted"
                 } else {
                     return "Tú"
                 }
             }
         } else if country == "Mexico" {
-            print(person)
-            if region == "Indigenous villages in Chiapas, Tabasco, Yucatán, or Quintana Roo" {
+            if tertiaryDatum == "Indigenous villages in Chiapas, Tabasco, Yucatán, or Quintana Roo" {
                 return "Vos"
             } else {
-                if person == "Colleague in a Formal Setting" || person == "An elder" {
+                if person == "Colleague in a formal setting" || person == "An elder" {
                     return "Usted"
                 } else {
                     return "Tú"
                 }
             }
         } else if country == "Chile" || country == "Bolivia" {
-            if person == "Colleague in a Formal Setting" || person == "An elder" {
+            if person == "Colleague in a formal setting" || person == "An elder" {
                 return "Tú"
             } else {
                 return "Vos"
             }
         } else if country == "Colombia" {
-            if region == "Caribbean coast" {
+            if tertiaryDatum == "Caribbean coast" {
                 return "Tú"
-            } else if region == "Quindío, Risaldo, Antioquia, or Risaralda States" || region == "Pacific coast" {
+            } else if tertiaryDatum == "Quindío, Risaldo, Antioquia, or Risaralda States" || tertiaryDatum == "Pacific coast" {
                 return "Vos"
             } else {
                 return "Usted"
             }
         } else if country == "Ecuador" {
-            if region == "North and Central Mountainous Regions" {
+            if tertiaryDatum == "North and Central Mountainous Regions" {
                 return "Vos"
             } else {
                 return "Tu"
             }
         } else if country == "Nicaragua" || country == "Costa Rica" {
-            if person == "Colleague in a Formal Setting" || person == "An elder" {
+            if person == "Colleague in a formal setting" || person == "An elder" {
                 return "Usted"
             } else {
                 return "Vos"
             }
         } else if country == "Guatemala" {
-            if person == "Colleague in a Formal Setting" || person == "An elder" {
-                if additionalInfo == "Between Men" {
+            if person == "Colleague in a formal setting" || person == "An elder" {
+                if tertiaryDatum == "Between Men" {
                     return "Usted"
                 } else {
                     return "Tu"
@@ -82,12 +82,12 @@ class Determine {
                 return "Vos"
             }
         } else if country == "El Salvador" {
-            if person == "Colleague in a Formal Setting" || person == "An elder" {
+            if person == "Colleague in a formal setting" || person == "An elder" {
                 return "Usted"
             } else {
-                if additionalInfo == "Semi-Formal" {
+                if tertiaryDatum == "Semi-formal" {
                     return "Tú"
-                } else if additionalInfo == "Informal" {
+                } else if tertiaryDatum == "Informal" {
                     return "Vos"
                 }
             }
@@ -95,24 +95,24 @@ class Determine {
             if person == "An elder" {
                 return "Vos"
             } else {
-                if region == "Mountainous region or countryside" {
+                if tertiaryDatum == "Mountainous region or countryside" {
                     return "Vos"
                 } else {
                     return "Tú"
                 }
             }
         } else if country == "Puerto Rico" {
-            if person == "Colleague in a Formal Setting" || person == "An elder" {
+            if person == "Colleague in a formal setting" || person == "An elder" {
                 return "Usted"
             } else {
-                if region == "Eastern end of island" {
+                if tertiaryDatum == "Eastern end of island" {
                     return "Vos"
                 } else {
                     return "Tú"
                 }
             }
         } else if country == "Venezuela" {
-            if region == "Zalia State" {
+            if tertiaryDatum == "Zalia State" {
                 return "Vos"
             } else {
                 return "Tu"
@@ -124,25 +124,26 @@ class Determine {
     
     func ifAdditionalTextFieldIsNeeded(language: String, country: String) -> [String] {
         
-        let constants = Constants()
-        let tertiary = TertiaryQuestionData()
+        let tertiary = Tertiary()
+        let questions = Questions()
         
         var countryIndex = Array<String>.Index()
         var questionArray = [String]()
         let question: String!
         var optionsSuperarray = [[String]]()
+        // i dont even use the following, i think i should delete it
         let optionsArray: [String]!
         let position: String!
         var resultArray = [String]()
         
         if language == "English" {
-            countryIndex = tertiary.countriesWithTertiaryOptions.firstIndex(of: country)!
-            questionArray = constants.questionsInEnglish
-            optionsSuperarray = tertiary.englishOptionsArray
+            countryIndex = tertiary.countriesInEnglish.firstIndex(of: country)!
+            questionArray = questions.inEnglish
+            optionsSuperarray = tertiary.optionsArrayInEnglish
         } else if language == "Espanol" {
-            countryIndex = tertiary.paisesConOpcionesTerciarias.firstIndex(of: country)!
-            questionArray = constants.preguntasEnEspanol
-            optionsSuperarray = tertiary.ordenOpcionesEnEspanol
+            countryIndex = tertiary.countriesInSpanish.firstIndex(of: country)!
+            questionArray = questions.inSpanish
+            optionsSuperarray = tertiary.optionsArrayInSpanish
         }
         
         optionsArray = optionsSuperarray[countryIndex]
@@ -164,6 +165,39 @@ class Determine {
         resultArray.append(position)
         
         return resultArray
+        
+    }
+    
+    func ifAdditionalTextFieldIsNotNeeded(vc: ViewController, language: String, country: String) {
+        
+        let tertiary = Tertiary()
+        
+        if language == "English" {
+            
+            if !tertiary.countriesInEnglish.contains(vc.country!) {
+                
+                let translation = CGAffineTransform(translationX: vc.view.frame.width * 2, y: 0)
+                vc.tertiaryButtonsView?.transform = translation
+                
+                vc.tertiaryButtonsView?.removeFromSuperview()
+                vc.tertiaryDropdown?.removeFromSuperview()
+                
+            }
+            
+        } else if language == "Espanol" {
+            
+            if !tertiary.countriesInSpanish.contains(vc.country!) {
+                
+                let translation = CGAffineTransform(translationX: -vc.view.frame.width * 2, y: 0)
+                vc.tertiaryButtonsView?.transform = translation
+                
+                vc.tertiaryButtonsView?.removeFromSuperview()
+                vc.tertiaryDropdown?.removeFromSuperview()
+                
+            }
+            
+        }
+        
     }
     
 }

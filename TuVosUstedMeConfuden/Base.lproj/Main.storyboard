@@ -72,7 +72,7 @@
                                             <constraint firstAttribute="height" constant="50" id="l42-Vz-UMc"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" name="AmericanTypewriter" family="American Typewriter" pointSize="17"/>
-                                        <state key="normal" title="Colleague in a Formal Setting">
+                                        <state key="normal" title="Colleague in a formal setting">
                                             <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
                                     </button>
@@ -84,7 +84,7 @@
                                             <constraint firstAttribute="height" constant="50" id="vk7-rj-JzB"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" name="AmericanTypewriter" family="American Typewriter" pointSize="17"/>
-                                        <state key="normal" title="An Elder">
+                                        <state key="normal" title="An elder">
                                             <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
                                     </button>

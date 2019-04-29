@@ -24,14 +24,19 @@ class ViewController: UIViewController {
     
     var language: String!
     
+    let transition = Transition()
+    
     let determine = Determine()
-    let constants = Constants()
-    let tertiary = TertiaryQuestionData()
+    let questions = Questions()
+    let countries = Countries()
+    let people = People()
+    let movingCountries = MovingCountries() // I should be able to get rid of this one if the plan works out
+    let images = Images()
+    let tertiary = Tertiary()
     var buttonViews = [UIView]()
     var country: String!
     var person: String!
-    var region: String?
-    var additionalInfo: String?
+    var tertiaryDatum: String?
     
     var tertiaryButtonsView: UIView?
     var tertiaryTextButton: UIButton?
@@ -99,8 +104,8 @@ class ViewController: UIViewController {
         peopleButtonsView.isHidden = !peopleButtonsView.isHidden
         
         // the following could also be additionalInfo but I'm doing this for now
-        region = sender.titleLabel?.text
-        tertiaryTextButton?.setTitle(region, for: .normal)
+        tertiaryDatum = sender.titleLabel?.text
+        tertiaryTextButton?.setTitle(tertiaryDatum, for: .normal)
         
         if country != nil {
             updateUIIfNeeded()
@@ -143,10 +148,6 @@ class ViewController: UIViewController {
         tertiaryDropdown!.isHidden = !tertiaryDropdown!.isHidden
         // the following will depend on position but for now i'm leaving it like this
         peopleButtonsView.isHidden = !peopleButtonsView.isHidden
-        
-        /*for case let button as UIButton in tertiaryDropdown!.subviews {
-            button.addTarget(self, action: #selector(tertiaryButtonClicked(sender:)), for: .touchUpInside)
-        }*/
         
     }
     
@@ -249,19 +250,9 @@ class ViewController: UIViewController {
                 }
             })
             
-            let question3Array = getQuestion3s(country: country, currentQuestionArray: constants.questionsInEnglish, nextQuestionArray: constants.preguntasEnEspanol)
+            transition.changeActiveButton(oldInactiveButton: englishButton, oldActiveButton: spanishButton, newActiveButton: vc.englishButton, newInactiveButton: vc.spanishButton)
             
-            let optionsArray = matchOptionsArrayToCountry(country: country, countryArray: tertiary.paisesConOpcionesTerciarias, superArray: tertiary.ordenOpcionesEnEspanol)
-            
-            let nextOptionsArray = matchOptionsArrayToCountry(country: country, countryArray: tertiary.countriesWithTertiaryOptions, superArray: tertiary.englishOptionsArray)
-            
-            switchActiveButtons(oldInactiveButton: englishButton, oldActiveButton: spanishButton, newActiveButton: vc.englishButton, newInactiveButton: vc.spanishButton)
-            
-            maintainInput(nextVC: vc, currentCountryArray: constants.paisesEnEspanol, nextCountryArray: constants.countriesInEnglish, currentPersonArray: constants.personasEnEspanol, nextPersonArray: constants.peopleInEnglish, currentTertiaryArray: tertiary.ordenOpcionesEnEspanol, nextTertiaryArray: tertiary.englishOptionsArray, currentOptionsArray: optionsArray, nextOptionsArray: nextOptionsArray, rearrangeArray: constants.paisesEnMovimiento, switchArray: constants.movingCountries)
-            
-            maintainUI(nextVC: vc, xTranslation: vc.view.frame.width * 2, currentQuestion1: constants.preguntasEnEspanol[0], currentQuestion2: constants.preguntasEnEspanol[1], currentQuestion3: question3Array[0], nextQuestion1: constants.questionsInEnglish[0], nextQuestion2: constants.questionsInEnglish[1], nextQuestion3: question3Array[1])
-
-            switchDropdownOptionsToNewLanguage(vc: vc, questionArray: vc.constants.questionsInEnglish, countryArray: vc.constants.countriesInEnglish, peopleArray: vc.constants.peopleInEnglish, imageArray: vc.constants.englishImageOrder, optionsArray: nextOptionsArray)
+            transition.setNewVariables(currentVC: self, nextVC: vc)
             
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                 
@@ -289,7 +280,6 @@ class ViewController: UIViewController {
             
             let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
             guard let vc = storyboard.instantiateInitialViewController() as? ViewController else { return }
-            //vc.language = "Espanol"
  
             UIView.animate(withDuration: 0.5, animations: {
                 self.countriesButtonsView.transform = CGAffineTransform(translationX: self.view.frame.width * 2, y: 0)
@@ -307,19 +297,13 @@ class ViewController: UIViewController {
             // for some reason it wont run if i don't do the following
             print(vc.view.subviews)
             
-            let question3Array = getQuestion3s(country: country, currentQuestionArray: constants.questionsInEnglish, nextQuestionArray: constants.preguntasEnEspanol)
+            transition.changeActiveButton(oldInactiveButton: spanishButton, oldActiveButton: englishButton, newActiveButton: vc.spanishButton, newInactiveButton: vc.englishButton)
             
-            let optionsArray = matchOptionsArrayToCountry(country: country, countryArray: tertiary.countriesWithTertiaryOptions, superArray: tertiary.englishOptionsArray)
+            transition.setNewVariables(currentVC: self, nextVC: vc)
             
-            let nextOptionsArray = matchOptionsArrayToCountry(country: country, countryArray: tertiary.paisesConOpcionesTerciarias, superArray: tertiary.ordenOpcionesEnEspanol)
+            transition.setNewButtonText(currentVC: self, nextVC: vc, xTranslation: -vc.view.frame.width * 2)
             
-            switchActiveButtons(oldInactiveButton: spanishButton, oldActiveButton: englishButton, newActiveButton: vc.spanishButton, newInactiveButton: vc.englishButton)
-            
-            maintainInput(nextVC: vc, currentCountryArray: constants.countriesInEnglish, nextCountryArray: constants.paisesEnEspanol, currentPersonArray: constants.peopleInEnglish, nextPersonArray: constants.personasEnEspanol, currentTertiaryArray: tertiary.englishOptionsArray, nextTertiaryArray: tertiary.ordenOpcionesEnEspanol, currentOptionsArray: optionsArray, nextOptionsArray: nextOptionsArray, rearrangeArray: constants.movingCountries, switchArray: constants.paisesEnMovimiento)
-            
-            maintainUI(nextVC: vc, xTranslation: -vc.view.frame.width * 2, currentQuestion1: constants.questionsInEnglish[0], currentQuestion2: constants.questionsInEnglish[1], currentQuestion3: question3Array[0], nextQuestion1: constants.preguntasEnEspanol[0], nextQuestion2: constants.preguntasEnEspanol[1], nextQuestion3: question3Array[1])
-            
-            switchDropdownOptionsToNewLanguage(vc: vc, questionArray: vc.constants.preguntasEnEspanol, countryArray: vc.constants.paisesEnEspanol, peopleArray: vc.constants.personasEnEspanol, imageArray: vc.constants.espanolOrdenImagen, optionsArray: nextOptionsArray)
+            transition.setNewDropdownOptions(currentVC: self, nextVC: vc)
             
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                 
@@ -344,139 +328,38 @@ class ViewController: UIViewController {
     
     func updateUIIfNeeded() {
         
-        var tertiaryArray = determine.ifAdditionalTextFieldIsNeeded(language: language, country: country)
-        if tertiaryArray != [] {
-            let sectionTitle = tertiaryArray[0]
-            tertiaryArray.remove(at: 0)
-            let newElementsPosition = Int((tertiaryArray.popLast())!)
-            let buttonTitles = tertiaryArray
-            if tertiaryDropdown == nil {
-                createTertiaryElements(sectionTitle: sectionTitle, buttonTitles: buttonTitles, newElementsPosition: newElementsPosition!)
-            }
-        }
-    
-        if country != nil && person != nil {
-            formOfYouLabel.text = determine.formOfYou(country: country, person: person, region: region, additionalInfo: additionalInfo)
-            formOfYouLabel.isHidden = false
-        }
-    
-    }
-    
-    func switchDropdownOptionsToNewLanguage(vc: ViewController, questionArray: [String], countryArray: [String], peopleArray: [String], imageArray: [UIImage], optionsArray: [String]) {
-        
-        // I might be able to turn this into a generic and call it a few times, not sure if thats better or not
-        
-        var buttonCountry = 0
-        var flagCountry = 0
-        for horizontalView in vc.countriesDropdown.subviews {
-            for case let button as UIButton in horizontalView.subviews {
-                button.setTitle(countryArray[buttonCountry], for: .normal)
-                buttonCountry += 1
-            }
-            for case let imageView as UIImageView in horizontalView.subviews {
-                imageView.image = imageArray[flagCountry]
-                flagCountry += 1
-            }
-        }
-        
-        var person = 0
-        for case let button as UIButton in vc.peopleDropdown.subviews {
-            button.setTitle(peopleArray[person], for: .normal)
-            person += 1
-        }
-        
-        // add functionality for tertiary dropdown
-        if tertiaryDropdown != nil {
-            var option = 0
-            for case let button as UIButton in vc.tertiaryDropdown!.subviews {
-                button.setTitle(optionsArray[option], for: .normal)
-                option += 1
-            }
-        }
-        
-    }
-    
-    func switchActiveButtons(oldInactiveButton: UIButton, oldActiveButton: UIButton, newActiveButton: UIButton, newInactiveButton: UIButton) {
-        
-        oldInactiveButton.setTitleColor(UIColor.white, for: .normal)
-        oldActiveButton.setTitleColor(UIColor.black, for: .normal)
-        
-        newActiveButton.setTitleColor(UIColor.white, for: .normal)
-        newInactiveButton.setTitleColor(UIColor.black, for: .normal)
-        
-    }
-    
-    func maintainInput(nextVC: ViewController, currentCountryArray: [String], nextCountryArray: [String], currentPersonArray: [String], nextPersonArray: [String], currentTertiaryArray: [[String]], nextTertiaryArray: [[String]], currentOptionsArray: [String], nextOptionsArray: [String], rearrangeArray: [String], switchArray: [String]) {
-        
-        // try to refactor?
-        // regionArray and derivatives will probably be renamed later
-        
-        var countryIndexInArray: Array<String>.Index?
-        var personIndexInArray: Array<String>.Index?
-        
-        if country != nil {
-            countryIndexInArray = currentCountryArray.firstIndex(of: country)!
-        }
-        if person != nil {
-            personIndexInArray = currentPersonArray.firstIndex(of: person)!
-            nextVC.person = nextPersonArray[personIndexInArray!]
-        }
-        if region != nil {
-            let tertiaryIndexInArray = currentOptionsArray.firstIndex(of: region!)
-            let newRegion = nextOptionsArray[tertiaryIndexInArray!]
-            nextVC.region = newRegion
-        }
-        
-        if countryIndexInArray != nil {
+        if tertiaryButtonsView?.superview != nil {
+            determine.ifAdditionalTextFieldIsNotNeeded(vc: self, language: language, country: country)
+        } else if tertiaryButtonsView?.superview == nil && tertiaryButtonsView != nil {
+            view.addSubview(tertiaryButtonsView!)
             
-            let newCountry = nextCountryArray[countryIndexInArray!]
-            
-            if rearrangeArray.contains(country) {
-                let index = rearrangeArray.firstIndex(of: country)!
-                let reorderedNewCountry = switchArray[index]
-                nextVC.country = reorderedNewCountry
-            } else {
-                nextVC.country = newCountry
+            UIView.animate(withDuration: 0.5) {
+                let transform = CGAffineTransform(translationX: 0, y: 0)
+                self.tertiaryButtonsView?.transform = transform
             }
             
-        }
-        
-    }
-    
-    func maintainUI(nextVC: ViewController, xTranslation: CGFloat, currentQuestion1: String, currentQuestion2: String, currentQuestion3: String?, nextQuestion1: String, nextQuestion2: String, nextQuestion3: String?) {
-        
-        nextVC.countriesButtonsView.transform = CGAffineTransform(translationX: xTranslation, y: 0)
-        if country == nil {
-            nextVC.countriesTextButton.setTitle(nextQuestion1, for: .normal)
+            view.addSubview(tertiaryDropdown!)
         } else {
-            nextVC.countriesTextButton.setTitle(nextVC.country, for: .normal)
-        }
-        
-        nextVC.peopleButtonsView.transform = CGAffineTransform(translationX: xTranslation, y: 0)
-        if person == nil {
-            nextVC.peopleTextButton.setTitle(nextQuestion2, for: .normal)
-        } else {
-            nextVC.peopleTextButton.setTitle(nextVC.person, for: .normal)
-        }
-        
-        if nextVC.tertiaryButtonsView != nil {
             
-            nextVC.tertiaryButtonsView?.transform = CGAffineTransform(translationX: xTranslation, y: 0)
-            if region == nil {
-                nextVC.tertiaryTextButton!.setTitle(nextQuestion3, for: .normal)
-            } else {
-                for case let textButton as UIButton in nextVC.tertiaryButtonsView!.subviews {
-                    textButton.setTitle(nextVC.region, for: .normal)
+            // this definitely needs to be refactored
+            var tertiaryArray = determine.ifAdditionalTextFieldIsNeeded(language: language, country: country)
+            if tertiaryArray != [] {
+                let sectionTitle = tertiaryArray[0]
+                tertiaryArray.remove(at: 0)
+                let newElementsPosition = Int((tertiaryArray.popLast())!)
+                let buttonTitles = tertiaryArray
+                if tertiaryDropdown == nil {
+                    createTertiaryElements(sectionTitle: sectionTitle, buttonTitles: buttonTitles, newElementsPosition: newElementsPosition!)
                 }
             }
             
         }
-        
-        if self.formOfYouLabel.isHidden == false {
-            nextVC.formOfYouLabel.isHidden = false
-            nextVC.formOfYouLabel.text = self.formOfYouLabel.text
+    
+        if country != nil && person != nil {
+            formOfYouLabel.text = determine.formOfYou(country: country, person: person, tertiaryDatum: tertiaryDatum)
+            formOfYouLabel.isHidden = false
         }
-        
+    
     }
     
     func maintainNewTertiaryElements(currentVC: ViewController, nextVC: ViewController) {
@@ -559,7 +442,6 @@ class ViewController: UIViewController {
         } else {
             currentQuestion3 = currentQuestionArray[2]
             nextQuestion3 = nextQuestionArray[2]
-            print("colombia")
         }
         
         resultsArray.append(currentQuestion3!)
