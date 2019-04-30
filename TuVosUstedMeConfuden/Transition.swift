@@ -60,11 +60,13 @@ class Transition {
         }
         
         nextVC.tertiaryButtonsView?.transform = CGAffineTransform(translationX: xTranslation, y: 0)
-        if nextVC.tertiaryDatum == nil {
-            let translatedQuestion = translate.question(language: currentVC.language, question: currentVC.tertiaryTextButton!.titleLabel!.text!)
-            nextVC.tertiaryTextButton!.setTitle(translatedQuestion, for: .normal)
-        } else {
-            nextVC.tertiaryTextButton!.setTitle(nextVC.tertiaryDatum, for: .normal)
+        if currentVC.tertiaryButtonsView != nil {
+            if nextVC.tertiaryDatum == nil {
+                let translatedQuestion = translate.question(language: currentVC.language, question: currentVC.tertiaryTextButton!.titleLabel!.text!)
+                nextVC.tertiaryTextButton!.setTitle(translatedQuestion, for: .normal)
+            } else {
+                nextVC.tertiaryTextButton!.setTitle(nextVC.tertiaryDatum, for: .normal)
+            }
         }
         
         // this puts the result on the other page

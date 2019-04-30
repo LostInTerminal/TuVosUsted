@@ -8,6 +8,8 @@
 
 struct Countries {
     
+    // DR to Honduras doesn't work when switching between languages...
+    
     var superarray = [[String]]()
     
     let inEnglish = ["Argentina", "Bolivia", "Chile", "Colombia", "Costa Rica", "Cuba", "Dominican Republic", "Ecuador", "El Salvador", "Equatorial Guinea", "Guatemala", "Honduras", "Mexico", "Nicaragua", "Panama", "Paraguay", "Peru", "Puerto Rico", "Spain", "Uruguay", "Venezuela"]

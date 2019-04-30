@@ -190,7 +190,8 @@ class ViewController: UIViewController {
             stackView.centerYAnchor.constraint(equalTo: peopleDropdown.centerYAnchor, constant: -208.5)*/
             
         } else if newElementsPosition == 3 {
-            tertiaryButtonsView?.frame = CGRect(x: countriesButtonsView.frame.minX, y: countriesButtonsView.frame.maxY + ((414-155)/2) - 50, width: 250, height: 50)
+            tertiaryButtonsView?.frame = CGRect(x: peopleButtonsView.frame.minX, y: peopleButtonsView.frame.minY, width: 250, height: 50)
+            //tertiaryButtonsView?.frame = CGRect(x: countriesButtonsView.frame.minX, y: countriesButtonsView.frame.maxY + ((414-155)/2) - 50, width: 250, height: 50)
             //tertiaryButtonsView?.frame = peopleDropdown.frame
             /*sectionView.widthAnchor.constraint(equalTo: peopleTextButton.widthAnchor, constant: 0)
             sectionView.heightAnchor.constraint(equalTo: peopleTextButton.heightAnchor, constant: 0)
@@ -263,7 +264,7 @@ class ViewController: UIViewController {
                     let buttonTitles = tertiaryArray
                     if vc.tertiaryDropdown == nil {
                         vc.createTertiaryElements(sectionTitle: sectionTitle, buttonTitles: buttonTitles, newElementsPosition: newElementsPosition!)
-                        vc.animateTertiaryElements(language: language)
+                        vc.animateTertiaryElements(language: language, country: country)
                     }
                 }
             }
@@ -313,7 +314,7 @@ class ViewController: UIViewController {
                 let buttonTitles = tertiaryArray
                 if tertiaryDropdown == nil {
                     createTertiaryElements(sectionTitle: sectionTitle, buttonTitles: buttonTitles, newElementsPosition: newElementsPosition!)
-                    animateTertiaryElements(language: language)
+                    animateTertiaryElements(language: language, country: country)
                 }
             }
             
@@ -327,26 +328,52 @@ class ViewController: UIViewController {
     
     }
     
-    func animateTertiaryElements(language: String) {
+    func animateTertiaryElements(language: String, country: String) {
         
         var transform: CGAffineTransform!
         
-        if language == "English" {
-            transform = CGAffineTransform(translationX: UIScreen.main.bounds.width * 2, y: 0)
-            
-            tertiaryButtonsView?.transform = transform
-            
+        if country != "El Salvador" && country != "Guatemala" {
+            if language == "English" {
+                transform = CGAffineTransform(translationX: UIScreen.main.bounds.width * 2, y: 0)
+                
+                tertiaryButtonsView?.transform = transform
+                
+                UIView.animate(withDuration: 0.5, animations: {
+                    self.tertiaryButtonsView?.transform = CGAffineTransform(translationX: 0, y: 0)
+                })
+            } else if language == "Espanol" {
+                transform = CGAffineTransform(translationX: -UIScreen.main.bounds.width * 2, y: 0)
+                
+                tertiaryButtonsView?.transform = transform
+                
+                UIView.animate(withDuration: 0.5, animations: {
+                    self.tertiaryButtonsView?.transform = CGAffineTransform(translationX: 0, y: 0)
+                })
+            }
+        } else {
+            let desiredYPosition = peopleButtonsView.frame.minY - countriesButtonsView.frame.minY
+            let secondaryTransform = CGAffineTransform(translationX: 0, y: -(peopleButtonsView.frame.minY - desiredYPosition) - 25)
             UIView.animate(withDuration: 0.5, animations: {
-                self.tertiaryButtonsView?.transform = CGAffineTransform(translationX: 0, y: 0)
+                self.peopleButtonsView.transform = secondaryTransform
             })
-        } else if language == "Espanol" {
-            transform = CGAffineTransform(translationX: -UIScreen.main.bounds.width * 2, y: 0)
             
-            tertiaryButtonsView?.transform = transform
-            
-            UIView.animate(withDuration: 0.5, animations: {
-                self.tertiaryButtonsView?.transform = CGAffineTransform(translationX: 0, y: 0)
-            })
+            if language == "English" {
+                transform = CGAffineTransform(translationX: UIScreen.main.bounds.width * 2, y: 0)
+                
+                tertiaryButtonsView?.transform = transform
+                
+                UIView.animate(withDuration: 0.5, animations: {
+                    self.tertiaryButtonsView?.transform = CGAffineTransform(translationX: 0, y: 0)
+                })
+            } else if language == "Espanol" {
+                transform = CGAffineTransform(translationX: -UIScreen.main.bounds.width * 2, y: 0)
+                
+                tertiaryButtonsView?.transform = transform
+                
+                UIView.animate(withDuration: 0.5, animations: {
+                    self.tertiaryButtonsView?.transform = CGAffineTransform(translationX: 0, y: 0)
+                })
+            }
         }
  
     }

@@ -170,6 +170,15 @@ class Determine {
         
         let tertiary = Tertiary()
         
+        if country != "El Salvador" && country != "Guatemala" && (vc.peopleButtonsView!.frame.minY < vc.tertiaryButtonsView!.frame.minY) {
+            let desiredYPosition = (vc.tertiaryButtonsView?.frame.minY)!
+            // position may not be perfect but it works for now
+            let secondaryTransform = CGAffineTransform(translationX: 0, y: desiredYPosition - vc.peopleButtonsView.frame.maxY - 75)
+            UIView.animate(withDuration: 0.5, animations: {
+                vc.peopleButtonsView.transform = secondaryTransform
+            })
+        }
+        
         if language == "English" {
             
             if !tertiary.countriesInEnglish.contains(vc.country!) {
@@ -197,8 +206,6 @@ class Determine {
                     vc.tertiaryButtonsView = nil
                     vc.tertiaryTextButton = nil
                     vc.tertiaryDropdown = nil
-                    //vc.tertiaryButtonsView?.removeFromSuperview()
-                    //vc.tertiaryDropdown?.removeFromSuperview()
                 })
                 
             }
@@ -231,41 +238,3 @@ class Determine {
     }
     
 }
-
-/*
- if country == "Argentina" || country == "Paraguay" {
- 
- formOfYou = "Vos"
- 
- } else if country == "Uruguay" {
- 
- tertiary.superarray.forEach { (optionsArray) in
- if tertiaryDatum == optionsArray[9][0] {
- formOfYou = "Tú"
- }
- }
- 
- formOfYou = "Vos"
- 
- } else if country == "Spain" || country == "Equatorial Guinea" || country == "Dominican Republic" || country == "Panama" {
- 
- formOfYou = "Tú"
- 
- } else if country == "Peru" {
- tertiary.superarray.forEach { (optionsArray) in
- if tertiaryDatum == optionsArray[7][0] || tertiaryDatum == optionsArray[7][0] {
- formOfYou = "Vos"
- }
- }
- 
- if formOfYou != "Vos" {
- people.superarray.forEach { (peopleArray) in
- if tertiaryDatum == peopleArray[3] || tertiaryDatum == peopleArray[4] {
- formOfYou = "Usted"
- } else {
- formOfYou = "Tú"
- }
- }
- }
- }
- */
