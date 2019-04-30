@@ -32,8 +32,9 @@ class Transition {
         if currentVC.person != nil {
             nextVC.person = translate.person(language: currentVC.language, word: currentVC.person)
         }
-        // the following could also be region or i could combine the two
         if currentVC.tertiaryDatum != nil {
+            // might solve
+            //let country = translate.country(language: currentVC.language, word: currentVC.country)
             nextVC.tertiaryDatum = translate.tertiary(language: currentVC.language, country: currentVC.country, word: currentVC.tertiaryDatum!)
         }
         
@@ -52,29 +53,18 @@ class Transition {
         
         nextVC.peopleButtonsView.transform = CGAffineTransform(translationX: xTranslation, y: 0)
         if nextVC.person == nil {
-            
             let translatedQuestion = translate.question(language: currentVC.language, question: currentVC.peopleTextButton.titleLabel!.text!)
             nextVC.peopleTextButton.setTitle(translatedQuestion, for: .normal)
         } else {
             nextVC.peopleTextButton.setTitle(nextVC.person, for: .normal)
         }
         
-        // this may be need to check currentVC.tertiaryButtonsView instead depending on the order
-        if nextVC.tertiaryButtonsView != nil {
-            
-            nextVC.tertiaryButtonsView?.transform = CGAffineTransform(translationX: xTranslation, y: 0)
-            if nextVC.tertiaryDatum == nil {
-                print("hallo")
-                /*let translatedQuestion = translate.question(language: currentVC.language, question: currentVC.tertiaryTextButton!.titleLabel!.text!)
-                print(nextVC.tertiaryTextButton)
-                nextVC.tertiaryTextButton!.setTitle(translatedQuestion, for: .normal)*/
-            } else {
-                // this is like this because stuff gets when I copy the old subviews, maybe I should just call the tertiary stuff creation function instead so I can do this normally
-                for case let textButton as UIButton in nextVC.tertiaryButtonsView!.subviews {
-                    textButton.setTitle(nextVC.tertiaryDatum, for: .normal)
-                }
-            }
-            
+        nextVC.tertiaryButtonsView?.transform = CGAffineTransform(translationX: xTranslation, y: 0)
+        if nextVC.tertiaryDatum == nil {
+            let translatedQuestion = translate.question(language: currentVC.language, question: currentVC.tertiaryTextButton!.titleLabel!.text!)
+            nextVC.tertiaryTextButton!.setTitle(translatedQuestion, for: .normal)
+        } else {
+            nextVC.tertiaryTextButton!.setTitle(nextVC.tertiaryDatum, for: .normal)
         }
         
         // this puts the result on the other page
@@ -86,8 +76,6 @@ class Transition {
     }
     
     func setNewDropdownOptions(currentVC: ViewController, nextVC: ViewController) {
-        
-        //if currentVC.language != "English" { return }
         
         // I might be able to turn this into a generic and call it a few times, not sure if thats better or not
         
@@ -107,25 +95,44 @@ class Transition {
             }
         }
         
-        var person = 0
         for case let button as UIButton in nextVC.peopleDropdown.subviews {
             let translatedPerson = translate.person(language: currentVC.language, word: button.titleLabel!.text!)
             button.setTitle(translatedPerson, for: .normal)
-            person += 1
         }
         
-        // might have to switch to current?
+        // HOW THE FUCK IS THIS WORKING?
         if nextVC.tertiaryDropdown != nil {
-            var option = 0
             for case let button as UIButton in nextVC.tertiaryDropdown!.subviews {
-                let translatedTertiary = translate.tertiary(language: currentVC.language, country: nextVC.country, word: button.titleLabel!.text!)
+                print("set dropdown options")
+                let translatedTertiary = translate.tertiary(language: currentVC.language, country: currentVC.country, word: button.titleLabel!.text!)
                 button.setTitle(translatedTertiary, for: .normal)
-                option += 1
             }
         }
         
     }
     
+    func animateOut(currentVC: ViewController, xTranslation: CGFloat) {
+        
+        UIView.animate(withDuration: 0.5, animations: {
+            currentVC.countriesButtonsView.transform = CGAffineTransform(translationX: xTranslation, y: 0)
+            currentVC.peopleButtonsView.transform = CGAffineTransform(translationX: xTranslation, y: 0)
+            if currentVC.tertiaryButtonsView != nil {
+                currentVC.tertiaryButtonsView!.transform = CGAffineTransform(translationX: xTranslation, y: 0)
+            }
+        })
+        
+    }
     
+    func animateIn(nextVC: ViewController) {
+        
+        UIView.animate(withDuration: 0.5, animations: {
+            nextVC.countriesButtonsView.transform = CGAffineTransform(translationX: 0, y: 0)
+            nextVC.peopleButtonsView.transform = CGAffineTransform(translationX: 0, y: 0)
+            if nextVC.tertiaryButtonsView != nil {
+                nextVC.tertiaryButtonsView!.transform = CGAffineTransform(translationX: 0, y: 0)
+            }
+        })
+        
+    }
     
 }

@@ -88,8 +88,6 @@ class Translate {
             
         } else if language == "Espanol" {
             
-            // for now, the first one is going to be changed to english, i may have to go back and change it later
-            
             let countryArrayIndex = tertiary.countriesInSpanish.firstIndex(of: country)
             let countryArray = tertiary.optionsArrayInSpanish[countryArrayIndex!]
             let index = countryArray.firstIndex(of: word)
