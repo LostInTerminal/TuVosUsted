@@ -167,7 +167,6 @@ class Determine {
     }
     
     func ifAdditionalTextFieldIsNotNeeded(vc: ViewController, language: String, country: String) {
-        
         let tertiary = Tertiary()
         
         if language == "English" && !tertiary.countriesInEnglish.contains(vc.country!) {

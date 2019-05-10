@@ -45,21 +45,21 @@ class ViewController: UIViewController {
         
         super.viewWillAppear(true)
         
-        // might need to bring countriesdropdown to front
-        if UserDefaults.standard.string(forKey: "language") == "English" {
-            createCountriesUIElements(sectionTitle: questions.inEnglish[0], buttonTitles: countries.inEnglish)
-            createPeopleUIElements(sectionTitle: questions.inEnglish[1], buttonTitles: people.inEnglish)
-        } else {
-            createCountriesUIElements(sectionTitle: questions.inSpanish[0], buttonTitles: countries.inSpanish)
-            createPeopleUIElements(sectionTitle: questions.inSpanish[1], buttonTitles: people.inSpanish)
+        if UserDefaults.standard.bool(forKey: "appStartingUp") {
+            if UserDefaults.standard.string(forKey: "language") == "English" {
+                createCountriesUIElements(sectionTitle: questions.inEnglish[0], buttonTitles: countries.inEnglish)
+                createPeopleUIElements(sectionTitle: questions.inEnglish[1], buttonTitles: people.inEnglish)
+            } else {
+                createCountriesUIElements(sectionTitle: questions.inSpanish[0], buttonTitles: countries.inSpanish)
+                createPeopleUIElements(sectionTitle: questions.inSpanish[1], buttonTitles: people.inSpanish)
+                UserDefaults.standard.set(false, forKey: "appStartingUp")
+            }
         }
         
         createLanguageButtons()
         createFormOfYouLabel()
         
         addButtonTargets()
-        
-        //updateUIIfNeeded()
         
     }
     
@@ -195,10 +195,23 @@ class ViewController: UIViewController {
             tertiaryTextButton?.setTitle(newTitle, for: .normal)
             view.layoutIfNeeded()
             
-            rearrangeTextFieldsIfNeeded()
-            UserDefaults.standard.set(true, forKey: "tertiaryItemsAreOnScreen")
+            if !tertiary.countriesInEnglish.contains(country) && !tertiary.countriesInSpanish.contains(country) {
+                UserDefaults.standard.set(false, forKey: "tertiaryItemsAreOnScreen")
+            }
             
             determine.ifAdditionalTextFieldIsNotNeeded(vc: self, language: UserDefaults.standard.string(forKey: "language")!, country: country)
+            rearrangeTextFieldsIfNeeded()
+            
+            if tertiary.countriesInEnglish.contains(country) || tertiary.countriesInSpanish.contains(country) {
+                UserDefaults.standard.set(true, forKey: "tertiaryItemsAreOnScreen")
+            }
+            
+            if country == "El Salvador" || country == "Guatemala" || country == "Honduras" {
+                UserDefaults.standard.set(true, forKey: "additionalInfoTertiaryWasActive")
+            } else {
+                UserDefaults.standard.set(false, forKey: "additionalInfoTertiaryWasActive")
+            }
+            
             UIView.animate(withDuration: 0.5) {
                 self.view.layoutIfNeeded()
             }
@@ -340,15 +353,19 @@ class ViewController: UIViewController {
                 
                 self.transition.changeActiveButton(oldInactiveButton: self.englishButton, oldActiveButton: self.spanishButton, newActiveButton: vc.englishButton, newInactiveButton: vc.spanishButton)
                 
-                let tertiaryOptionNotYetSelected = (vc.tertiary.countriesInEnglish.contains(self.country) && self.tertiaryDatum != nil)
-                if self.country != nil && self.person != nil && (tertiaryOptionNotYetSelected || !vc.tertiary.countriesInEnglish.contains(self.country)) {
-                    vc.formOfYouLabel.text = self.formOfYouLabel.text
-                    vc.formOfYouLabel.isHidden = false
+                // ADD "YOU" RESULT IF NEEDED
+                if self.tertiaryDatum != nil {
+                    let tertiaryOptionNotYetSelected = (vc.tertiary.countriesInEnglish.contains(self.country))
+                    if self.country != nil && self.person != nil && (tertiaryOptionNotYetSelected || !vc.tertiary.countriesInEnglish.contains(self.country)) {
+                        vc.formOfYouLabel.text = self.formOfYouLabel.text
+                        vc.formOfYouLabel.isHidden = false
+                    }
                 }
                 
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                     self.dismiss(animated: false, completion: {
-                        self.transition.animateIn(nextVC: vc, xTranslation: UIScreen.main.bounds.width * 2)
+                        
+                        vc.transition.translateAllTextButtons(vc: vc, xTranslation: -UIScreen.main.bounds.width * 2)
                         self.transition.setNewVariables(currentVC: self, nextVC: vc)
                         self.transition.setNewButtonText(currentVC: self, nextVC: vc)
                     })
@@ -373,7 +390,7 @@ class ViewController: UIViewController {
             print(vc.view.subviews)
             
             // terrible code, but idfk how to fix this shit
-            if vc.tertiaryTextButton == nil {//&& vc.country != nil {
+            if tertiaryTextButton != nil {
                 var tertiaryArray = vc.determine.ifAdditionalTextFieldIsNeeded(language: UserDefaults.standard.string(forKey: "language")!, country: country)
                 // THIS IS TURNING UP NIL
                 if tertiaryArray != [] {
@@ -382,7 +399,6 @@ class ViewController: UIViewController {
                     let newElementsPosition = Int((tertiaryArray.popLast())!)
                     let buttonTitles = tertiaryArray
                     vc.createTertiaryElements(sectionTitle: sectionTitle, buttonTitles: buttonTitles, newElementsPosition: newElementsPosition!)
-                    UserDefaults.standard.set(false, forKey: "tertiaryItemsAreOnScreen")
                     vc.rearrangeTextFieldsIfNeeded()
                     print("created")
                     // set to true?
@@ -400,10 +416,12 @@ class ViewController: UIViewController {
                 self.transition.animateOut(currentVC: self, xTranslation: UIScreen.main.bounds.width * 2)
                 
                 // ADD "YOU" RESULT IF NEEDED
-                let tertiaryOptionNotYetSelected = (vc.tertiary.countriesInSpanish.contains(self.country) && self.tertiaryDatum != nil)
-                if self.country != nil && self.person != nil && (tertiaryOptionNotYetSelected || !vc.tertiary.countriesInSpanish.contains(self.country)) {
-                    vc.formOfYouLabel.text = self.formOfYouLabel.text
-                    vc.formOfYouLabel.isHidden = false
+                if self.tertiaryDatum != nil {
+                    let tertiaryOptionNotYetSelected = (vc.tertiary.countriesInSpanish.contains(self.country))
+                    if self.country != nil && self.person != nil && (tertiaryOptionNotYetSelected || !vc.tertiary.countriesInSpanish.contains(self.country)) {
+                        vc.formOfYouLabel.text = self.formOfYouLabel.text
+                        vc.formOfYouLabel.isHidden = false
+                    }
                 }
                 
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
@@ -458,10 +476,22 @@ class ViewController: UIViewController {
             
         }
         
+        let calculateFormOfYou = DispatchWorkItem {
+            if self.country != nil && self.person != nil {
+                self.formOfYouLabel.text = self.determine.formOfYou(country: self.country, person: self.person, tertiaryDatum: self.tertiaryDatum)
+                self.formOfYouLabel.isHidden = false
+            }
+        }
+        
         // ADD "YOU" RESULT IF NEEDED
-        if country != nil && person != nil {
-            formOfYouLabel.text = determine.formOfYou(country: country, person: person, tertiaryDatum: tertiaryDatum)
-            formOfYouLabel.isHidden = false
+        if tertiary.countriesInSpanish.contains(country) || tertiary.countriesInEnglish.contains(country) {
+            if tertiaryDatum == nil {
+                return
+            } else {
+                calculateFormOfYou.perform()
+            }
+        } else {
+            calculateFormOfYou.perform()
         }
     
     }
@@ -543,17 +573,18 @@ class ViewController: UIViewController {
     
     func rearrangeTextFieldsIfNeeded() {
         
-        if country != "El Salvador" && country != "Guatemala" && country != "Honduras" && UserDefaults.standard.bool(forKey: "tertiaryItemsAreOnScreen") {
-
+        if country != "El Salvador" && country != "Guatemala" && country != "Honduras" && UserDefaults.standard.bool(forKey: "additionalInfoTertiaryWasActive") {
+            
             peopleTextButtonCenterYConstraint.constant += (UIScreen.main.bounds.height * 0.1875 - 25)
-            tertiaryTextButtonCenterYConstraint?.constant -= (UIScreen.main.bounds.height * 0.1875 - 25)
+            if UserDefaults.standard.bool(forKey: "tertiaryItemsAreOnScreen") {
+                tertiaryTextButtonCenterYConstraint?.constant -= (UIScreen.main.bounds.height * 0.1875 - 25)
+            }
             
         } else if (country == "El Salvador" || country == "Guatemala" || country == "Honduras") {
             peopleTextButtonCenterYConstraint.constant -= (UIScreen.main.bounds.height * 0.1875 - 25)
             if UserDefaults.standard.bool(forKey: "tertiaryItemsAreOnScreen") {
+                // THIS SHOULD NOT BE FUCKING HAPPENING
                 tertiaryTextButtonCenterYConstraint?.constant += (UIScreen.main.bounds.height * 0.1875 - 25)
-            } else if UserDefaults.standard.bool(forKey: "transitionOccuring") {
-                tertiaryTextButtonCenterYConstraint?.constant -= (UIScreen.main.bounds.height * 0.1875 - 25)
             }
             
         } else { return }

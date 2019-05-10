@@ -22,16 +22,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         UserDefaults.standard.set("English", forKey: "language")
         UserDefaults.standard.set(false, forKey: "tertiaryItemsAreOnScreen")
-        // Override point for customization after application launch.
-        
-        // this line sets the default text color for everything
-        //UILabel.appearance().font = UIFont(name: "Meteoritox", size: 17)
-        //UILabel.appearance().textColor = UIColor.black
-        //UILabel.appearance().textAlignment = .center
-        //UILabel.appearance(whenContainedInInstancesOf: [UIButton.self]).font = UIFont(name: "Meteoritox", size: 17)
-        //UILabel.appearance(whenContainedInInstancesOf: [UIButton.self]).textColor = UIColor.black
-        //UILabel.appearance(whenContainedInInstancesOf: [UIButton.self]).textAlignment = .center
-        //UILabel.appearance(whenContainedInInstancesOf: [UIButton.self]).numberOfLines = 2
+        UserDefaults.standard.set(false, forKey: "additionalInfoTertiaryWasActive")
+        UserDefaults.standard.set(false, forKey: "tertiaryWasActive")
+        UserDefaults.standard.set(true, forKey: "appStartingUp")
         
         return true
     }

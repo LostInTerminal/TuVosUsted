@@ -145,6 +145,9 @@ class Transition {
             vc.tertiaryTextButtonCenterXConstraint?.constant += xTranslation
         }
         vc.peopleTextButtonCenterXConstraint.constant += xTranslation
+        UIView.animate(withDuration: 0.5, animations: {
+            vc.view.layoutIfNeeded()
+        })
         
     }
     
