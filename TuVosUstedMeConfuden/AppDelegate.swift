@@ -13,12 +13,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     
-    override init() {
+    /*override init() {
         super.init()
         UIFont.overrideInitialize()
-    }
+    }*/
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        
+        UserDefaults.standard.set("English", forKey: "language")
+        UserDefaults.standard.set(false, forKey: "tertiaryItemsAreOnScreen")
         // Override point for customization after application launch.
         
         // this line sets the default text color for everything

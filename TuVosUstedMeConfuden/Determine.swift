@@ -68,7 +68,7 @@ class Determine {
             } else {
                 return "Vos"
             }
-        } else if country == "Guatemala" {
+        } else if country == "Guatemala" || country == "Honduras" {
             if person == "Colleague in a formal setting" || person == "An elder" || person == "Colega en una ambiente formal" || person == "Un anciano" {
                 if tertiaryDatum == "Yes" || tertiaryDatum == "Sí" {
                     return "Usted"
@@ -82,10 +82,10 @@ class Determine {
             if person == "Colleague in a formal setting" || person == "An elder" || person == "Colega en una ambiente formal" || person == "Un anciano" {
                 return "Usted"
             } else {
-                if tertiaryDatum == "Semi-formal" {
-                    return "Tú"
-                } else if tertiaryDatum == "Informal" {
+                if tertiaryDatum == "Yes" || tertiaryDatum == "Sí" {
                     return "Vos"
+                } else {
+                    return "Tú"
                 }
             }
         } else if country == "Cuba" {
@@ -148,7 +148,7 @@ class Determine {
             if country == "El Salvador" {
                 question = questionArray[3]
                 position = "3"
-            } else if country == "Guatemala" {
+            } else if country == "Guatemala" || country == "Honduras" {
                 question = questionArray[4]
                 position = "3"
             } else {
@@ -170,47 +170,19 @@ class Determine {
         
         let tertiary = Tertiary()
         
-        if country != "El Salvador" && country != "Guatemala" && (vc.peopleButtonsView!.frame.minY < vc.tertiaryButtonsView!.frame.minY) {
-            let desiredYPosition = (vc.tertiaryButtonsView?.frame.minY)!
-            // position may not be perfect but it works for now
-            let secondaryTransform = CGAffineTransform(translationX: 0, y: desiredYPosition - vc.peopleButtonsView.frame.maxY - 75)
-            UIView.animate(withDuration: 0.5, animations: {
-                vc.peopleButtonsView.transform = secondaryTransform
-            })
-        }
+        if language == "English" && !tertiary.countriesInEnglish.contains(vc.country!) {
+            vc.tertiaryTextButtonCenterXConstraint?.constant += UIScreen.main.bounds.width * 2
+        } else if language == "Espanol" && !tertiary.countriesInSpanish.contains(vc.country!) {
+            vc.tertiaryTextButtonCenterXConstraint?.constant -= UIScreen.main.bounds.width * 2
+        } else { return }
         
-        if language == "English" {
-            
-            if !tertiary.countriesInEnglish.contains(vc.country!) {
-                
-                UIView.animate(withDuration: 0.5, animations: {
-                    let translation = CGAffineTransform(translationX: vc.view.frame.width * 2, y: 0)
-                    vc.tertiaryButtonsView?.transform = translation
-                }, completion: { (Bool) in
-                    vc.tertiaryButtonsView = nil
-                    vc.tertiaryTextButton = nil
-                    vc.tertiaryDropdown = nil
-                })
-                
-                
-            }
-            
-        } else if language == "Espanol" {
-            
-            if !tertiary.countriesInSpanish.contains(vc.country!) {
-                
-                UIView.animate(withDuration: 0.5, animations: {
-                    let translation = CGAffineTransform(translationX: -vc.view.frame.width * 2, y: 0)
-                    vc.tertiaryButtonsView?.transform = translation
-                }, completion: { (Bool) in
-                    vc.tertiaryButtonsView = nil
-                    vc.tertiaryTextButton = nil
-                    vc.tertiaryDropdown = nil
-                })
-                
-            }
-            
-        }
+        UIView.animate(withDuration: 0.5, animations: {
+            vc.view.layoutIfNeeded()
+        }, completion: { (Bool) in
+            UserDefaults.standard.set(false, forKey: "tertiaryItemsAreOnScreen")
+            vc.tertiaryTextButton = nil
+            vc.tertiaryDropdown = nil
+        })
         
     }
     
@@ -237,4 +209,28 @@ class Determine {
         
     }
     
+    func ifTertiaryQuestionMatchesValue(language: String, country: String) -> String {
+        
+        var question: String!
+        let questions = Questions()
+        var questionArray = [String]()
+        
+        if language == "English" {
+            questionArray = questions.inEnglish
+        } else if language == "Espanol" {
+            questionArray = questions.inSpanish
+        }
+        
+        if country == "El Salvador" {
+            question = questionArray[3]
+        } else if country == "Guatemala" || country == "Honduras" {
+            question = questionArray[4]
+        } else {
+            question = questionArray[2]
+            
+        }
+        
+        return question
+        
+    }
 }

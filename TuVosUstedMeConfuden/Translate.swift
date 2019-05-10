@@ -10,20 +10,20 @@ import UIKit
 
 class Translate {
     
-    func question(language: String, question: String) -> String {//country: String?, person: String?, additionalInfo: String?) {
+    func question(language: String, question: String) -> String {
         
         let questions = Questions()
         var translatedWord = ""
         
         if language == "English" {
             
-            let index = questions.inEnglish.firstIndex(of: question)
-            translatedWord = questions.inSpanish[index!]
+            let index = questions.inSpanish.firstIndex(of: question)
+            translatedWord = questions.inEnglish[index!]
             
         } else if language == "Espanol" {
             
-            let index = questions.inSpanish.firstIndex(of: question)
-            translatedWord = questions.inEnglish[index!]
+            let index = questions.inEnglish.firstIndex(of: question)
+            translatedWord = questions.inSpanish[index!]
             
         }
         
@@ -37,14 +37,14 @@ class Translate {
         var translatedCountry = ""
         
         if language == "English" {
-            
-            let index = countries.inEnglish.firstIndex(of: word)
-            translatedCountry = countries.inSpanish[index!]
+    
+            let index = countries.inSpanish_EnglishOrder.firstIndex(of: word)
+            translatedCountry = countries.inEnglish[index!]
             
         } else if language == "Espanol" {
             
-            let index = countries.inSpanish.firstIndex(of: word)
-            translatedCountry = countries.inEnglish[index!]
+            let index = countries.inEnglish.firstIndex(of: word)
+            translatedCountry = countries.inSpanish_EnglishOrder[index!]
             
         }
         
@@ -59,13 +59,14 @@ class Translate {
         
         if language == "English" {
             
-            let index = people.inEnglish.firstIndex(of: word)
-            translatedPerson = people.inSpanish[index!]
-            
-        } else if language == "Espanol" {
-            
             let index = people.inSpanish.firstIndex(of: word)
             translatedPerson = people.inEnglish[index!]
+            
+            
+        } else if language == "Espanol" {
+        
+            let index = people.inEnglish.firstIndex(of: word)
+            translatedPerson = people.inSpanish[index!]
             
         }
         
@@ -80,44 +81,32 @@ class Translate {
         
         if language == "English" {
             
+            print(country)
+            print(word)
+            let countryArrayIndex = tertiary.countriesInSpanish.firstIndex(of: country)
+            print(countryArrayIndex)
+            //let countryArray = tertiary.optionsArrayInEnglish[countryArrayIndex!]
+            let countryArray = tertiary.optionsArrayInSpanish[countryArrayIndex!]
+            print(countryArray)
+            let index = countryArray.firstIndex(of: word)
+            print(index)
+            let newCountryArray = tertiary.optionsArrayInEnglish[countryArrayIndex!]
+            //let newCountryArray = tertiary.optionsArrayInSpanish[countryArrayIndex!]
+            print(newCountryArray)
+            translatedTertiary = newCountryArray[index!]
+            
+        } else if language == "Espanol" {
+            print(country)
+            print(word)
             let countryArrayIndex = tertiary.countriesInEnglish.firstIndex(of: country)
             let countryArray = tertiary.optionsArrayInEnglish[countryArrayIndex!]
             let index = countryArray.firstIndex(of: word)
             let newCountryArray = tertiary.optionsArrayInSpanish[countryArrayIndex!]
             translatedTertiary = newCountryArray[index!]
             
-        } else if language == "Espanol" {
-            
-            let countryArrayIndex = tertiary.countriesInSpanish.firstIndex(of: country)
-            let countryArray = tertiary.optionsArrayInSpanish[countryArrayIndex!]
-            let index = countryArray.firstIndex(of: word)
-            let newCountryArray = tertiary.optionsArrayInEnglish[countryArrayIndex!]
-            translatedTertiary = newCountryArray[index!]
-            
         }
         
         return translatedTertiary
-        
-    }
-    
-    func image(language: String, image: UIImage) -> UIImage {
-        
-        let images = Images()
-        var translatedImage: UIImage!
-        
-        if language == "English" {
-            
-            let index = images.inEnglishOrder.firstIndex(of: image)
-            translatedImage = images.inSpanishOrder[index!]
-            
-        } else if language == "Espanol" {
-            
-            let index = images.inSpanishOrder.firstIndex(of: image)
-            translatedImage = images.inEnglishOrder[index!]
-            
-        }
-        
-        return translatedImage
         
     }
     

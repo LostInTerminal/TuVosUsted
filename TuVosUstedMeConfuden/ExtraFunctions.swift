@@ -19,7 +19,7 @@ class ExtraFunctions {
         if country == "El Salvador" {
             currentQuestion3 = currentQuestionArray[3]
             nextQuestion3 = nextQuestionArray[3]
-        } else if country == "Guatemala" {
+        } else if country == "Guatemala" || country == "Honduras" {
             currentQuestion3 = currentQuestionArray[4]
             nextQuestion3 = nextQuestionArray[4]
         } else if country == nil {
