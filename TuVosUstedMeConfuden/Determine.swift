@@ -170,9 +170,9 @@ class Determine {
         let tertiary = Tertiary()
         
         if language == "English" && !tertiary.countriesInEnglish.contains(vc.country!) {
-            vc.tertiaryTextButtonCenterXConstraint?.constant += UIScreen.main.bounds.width * 2
+            vc.tertiaryTextButtonCenterXAnchor?.constant += UIScreen.main.bounds.width * 2
         } else if language == "Espanol" && !tertiary.countriesInSpanish.contains(vc.country!) {
-            vc.tertiaryTextButtonCenterXConstraint?.constant -= UIScreen.main.bounds.width * 2
+            vc.tertiaryTextButtonCenterXAnchor?.constant -= UIScreen.main.bounds.width * 2
         } else { return }
         
         UIView.animate(withDuration: 0.5, animations: {

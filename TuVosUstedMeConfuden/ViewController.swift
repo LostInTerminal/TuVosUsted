@@ -14,11 +14,11 @@ class ViewController: UIViewController {
     let spanishButton = UIButton()
     let countriesTextButton = TitleButton()
     let countriesDropdown = UIStackView()
-    var countriesTextButtonCenterXConstraint = NSLayoutConstraint()
+    var countriesTextButtonCenterXAnchor = NSLayoutConstraint()
     let peopleTextButton = TitleButton()
     let peopleDropdown = UIStackView()
-    var peopleTextButtonCenterXConstraint = NSLayoutConstraint()
-    var peopleTextButtonCenterYConstraint = NSLayoutConstraint()
+    var peopleTextButtonCenterXAnchor = NSLayoutConstraint()
+    var peopleTextButtonCenterYAnchor = NSLayoutConstraint()
     let formOfYouLabel = CustomLabel()
     
     let transition = Transition()
@@ -34,32 +34,34 @@ class ViewController: UIViewController {
     var tertiaryDatum: String?
     
     var tertiaryTextButton: TitleButton?
-    var tertiaryTextButtonCenterXConstraint: NSLayoutConstraint?
-    var tertiaryTextButtonCenterYConstraint: NSLayoutConstraint?
+    var tertiaryTextButtonCenterXAnchor: NSLayoutConstraint?
+    var tertiaryTextButtonCenterYAnchor: NSLayoutConstraint?
+    var tertiaryTextButtonHeightAnchor: NSLayoutConstraint?
     
     var tertiaryDropdown: UIStackView?
-    var tertiaryDropdownCenterXConstraint: NSLayoutConstraint?
-    var tertiaryDropdownCenterYConstraint: NSLayoutConstraint?
+    var tertiaryDropdownCenterXAnchor: NSLayoutConstraint?
+    var tertiaryDropdownCenterYAnchor: NSLayoutConstraint?
     
     override func viewWillAppear(_ animated: Bool) {
         
         super.viewWillAppear(true)
         
-        if UserDefaults.standard.bool(forKey: "appStartingUp") {
-            if UserDefaults.standard.string(forKey: "language") == "English" {
-                createCountriesUIElements(sectionTitle: questions.inEnglish[0], buttonTitles: countries.inEnglish)
-                createPeopleUIElements(sectionTitle: questions.inEnglish[1], buttonTitles: people.inEnglish)
-            } else {
-                createCountriesUIElements(sectionTitle: questions.inSpanish[0], buttonTitles: countries.inSpanish)
-                createPeopleUIElements(sectionTitle: questions.inSpanish[1], buttonTitles: people.inSpanish)
-                UserDefaults.standard.set(false, forKey: "appStartingUp")
-            }
+        if UserDefaults.standard.bool(forKey: "baseElementsNeeded") && UserDefaults.standard.string(forKey: "language") == "English" {
+            createCountriesUIElements(sectionTitle: questions.inEnglish[0], buttonTitles: countries.inEnglish)
+            createPeopleUIElements(sectionTitle: questions.inEnglish[1], buttonTitles: people.inEnglish)
+            UserDefaults.standard.set(false, forKey: "baseElementsNeeded")
+        } else if UserDefaults.standard.string(forKey: "language") == "Espanol" {
+            createCountriesUIElements(sectionTitle: questions.inSpanish[0], buttonTitles: countries.inSpanish)
+            createPeopleUIElements(sectionTitle: questions.inSpanish[1], buttonTitles: people.inSpanish)
         }
+        
         
         createLanguageButtons()
         createFormOfYouLabel()
         
         addButtonTargets()
+        
+        print(countriesTextButton)
         
     }
     
@@ -79,8 +81,8 @@ class ViewController: UIViewController {
         view.addSubview(countriesDropdown)
         
         countriesTextButton.translatesAutoresizingMaskIntoConstraints = false
-        countriesTextButtonCenterXConstraint = countriesTextButton.centerXAnchor.constraint(equalTo: view.centerXAnchor)
-        countriesTextButtonCenterXConstraint.isActive = true
+        countriesTextButtonCenterXAnchor = countriesTextButton.centerXAnchor.constraint(equalTo: view.centerXAnchor)
+        countriesTextButtonCenterXAnchor.isActive = true
         countriesTextButton.topAnchor.constraint(equalTo: view.topAnchor, constant: UIScreen.main.bounds.height / 8).isActive = true
         countriesTextButton.widthAnchor.constraint(equalToConstant: Style.Size.boxWidth).isActive = true
         countriesTextButton.heightAnchor.constraint(equalToConstant: Style.Size.boxHeight).isActive = true
@@ -91,7 +93,7 @@ class ViewController: UIViewController {
         countriesDropdown.widthAnchor.constraint(equalToConstant: Style.Size.boxWidth).isActive = true
         countriesDropdown.heightAnchor.constraint(equalToConstant: (Style.Size.boxHeight * CGFloat(buttonTitles.count)) / 2).isActive = true
         
-        countriesTextButton.addDividers()
+        countriesTextButton.addDividers(heightMultiplier: 0.01)
         
     }
     
@@ -109,10 +111,10 @@ class ViewController: UIViewController {
         view.addSubview(peopleDropdown)
         
         peopleTextButton.translatesAutoresizingMaskIntoConstraints = false
-        peopleTextButtonCenterXConstraint = peopleTextButton.centerXAnchor.constraint(equalTo: view.centerXAnchor)
-        peopleTextButtonCenterXConstraint.isActive = true
-        peopleTextButtonCenterYConstraint = peopleTextButton.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -25)
-        peopleTextButtonCenterYConstraint.isActive = true
+        peopleTextButtonCenterXAnchor = peopleTextButton.centerXAnchor.constraint(equalTo: view.centerXAnchor)
+        peopleTextButtonCenterXAnchor.isActive = true
+        peopleTextButtonCenterYAnchor = peopleTextButton.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -25)
+        peopleTextButtonCenterYAnchor.isActive = true
         peopleTextButton.widthAnchor.constraint(equalToConstant: Style.Size.boxWidth).isActive = true
         peopleTextButton.heightAnchor.constraint(equalToConstant: Style.Size.boxHeight).isActive = true
         
@@ -122,7 +124,7 @@ class ViewController: UIViewController {
         peopleDropdown.widthAnchor.constraint(equalToConstant: Style.Size.boxWidth).isActive = true
         peopleDropdown.heightAnchor.constraint(equalToConstant: Style.Size.boxHeight * CGFloat(buttonTitles.count)).isActive = true
         
-        peopleTextButton.addDividers()
+        peopleTextButton.addDividers(heightMultiplier: 0.01)
         
     }
     
@@ -134,7 +136,7 @@ class ViewController: UIViewController {
         view.addSubview(formOfYouLabel)
         
         formOfYouLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        formOfYouLabel.topAnchor.constraint(equalTo: peopleDropdown.bottomAnchor, constant: 0).isActive = true
+        formOfYouLabel.topAnchor.constraint(equalTo: view.bottomAnchor, constant: -UIScreen.main.bounds.height * 0.25).isActive = true
         formOfYouLabel.heightAnchor.constraint(equalToConstant: Style.Size.resultHeight).isActive = true
         formOfYouLabel.widthAnchor.constraint(equalToConstant: Style.Size.resultWidth).isActive = true
         
@@ -190,6 +192,7 @@ class ViewController: UIViewController {
         
         updateUIIfNeeded()
         
+        // DO SOMETHING WITH THIS, CAN'T REMEMBER WHAT THIS WAS FOR
         if tertiaryTextButton != nil {
             let newTitle = determine.ifTertiaryQuestionMatchesValue(language: UserDefaults.standard.string(forKey: "language")!, country: country)
             tertiaryTextButton?.setTitle(newTitle, for: .normal)
@@ -202,6 +205,19 @@ class ViewController: UIViewController {
             determine.ifAdditionalTextFieldIsNotNeeded(vc: self, language: UserDefaults.standard.string(forKey: "language")!, country: country)
             rearrangeTextFieldsIfNeeded()
             
+            if country == "El Salvador" || country == "Guatemala" || country == "Honduras" {
+                tertiaryTextButtonHeightAnchor?.constant = Style.Size.boxHeight * 2
+                self.view.layoutIfNeeded()
+                tertiaryTextButton?.removeSubviews()
+                tertiaryTextButton?.addDividers(heightMultiplier: 0.005)
+            }
+            
+            // TEMP
+            /*UIView.animate(withDuration: 0.5) {
+                self.view.layoutIfNeeded()
+            }*/
+            //
+            
             if tertiary.countriesInEnglish.contains(country) || tertiary.countriesInSpanish.contains(country) {
                 UserDefaults.standard.set(true, forKey: "tertiaryItemsAreOnScreen")
             }
@@ -211,10 +227,7 @@ class ViewController: UIViewController {
             } else {
                 UserDefaults.standard.set(false, forKey: "additionalInfoTertiaryWasActive")
             }
-            
-            UIView.animate(withDuration: 0.5) {
-                self.view.layoutIfNeeded()
-            }
+        
         }
         
     }
@@ -226,9 +239,7 @@ class ViewController: UIViewController {
         person = sender.titleLabel?.text
         peopleTextButton.setTitle(person, for: .normal)
         
-        if country != nil {
-            updateUIIfNeeded()
-        }
+        updateUIIfNeeded()
         
     }
     
@@ -240,10 +251,24 @@ class ViewController: UIViewController {
         
         tertiaryTextButton?.setTitle(tertiaryDatum, for: .normal)
         
-        if country != nil { // && person?
-            // this is interfering w/ the text change for tertiaryTextButton
-            updateUIIfNeeded()
+        updateUIIfNeeded()
+        
+        var heightMultiplier: CGFloat!
+        
+        if country == "El Salvador" || country == "Guatemala" || country == "Honduras" {
+            tertiaryTextButtonHeightAnchor?.constant = Style.Size.boxHeight * 2
+            heightMultiplier = 0.005
+            // the following should be switched to a .contain for these and 3 more (in 2 languages)
+        } else if tertiaryDatum == "Indigenous villages in Chiapas, Tabasco, Yucatán, or Quintana Roo" || tertiaryDatum == "Indigenous villages in Chiapas, Tabasco, Yucatán, or Quintana Roo" || tertiaryDatum == "Quindío, Risaldo, Antioquia, or Risaralda States" || tertiaryDatum == "Estados de Quindío, Risaldo, Antioquia, o Risaralda" {
+            tertiaryTextButtonHeightAnchor?.constant = Style.Size.boxHeight * 3
+            heightMultiplier = 0.0033
+        } else {
+            tertiaryTextButtonHeightAnchor?.constant = Style.Size.boxHeight
+            heightMultiplier = 0.01
         }
+        self.view.layoutIfNeeded()
+        tertiaryTextButton?.removeSubviews()
+        tertiaryTextButton?.addDividers(heightMultiplier: heightMultiplier)
         
     }
     
@@ -302,13 +327,13 @@ class ViewController: UIViewController {
         if newElementsPosition == 2 {
             
             tertiaryTextButton?.translatesAutoresizingMaskIntoConstraints = false
-            tertiaryTextButtonCenterXConstraint = tertiaryTextButton?.centerXAnchor.constraint(equalTo: view.centerXAnchor)
-            tertiaryTextButtonCenterXConstraint?.isActive = true
-            tertiaryTextButtonCenterYConstraint = tertiaryTextButton?.centerYAnchor.constraint(equalTo: view.topAnchor, constant: UIScreen.main.bounds.height * 0.3125)
-            tertiaryTextButtonCenterYConstraint?.isActive = true
-            // maybe set these to constant?
+            tertiaryTextButtonCenterXAnchor = tertiaryTextButton?.centerXAnchor.constraint(equalTo: view.centerXAnchor)
+            tertiaryTextButtonCenterXAnchor?.isActive = true
+            tertiaryTextButtonCenterYAnchor = tertiaryTextButton?.centerYAnchor.constraint(equalTo: view.topAnchor, constant: UIScreen.main.bounds.height * 0.3125)
+            tertiaryTextButtonCenterYAnchor?.isActive = true
             tertiaryTextButton?.widthAnchor.constraint(equalToConstant: Style.Size.boxWidth).isActive = true
-            tertiaryTextButton?.heightAnchor.constraint(equalToConstant: Style.Size.boxHeight).isActive = true
+            tertiaryTextButtonHeightAnchor = tertiaryTextButton?.heightAnchor.constraint(equalToConstant: Style.Size.boxHeight)
+            tertiaryTextButtonHeightAnchor?.isActive = true
             
             tertiaryDropdown?.translatesAutoresizingMaskIntoConstraints = false
             tertiaryDropdown?.topAnchor.constraint(equalTo: tertiaryTextButton!.bottomAnchor).isActive = true
@@ -319,12 +344,13 @@ class ViewController: UIViewController {
         } else if newElementsPosition == 3 {
             
             tertiaryTextButton?.translatesAutoresizingMaskIntoConstraints = false
-            tertiaryTextButtonCenterXConstraint = tertiaryTextButton?.centerXAnchor.constraint(equalTo: view.centerXAnchor)
-            tertiaryTextButtonCenterXConstraint?.isActive = true
-            tertiaryTextButtonCenterYConstraint = tertiaryTextButton?.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -25)
-            tertiaryTextButtonCenterYConstraint?.isActive = true
+            tertiaryTextButtonCenterXAnchor = tertiaryTextButton?.centerXAnchor.constraint(equalTo: view.centerXAnchor)
+            tertiaryTextButtonCenterXAnchor?.isActive = true
+            tertiaryTextButtonCenterYAnchor = tertiaryTextButton?.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -25)
+            tertiaryTextButtonCenterYAnchor?.isActive = true
             tertiaryTextButton?.widthAnchor.constraint(equalToConstant: Style.Size.boxWidth).isActive = true
-            tertiaryTextButton?.heightAnchor.constraint(equalToConstant: Style.Size.boxHeight).isActive = true
+            tertiaryTextButtonHeightAnchor = tertiaryTextButton?.heightAnchor.constraint(equalToConstant: Style.Size.boxHeight)
+            tertiaryTextButtonHeightAnchor?.isActive = true
             
             tertiaryDropdown?.translatesAutoresizingMaskIntoConstraints = false
             tertiaryDropdown?.topAnchor.constraint(equalTo: tertiaryTextButton!.bottomAnchor).isActive = true
@@ -334,7 +360,7 @@ class ViewController: UIViewController {
             
         }
         
-        tertiaryTextButton?.addDividers()
+        tertiaryTextButton?.addDividers(heightMultiplier: 0.01)
         
     }
     
@@ -364,8 +390,8 @@ class ViewController: UIViewController {
                 
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                     self.dismiss(animated: false, completion: {
-                        
-                        vc.transition.translateAllTextButtons(vc: vc, xTranslation: -UIScreen.main.bounds.width * 2)
+                        //self.transition.animateIn(nextVC: vc, xTranslation: UIScreen.main.bounds.width * 2)
+                        self.transition.translateAllTextButtons(vc: vc, xTranslation: -UIScreen.main.bounds.width * 2)
                         self.transition.setNewVariables(currentVC: self, nextVC: vc)
                         self.transition.setNewButtonText(currentVC: self, nextVC: vc)
                     })
@@ -409,30 +435,28 @@ class ViewController: UIViewController {
             
             transition.setNewDropdownOptions(currentVC: self, nextVC: vc)
             
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                
-                self.transition.changeActiveButton(oldInactiveButton: self.spanishButton, oldActiveButton: self.englishButton, newActiveButton: vc.spanishButton, newInactiveButton: vc.englishButton)
-                
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                 self.transition.animateOut(currentVC: self, xTranslation: UIScreen.main.bounds.width * 2)
+            }
                 
-                // ADD "YOU" RESULT IF NEEDED
-                if self.tertiaryDatum != nil {
-                    let tertiaryOptionNotYetSelected = (vc.tertiary.countriesInSpanish.contains(self.country))
-                    if self.country != nil && self.person != nil && (tertiaryOptionNotYetSelected || !vc.tertiary.countriesInSpanish.contains(self.country)) {
-                        vc.formOfYouLabel.text = self.formOfYouLabel.text
-                        vc.formOfYouLabel.isHidden = false
-                    }
+            self.transition.changeActiveButton(oldInactiveButton: self.spanishButton, oldActiveButton: self.englishButton, newActiveButton: vc.spanishButton, newInactiveButton: vc.englishButton)
+            
+            // ADD "YOU" RESULT IF NEEDED
+            if self.tertiaryDatum != nil {
+                let tertiaryOptionNotYetSelected = (vc.tertiary.countriesInSpanish.contains(self.country))
+                if self.country != nil && self.person != nil && (tertiaryOptionNotYetSelected || !vc.tertiary.countriesInSpanish.contains(self.country)) {
+                    vc.formOfYouLabel.text = self.formOfYouLabel.text
+                    vc.formOfYouLabel.isHidden = false
                 }
-                
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                    self.present(vc, animated: false, completion: {
-                        self.transition.animateIn(nextVC: vc, xTranslation: -UIScreen.main.bounds.width * 2)
-                        //self.transition.setNewDropdownOptions(currentVC: self, nextVC: vc)
-                        self.transition.setNewVariables(currentVC: self, nextVC: vc)
-                        self.transition.setNewButtonText(currentVC: self, nextVC: vc)
-                    })
-                }
-                
+            }
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                self.present(vc, animated: false, completion: {
+                    self.transition.animateIn(nextVC: vc, xTranslation: -UIScreen.main.bounds.width * 2)
+                    //self.transition.setNewDropdownOptions(currentVC: self, nextVC: vc)
+                    self.transition.setNewVariables(currentVC: self, nextVC: vc)
+                    self.transition.setNewButtonText(currentVC: self, nextVC: vc)
+                })
             }
             
             UserDefaults.standard.set(false, forKey: "transitionOccuring")
@@ -444,37 +468,53 @@ class ViewController: UIViewController {
     func updateUIIfNeeded() {
         
         if tertiaryTextButton != nil {
-            if determine.ifDropdownOptionsShouldBeChanged(language: UserDefaults.standard.string(forKey: "language")!, country: country, tertiaryDatum: tertiaryDatum ?? "") {
-                // this will definitely need to be refactored
-                
-                for case let button as UIButton in tertiaryDropdown!.subviews {
-                    // want to nullify instead if possible
-                    button.removeFromSuperview()
-                }
-                
-                var tertiaryArray = determine.ifAdditionalTextFieldIsNeeded(language: UserDefaults.standard.string(forKey: "language")!, country: country)
-                if tertiaryArray != [] {
-                    tertiaryArray.remove(at: 0)
-                    tertiaryArray.popLast()
-                    let buttonTitles = tertiaryArray
-                    populateDropdown(buttonTitles: buttonTitles, dropdown: tertiaryDropdown!)
-                }
-            }
+            changeTertiaryDropdown()
         } else if tertiaryTextButton == nil && country != nil {
-            // this definitely needs to be refactored
-            var tertiaryArray = determine.ifAdditionalTextFieldIsNeeded(language: UserDefaults.standard.string(forKey: "language")!, country: country)
-            if tertiaryArray != [] {
-                let sectionTitle = tertiaryArray[0]
-                tertiaryArray.remove(at: 0)
-                let newElementsPosition = Int((tertiaryArray.popLast())!)
-                let buttonTitles = tertiaryArray
-                if tertiaryDropdown == nil {
-                    createTertiaryElements(sectionTitle: sectionTitle, buttonTitles: buttonTitles, newElementsPosition: newElementsPosition!)
-                    animateTertiaryElements(language: UserDefaults.standard.string(forKey: "language")!, country: country)
-                }
+            createNewTertiaryDropdown()
+        }
+        
+        calculateFormOfYou()
+    
+    }
+    
+    func changeTertiaryDropdown() {
+        
+        if determine.ifDropdownOptionsShouldBeChanged(language: UserDefaults.standard.string(forKey: "language")!, country: country, tertiaryDatum: tertiaryDatum ?? "") {
+            // this will definitely need to be refactored
+            
+            for case let button as UIButton in tertiaryDropdown!.subviews {
+                // want to nullify instead if possible
+                button.removeFromSuperview()
             }
             
+            var tertiaryArray = determine.ifAdditionalTextFieldIsNeeded(language: UserDefaults.standard.string(forKey: "language")!, country: country)
+            if tertiaryArray != [] {
+                tertiaryArray.remove(at: 0)
+                tertiaryArray.popLast()
+                let buttonTitles = tertiaryArray
+                populateDropdown(buttonTitles: buttonTitles, dropdown: tertiaryDropdown!)
+            }
         }
+        
+    }
+    
+    func createNewTertiaryDropdown() {
+        // this definitely needs to be refactored
+        
+        var tertiaryArray = determine.ifAdditionalTextFieldIsNeeded(language: UserDefaults.standard.string(forKey: "language")!, country: country)
+        if tertiaryArray != [] {
+            let sectionTitle = tertiaryArray[0]
+            tertiaryArray.remove(at: 0)
+            let newElementsPosition = Int((tertiaryArray.popLast())!)
+            let buttonTitles = tertiaryArray
+            if tertiaryDropdown == nil {
+                createTertiaryElements(sectionTitle: sectionTitle, buttonTitles: buttonTitles, newElementsPosition: newElementsPosition!)
+                animateTertiaryElements(language: UserDefaults.standard.string(forKey: "language")!, country: country)
+            }
+        }
+    }
+    
+    func calculateFormOfYou() {
         
         let calculateFormOfYou = DispatchWorkItem {
             if self.country != nil && self.person != nil {
@@ -493,27 +533,25 @@ class ViewController: UIViewController {
         } else {
             calculateFormOfYou.perform()
         }
-    
+        
     }
     
     func animateTertiaryElements(language: String, country: String) {
         
         // hacky fix for now
         if !(tertiary.countriesInEnglish.contains(country) || tertiary.countriesInSpanish.contains(country)) { return }
-        
-        // convert to simplification function
             
         if language == "English" {
-            tertiaryTextButtonCenterXConstraint?.constant += UIScreen.main.bounds.width * 2
+            tertiaryTextButtonCenterXAnchor?.constant += UIScreen.main.bounds.width * 2
         } else if language == "Espanol" {
-            tertiaryTextButtonCenterXConstraint?.constant -= UIScreen.main.bounds.width * 2
+            tertiaryTextButtonCenterXAnchor?.constant -= UIScreen.main.bounds.width * 2
         }
         self.view.layoutIfNeeded()
         
         if language == "English" {
-            tertiaryTextButtonCenterXConstraint?.constant -= UIScreen.main.bounds.width * 2
+            tertiaryTextButtonCenterXAnchor?.constant -= UIScreen.main.bounds.width * 2
         } else if language == "Espanol" {
-            tertiaryTextButtonCenterXConstraint?.constant += UIScreen.main.bounds.width * 2
+            tertiaryTextButtonCenterXAnchor?.constant += UIScreen.main.bounds.width * 2
         }
         UIView.animate(withDuration: 0.5, animations: {
             self.view.layoutIfNeeded()
@@ -575,16 +613,16 @@ class ViewController: UIViewController {
         
         if country != "El Salvador" && country != "Guatemala" && country != "Honduras" && UserDefaults.standard.bool(forKey: "additionalInfoTertiaryWasActive") {
             
-            peopleTextButtonCenterYConstraint.constant += (UIScreen.main.bounds.height * 0.1875 - 25)
+            peopleTextButtonCenterYAnchor.constant += (UIScreen.main.bounds.height * 0.1875 - 25)
             if UserDefaults.standard.bool(forKey: "tertiaryItemsAreOnScreen") {
-                tertiaryTextButtonCenterYConstraint?.constant -= (UIScreen.main.bounds.height * 0.1875 - 25)
+                tertiaryTextButtonCenterYAnchor?.constant -= (UIScreen.main.bounds.height * 0.1875 - 25)
             }
             
-        } else if (country == "El Salvador" || country == "Guatemala" || country == "Honduras") {
-            peopleTextButtonCenterYConstraint.constant -= (UIScreen.main.bounds.height * 0.1875 - 25)
+        } else if (country == "El Salvador" || country == "Guatemala" || country == "Honduras") && !UserDefaults.standard.bool(forKey: "additionalInfoTertiaryWasActive") {
+            // if moving between countries of same category, this should be nullified
+            peopleTextButtonCenterYAnchor.constant -= (UIScreen.main.bounds.height * 0.1875 - 25)
             if UserDefaults.standard.bool(forKey: "tertiaryItemsAreOnScreen") {
-                // THIS SHOULD NOT BE FUCKING HAPPENING
-                tertiaryTextButtonCenterYConstraint?.constant += (UIScreen.main.bounds.height * 0.1875 - 25)
+                tertiaryTextButtonCenterYAnchor?.constant += (UIScreen.main.bounds.height * 0.1875 - 25)
             }
             
         } else { return }
@@ -599,10 +637,11 @@ class ViewController: UIViewController {
 
 extension UIView {
     
-    func addDividers() {
+    func addDividers(heightMultiplier: CGFloat) {
+        // .999 INSTEAD OF .99 DOESNT GIVE DOUBLED LOOK FOR SHARED BOTTOM/TOP
         
-        let topBorderView = UIView(frame: CGRect(x: 0, y: 0, width: frame.width, height: frame.height * 0.01))
-        let bottomBorderView = UIView(frame: CGRect(x: 0, y: frame.height * 0.999, width: frame.width, height: frame.height * 0.01))
+        let topBorderView = UIView(frame: CGRect(x: 0, y: 0, width: frame.width, height: frame.height * heightMultiplier))
+        let bottomBorderView = UIView(frame: CGRect(x: 0, y: frame.height - (frame.height * heightMultiplier), width: frame.width, height: frame.height * heightMultiplier))
         topBorderView.backgroundColor = UIColor.white
         bottomBorderView.backgroundColor = UIColor.white
         addSubview(topBorderView)

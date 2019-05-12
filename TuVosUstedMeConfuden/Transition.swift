@@ -106,11 +106,11 @@ class Transition {
     
     func animateOut(currentVC: ViewController, xTranslation: CGFloat) {
         
-        currentVC.countriesTextButtonCenterXConstraint.constant += xTranslation
+        currentVC.countriesTextButtonCenterXAnchor.constant += xTranslation
         if currentVC.tertiaryTextButton != nil {
-            currentVC.tertiaryTextButtonCenterXConstraint?.constant += xTranslation
+            currentVC.tertiaryTextButtonCenterXAnchor?.constant += xTranslation
         }
-        currentVC.peopleTextButtonCenterXConstraint.constant += xTranslation
+        currentVC.peopleTextButtonCenterXAnchor.constant += xTranslation
         UIView.animate(withDuration: 0.5, animations: {
             currentVC.view.layoutIfNeeded()
         })
@@ -119,32 +119,34 @@ class Transition {
     
     func animateIn(nextVC: ViewController, xTranslation: CGFloat) {
         
-        nextVC.countriesTextButtonCenterXConstraint.constant += xTranslation
-        nextVC.peopleTextButtonCenterXConstraint.constant += xTranslation
+        nextVC.countriesTextButtonCenterXAnchor.constant += xTranslation
+        nextVC.peopleTextButtonCenterXAnchor.constant += xTranslation
         if nextVC.tertiaryTextButton != nil && UserDefaults.standard.string(forKey: "language") == "Espanol" {
-            nextVC.tertiaryTextButtonCenterXConstraint?.constant += xTranslation
+            nextVC.tertiaryTextButtonCenterXAnchor?.constant += xTranslation
         }
         nextVC.view.layoutIfNeeded()
         
-        nextVC.countriesTextButtonCenterXConstraint.constant -= xTranslation
-        nextVC.peopleTextButtonCenterXConstraint.constant -= xTranslation
-        if nextVC.tertiaryTextButton != nil {
-            nextVC.tertiaryTextButtonCenterXConstraint?.constant -= xTranslation
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+            nextVC.countriesTextButtonCenterXAnchor.constant -= xTranslation
+            nextVC.peopleTextButtonCenterXAnchor.constant -= xTranslation
+            if nextVC.tertiaryTextButton != nil {
+                nextVC.tertiaryTextButtonCenterXAnchor?.constant -= xTranslation
+            }
+            UIView.animate(withDuration: 0.5, animations: {
+                nextVC.view.layoutIfNeeded()
+            })
         }
-        UIView.animate(withDuration: 0.5, animations: {
-            nextVC.view.layoutIfNeeded()
-        })
         
     }
     
     // SIMPLIFICATION FUNCTION
     func translateAllTextButtons(vc: ViewController, xTranslation: CGFloat) {
         
-        vc.countriesTextButtonCenterXConstraint.constant += xTranslation
+        vc.countriesTextButtonCenterXAnchor.constant += xTranslation
         if vc.tertiaryTextButton != nil {
-            vc.tertiaryTextButtonCenterXConstraint?.constant += xTranslation
+            vc.tertiaryTextButtonCenterXAnchor?.constant += xTranslation
         }
-        vc.peopleTextButtonCenterXConstraint.constant += xTranslation
+        vc.peopleTextButtonCenterXAnchor.constant += xTranslation
         UIView.animate(withDuration: 0.5, animations: {
             vc.view.layoutIfNeeded()
         })

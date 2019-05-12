@@ -24,7 +24,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UserDefaults.standard.set(false, forKey: "tertiaryItemsAreOnScreen")
         UserDefaults.standard.set(false, forKey: "additionalInfoTertiaryWasActive")
         UserDefaults.standard.set(false, forKey: "tertiaryWasActive")
-        UserDefaults.standard.set(true, forKey: "appStartingUp")
+        UserDefaults.standard.set(true, forKey: "baseElementsNeeded")
         
         return true
     }
