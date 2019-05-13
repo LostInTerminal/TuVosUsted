@@ -15,10 +15,12 @@ class ViewController: UIViewController {
     let countriesTextButton = TitleButton()
     let countriesDropdown = UIStackView()
     var countriesTextButtonCenterXAnchor = NSLayoutConstraint()
+    var countriesTextButtonHeightAnchor = NSLayoutConstraint()
     let peopleTextButton = TitleButton()
     let peopleDropdown = UIStackView()
     var peopleTextButtonCenterXAnchor = NSLayoutConstraint()
     var peopleTextButtonCenterYAnchor = NSLayoutConstraint()
+    var peopleTextButtonHeightAnchor = NSLayoutConstraint()
     let formOfYouLabel = CustomLabel()
     
     let transition = Transition()
@@ -55,7 +57,6 @@ class ViewController: UIViewController {
             createPeopleUIElements(sectionTitle: questions.inSpanish[1], buttonTitles: people.inSpanish)
         }
         
-        
         createLanguageButtons()
         createFormOfYouLabel()
         
@@ -67,25 +68,24 @@ class ViewController: UIViewController {
     
     func createCountriesUIElements(sectionTitle: String, buttonTitles: [String]) {
         
-        print("you shouldn't see me three times")
-        
         countriesDropdown.isHidden = true
         
-        populateDropdown(buttonTitles: buttonTitles, dropdown: countriesDropdown)
+        view.addSubview(countriesTextButton)
+        view.addSubview(countriesDropdown)
+        
+        //populateDropdown(buttonTitles: buttonTitles, dropdown: countriesDropdown)
         
         countriesTextButton.frame = CGRect(x: 0, y: 0, width: Style.Size.boxWidth, height: Style.Size.boxHeight)
         countriesTextButton.setTitle(sectionTitle, for: .normal)
         countriesTextButton.addTarget(self, action: #selector(activateCountriesDropdown), for: .touchUpInside)
-        
-        view.addSubview(countriesTextButton)
-        view.addSubview(countriesDropdown)
         
         countriesTextButton.translatesAutoresizingMaskIntoConstraints = false
         countriesTextButtonCenterXAnchor = countriesTextButton.centerXAnchor.constraint(equalTo: view.centerXAnchor)
         countriesTextButtonCenterXAnchor.isActive = true
         countriesTextButton.topAnchor.constraint(equalTo: view.topAnchor, constant: UIScreen.main.bounds.height / 8).isActive = true
         countriesTextButton.widthAnchor.constraint(equalToConstant: Style.Size.boxWidth).isActive = true
-        countriesTextButton.heightAnchor.constraint(equalToConstant: Style.Size.boxHeight).isActive = true
+        countriesTextButtonHeightAnchor = countriesTextButton.heightAnchor.constraint(equalToConstant: Style.Size.boxHeight)
+        countriesTextButtonHeightAnchor.isActive = true
         
         countriesDropdown.translatesAutoresizingMaskIntoConstraints = false
         countriesDropdown.topAnchor.constraint(equalTo: countriesTextButton.bottomAnchor).isActive = true
@@ -93,7 +93,9 @@ class ViewController: UIViewController {
         countriesDropdown.widthAnchor.constraint(equalToConstant: Style.Size.boxWidth).isActive = true
         countriesDropdown.heightAnchor.constraint(equalToConstant: (Style.Size.boxHeight * CGFloat(buttonTitles.count)) / 2).isActive = true
         
-        countriesTextButton.addDividers(heightMultiplier: 0.01)
+        populateDropdown(buttonTitles: buttonTitles, dropdown: countriesDropdown)
+        
+        countriesTextButton.addDividers(heightAnchor: countriesTextButtonHeightAnchor, heightMultiplier: 0.01)
         
     }
     
@@ -116,7 +118,8 @@ class ViewController: UIViewController {
         peopleTextButtonCenterYAnchor = peopleTextButton.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -25)
         peopleTextButtonCenterYAnchor.isActive = true
         peopleTextButton.widthAnchor.constraint(equalToConstant: Style.Size.boxWidth).isActive = true
-        peopleTextButton.heightAnchor.constraint(equalToConstant: Style.Size.boxHeight).isActive = true
+        peopleTextButtonHeightAnchor = peopleTextButton.heightAnchor.constraint(equalToConstant: Style.Size.boxHeight)
+        peopleTextButtonHeightAnchor.isActive = true
         
         peopleDropdown.translatesAutoresizingMaskIntoConstraints = false
         peopleDropdown.topAnchor.constraint(equalTo: peopleTextButton.bottomAnchor).isActive = true
@@ -124,7 +127,7 @@ class ViewController: UIViewController {
         peopleDropdown.widthAnchor.constraint(equalToConstant: Style.Size.boxWidth).isActive = true
         peopleDropdown.heightAnchor.constraint(equalToConstant: Style.Size.boxHeight * CGFloat(buttonTitles.count)).isActive = true
         
-        peopleTextButton.addDividers(heightMultiplier: 0.01)
+        peopleTextButton.addDividers(heightAnchor: peopleTextButtonHeightAnchor, heightMultiplier: 0.01)
         
     }
     
@@ -209,7 +212,8 @@ class ViewController: UIViewController {
                 tertiaryTextButtonHeightAnchor?.constant = Style.Size.boxHeight * 2
                 self.view.layoutIfNeeded()
                 tertiaryTextButton?.removeSubviews()
-                tertiaryTextButton?.addDividers(heightMultiplier: 0.005)
+                // beware following !
+                tertiaryTextButton?.addDividers(heightAnchor: tertiaryTextButtonHeightAnchor!, heightMultiplier: 0.005)
             }
             
             // TEMP
@@ -268,7 +272,8 @@ class ViewController: UIViewController {
         }
         self.view.layoutIfNeeded()
         tertiaryTextButton?.removeSubviews()
-        tertiaryTextButton?.addDividers(heightMultiplier: heightMultiplier)
+        // beware following bang
+        tertiaryTextButton?.addDividers(heightAnchor: tertiaryTextButtonHeightAnchor!, heightMultiplier: heightMultiplier)
         
     }
     
@@ -360,7 +365,7 @@ class ViewController: UIViewController {
             
         }
         
-        tertiaryTextButton?.addDividers(heightMultiplier: 0.01)
+        tertiaryTextButton?.addDividers(heightAnchor: tertiaryTextButtonHeightAnchor!, heightMultiplier: 0.01)
         
     }
     
@@ -566,28 +571,44 @@ class ViewController: UIViewController {
             var button = 0.0
             var x = 0
             var row: UIView?
+            var rowHeightAnchor: NSLayoutConstraint?
             
             buttonTitles.forEach { (item) in
                 
                 if Int(button) % 2 == 0 {
                     x = 0
-                    row = UIView(frame: CGRect(x: 0, y: dropdown.subviews.last?.frame.maxY ?? 0 * Style.Size.boxHeight, width: Style.Size.boxWidth, height: Style.Size.boxHeight))
+                    //row = UIView(frame: CGRect(x: 0, y: dropdown.subviews.last?.frame.maxY ?? 0 * Style.Size.boxHeight, width: Style.Size.boxWidth, height: Style.Size.boxHeight))
+                    row = UIView()
+                    row?.backgroundColor = view.backgroundColor
+                    row?.translatesAutoresizingMaskIntoConstraints = false
+                    dropdown.addSubview(row!)
+                    //row?.topAnchor.constraint(equalTo: dropdown.topAnchor).isActive = true
+                    row?.topAnchor.constraint(equalTo: dropdown.topAnchor, constant: CGFloat(floor(button / 2)) * Style.Size.boxHeight).isActive = true
+                    row?.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+                    rowHeightAnchor = row?.heightAnchor.constraint(equalToConstant: Style.Size.boxHeight)
+                    rowHeightAnchor?.isActive = true
+                    row?.widthAnchor.constraint(equalToConstant: Style.Size.boxWidth).isActive = true
+                    row?.addDividers(heightAnchor: rowHeightAnchor!, heightMultiplier: 0.01)
                 } else {
                     x = 125
                 }
                 
-                let option = OptionButton(frame: CGRect(x: x, y: 0, width: 125, height: 50))
-                option.backgroundColor = view.backgroundColor
+                //let option = OptionButton(frame: CGRect(x: x, y: 0, width: 125, height: 50))
+                let option = OptionButton()
+                option.translatesAutoresizingMaskIntoConstraints = false
+                row?.addSubview(option)
+                option.topAnchor.constraint(equalTo: row!.topAnchor).isActive = true
+                if x == 0 {
+                    option.centerXAnchor.constraint(equalTo: dropdown.centerXAnchor, constant: -Style.Size.boxWidth / 4).isActive = true
+                } else if x == 125 {
+                    option.centerXAnchor.constraint(equalTo: dropdown.centerXAnchor, constant: Style.Size.boxWidth / 4).isActive = true
+                }
+                option.heightAnchor.constraint(equalToConstant: Style.Size.boxHeight).isActive = true
+                option.widthAnchor.constraint(equalToConstant: Style.Size.boxWidth / 2).isActive = true
                 option.setTitle(item, for: .normal)
                 option.addTarget(self, action: #selector(countryClicked(sender:)), for: .touchUpInside)
-                dropdown.addSubview(option)
-                row?.addSubview(option)
                 
                 button += 1
-                
-                if Int(button) % 2 != 0 {
-                    dropdown.addSubview(row!)
-                }
                 
             }
             
@@ -597,10 +618,16 @@ class ViewController: UIViewController {
             
             buttonTitles.forEach { (title) in
                 let option = OptionButton(frame: CGRect(x: 0, y: button * Style.Size.boxHeight, width: Style.Size.boxWidth, height: Style.Size.boxHeight))
-                option.backgroundColor = view.backgroundColor//UIColor(red: 56/255, green: 161/255, blue: 243/255, alpha: 1)//UIColor.clear
-                option.setTitle(title, for: .normal)
                 
                 dropdown.addSubview(option)
+                
+                option.translatesAutoresizingMaskIntoConstraints = false
+                option.topAnchor.constraint(equalTo: dropdown.topAnchor, constant: button * Style.Size.boxHeight).isActive = true
+                option.centerXAnchor.constraint(equalTo: dropdown.centerXAnchor).isActive = true
+                option.heightAnchor.constraint(equalToConstant: Style.Size.boxHeight).isActive = true
+                option.widthAnchor.constraint(equalToConstant: Style.Size.boxWidth).isActive = true
+                option.backgroundColor = view.backgroundColor//UIColor(red: 56/255, green: 161/255, blue: 243/255, alpha: 1)//UIColor.clear
+                option.setTitle(title, for: .normal)
                 
                 button += 1
             }
@@ -637,16 +664,67 @@ class ViewController: UIViewController {
 
 extension UIView {
     
-    func addDividers(heightMultiplier: CGFloat) {
+    func addDividers(heightAnchor: NSLayoutConstraint, heightMultiplier: CGFloat) {
         // .999 INSTEAD OF .99 DOESNT GIVE DOUBLED LOOK FOR SHARED BOTTOM/TOP
         
-        let topBorderView = UIView(frame: CGRect(x: 0, y: 0, width: frame.width, height: frame.height * heightMultiplier))
-        let bottomBorderView = UIView(frame: CGRect(x: 0, y: frame.height - (frame.height * heightMultiplier), width: frame.width, height: frame.height * heightMultiplier))
+        let topBorderView = UIView()
         topBorderView.backgroundColor = UIColor.white
-        bottomBorderView.backgroundColor = UIColor.white
+        topBorderView.translatesAutoresizingMaskIntoConstraints = false
         addSubview(topBorderView)
+        topBorderView.topAnchor.constraint(equalTo: topAnchor).isActive = true
+        topBorderView.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
+        topBorderView.widthAnchor.constraint(equalTo: widthAnchor).isActive = true
+        topBorderView.heightAnchor.constraint(equalToConstant: heightAnchor.constant * heightMultiplier).isActive = true
+        
+        let bottomBorderView = UIView()
+        bottomBorderView.backgroundColor = UIColor.white
+        bottomBorderView.translatesAutoresizingMaskIntoConstraints = false
         addSubview(bottomBorderView)
+        bottomBorderView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
+        bottomBorderView.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
+        bottomBorderView.widthAnchor.constraint(equalTo: widthAnchor).isActive = true
+        bottomBorderView.heightAnchor.constraint(equalToConstant: heightAnchor.constant * heightMultiplier).isActive = true
         
     }
     
+}
+
+extension UIView {
+    
+    func fillSuperview() {
+        anchor(top: superview?.topAnchor, leading: superview?.leadingAnchor, bottom: superview?.bottomAnchor, trailing: superview?.trailingAnchor)
+    }
+    
+    func anchorSize(to view: UIView) {
+        widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
+        heightAnchor.constraint(equalTo: view.heightAnchor).isActive = true
+    }
+    
+    func anchor(top: NSLayoutYAxisAnchor?, leading: NSLayoutXAxisAnchor?, bottom: NSLayoutYAxisAnchor?, trailing: NSLayoutXAxisAnchor?, padding: UIEdgeInsets = .zero, size: CGSize = .zero) {
+        translatesAutoresizingMaskIntoConstraints = false
+        
+        if let top = top {
+            topAnchor.constraint(equalTo: top, constant: padding.top).isActive = true
+        }
+        
+        if let leading = leading {
+            leadingAnchor.constraint(equalTo: leading, constant: padding.left).isActive = true
+        }
+        
+        if let bottom = bottom {
+            bottomAnchor.constraint(equalTo: bottom, constant: -padding.bottom).isActive = true
+        }
+        
+        if let trailing = trailing {
+            trailingAnchor.constraint(equalTo: trailing, constant: -padding.right).isActive = true
+        }
+        
+        if size.width != 0 {
+            widthAnchor.constraint(equalToConstant: size.width).isActive = true
+        }
+        
+        if size.height != 0 {
+            heightAnchor.constraint(equalToConstant: size.height).isActive = true
+        }
+    }
 }

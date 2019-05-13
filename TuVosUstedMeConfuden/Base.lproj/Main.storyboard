@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="73g-tm-i6l">
-    <device id="retina6_1" orientation="portrait">
+    <device id="retina6_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
@@ -133,7 +133,7 @@
                                 </state>
                             </button>
                             <stackView hidden="YES" opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="3Lp-hk-I0j">
-                                <rect key="frame" x="82" y="180" width="250" height="550"/>
+                                <rect key="frame" x="82" y="180.33333333333337" width="250" height="550"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JHS-U0-AsR">
                                         <rect key="frame" x="0.0" y="0.0" width="250" height="50"/>
@@ -204,7 +204,7 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KqE-Q8-nvQ">
-                                        <rect key="frame" x="0.0" y="100" width="250" height="50"/>
+                                        <rect key="frame" x="0.0" y="99.999999999999972" width="250" height="50"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JOj-9d-fp6">
                                                 <rect key="frame" x="0.0" y="0.0" width="125" height="50"/>
@@ -238,7 +238,7 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="snO-KJ-YLH">
-                                        <rect key="frame" x="0.0" y="150" width="250" height="50"/>
+                                        <rect key="frame" x="0.0" y="149.99999999999997" width="250" height="50"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="zgw-yF-3ye">
                                                 <rect key="frame" x="0.0" y="0.0" width="125" height="50"/>
@@ -272,7 +272,7 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LmH-nN-sCs">
-                                        <rect key="frame" x="0.0" y="200" width="250" height="50"/>
+                                        <rect key="frame" x="0.0" y="199.99999999999997" width="250" height="50"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hAh-zo-sfq">
                                                 <rect key="frame" x="0.0" y="0.0" width="125" height="50"/>
@@ -1172,7 +1172,6 @@
         <!--View Controller-->
         <scene sceneID="iKB-BS-Kc0">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="hed-Yp-Rb3" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController id="e51-NT-xl8" customClass="ViewController" customModule="TuVosUstedMeConfuden" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="cdM-fz-KF5">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
@@ -1224,6 +1223,7 @@
                         <outlet property="spanishButton" destination="mdj-Lv-ks7" id="2NY-Sc-Qpc"/>
                     </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="hed-Yp-Rb3" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2603" y="828"/>
         </scene>
