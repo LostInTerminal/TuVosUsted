@@ -119,7 +119,7 @@ class Determine {
         
     }
     
-    func ifAdditionalTextFieldIsNeeded(language: String, country: String) -> [String] {
+    func obtainTertiaryData(language: String, country: String) -> [String] {
         
         let tertiary = Tertiary()
         let questions = Questions()
@@ -136,7 +136,7 @@ class Determine {
             countryIndex = tertiary.countriesInEnglish.firstIndex(of: country)!
             questionArray = questions.inEnglish
             optionsSuperarray = tertiary.optionsArrayInEnglish
-        } else if language == "Espanol" &&  tertiary.countriesInSpanish.contains(country) {
+        } else if language == "Español" &&  tertiary.countriesInSpanish.contains(country) {
             countryIndex = tertiary.countriesInSpanish.firstIndex(of: country)!
             questionArray = questions.inSpanish
             optionsSuperarray = tertiary.optionsArrayInSpanish
@@ -167,18 +167,25 @@ class Determine {
     }
     
     func ifAdditionalTextFieldIsNotNeeded(vc: ViewController, language: String, country: String) {
-        let tertiary = Tertiary()
         
-        if language == "English" && !tertiary.countriesInEnglish.contains(vc.country!) {
-            vc.tertiaryTextButtonCenterXAnchor?.constant += UIScreen.main.bounds.width * 2
-        } else if language == "Espanol" && !tertiary.countriesInSpanish.contains(vc.country!) {
-            vc.tertiaryTextButtonCenterXAnchor?.constant -= UIScreen.main.bounds.width * 2
-        } else { return }
+        let tertiary = Tertiary()
+        let translation = Style.Ratios.twoTimesScreenWidth
+        
+        for constraint in vc.tertiaryTextButton!.constraintsAffectingLayout(for: .horizontal) {
+            if constraint.constant == 0 {
+                if language == "English" && !tertiary.countriesInEnglish.contains(vc.country!) {
+                    constraint.constant += translation
+                } else if language == "Español" && !tertiary.countriesInSpanish.contains(vc.country!) {
+                    constraint.constant -= translation
+                } else { return }
+            }
+        }
+        
+        UserDefaults.standard.set(false, forKey: "tertiaryItemsAreOnScreen")
         
         UIView.animate(withDuration: 0.5, animations: {
             vc.view.layoutIfNeeded()
         }, completion: { (Bool) in
-            UserDefaults.standard.set(false, forKey: "tertiaryItemsAreOnScreen")
             vc.tertiaryTextButton = nil
             vc.tertiaryDropdown = nil
         })
@@ -196,7 +203,7 @@ class Determine {
             if !countryArray.contains(tertiaryDatum) {
                 dropdownOptionsShouldBeChanged = true
             }
-        } else if language == "Espanol" && tertiary.countriesInSpanish.contains(country) {
+        } else if language == "Español" && tertiary.countriesInSpanish.contains(country) {
             let countryArrayIndex = tertiary.countriesInSpanish.firstIndex(of: country)
             let countryArray = tertiary.optionsArrayInSpanish[countryArrayIndex!]
             if !countryArray.contains(tertiaryDatum) {
@@ -216,7 +223,7 @@ class Determine {
         
         if language == "English" {
             questionArray = questions.inEnglish
-        } else if language == "Espanol" {
+        } else if language == "Español" {
             questionArray = questions.inSpanish
         }
         

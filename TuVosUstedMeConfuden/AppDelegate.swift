@@ -25,6 +25,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UserDefaults.standard.set(false, forKey: "additionalInfoTertiaryWasActive")
         UserDefaults.standard.set(false, forKey: "tertiaryWasActive")
         UserDefaults.standard.set(true, forKey: "baseElementsNeeded")
+        UserDefaults.standard.set(false, forKey: "transitionOccuring")
         
         return true
     }

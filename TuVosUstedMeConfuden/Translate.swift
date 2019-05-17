@@ -20,7 +20,7 @@ class Translate {
             let index = questions.inSpanish.firstIndex(of: question)
             translatedWord = questions.inEnglish[index!]
             
-        } else if language == "Espanol" {
+        } else if language == "Español" {
             
             let index = questions.inEnglish.firstIndex(of: question)
             translatedWord = questions.inSpanish[index!]
@@ -41,7 +41,10 @@ class Translate {
             let index = countries.inSpanish_EnglishOrder.firstIndex(of: word)
             translatedCountry = countries.inEnglish[index!]
             
-        } else if language == "Espanol" {
+        } else if language == "Español" {
+            
+            print(language)
+            print(word)
             
             let index = countries.inEnglish.firstIndex(of: word)
             translatedCountry = countries.inSpanish_EnglishOrder[index!]
@@ -63,7 +66,7 @@ class Translate {
             translatedPerson = people.inEnglish[index!]
             
             
-        } else if language == "Espanol" {
+        } else if language == "Español" {
         
             let index = people.inEnglish.firstIndex(of: word)
             translatedPerson = people.inSpanish[index!]
@@ -81,23 +84,13 @@ class Translate {
         
         if language == "English" {
             
-            print(country)
-            print(word)
             let countryArrayIndex = tertiary.countriesInSpanish.firstIndex(of: country)
-            print(countryArrayIndex)
-            //let countryArray = tertiary.optionsArrayInEnglish[countryArrayIndex!]
             let countryArray = tertiary.optionsArrayInSpanish[countryArrayIndex!]
-            print(countryArray)
             let index = countryArray.firstIndex(of: word)
-            print(index)
             let newCountryArray = tertiary.optionsArrayInEnglish[countryArrayIndex!]
-            //let newCountryArray = tertiary.optionsArrayInSpanish[countryArrayIndex!]
-            print(newCountryArray)
             translatedTertiary = newCountryArray[index!]
             
-        } else if language == "Espanol" {
-            print(country)
-            print(word)
+        } else if language == "Español" {
             let countryArrayIndex = tertiary.countriesInEnglish.firstIndex(of: country)
             let countryArray = tertiary.optionsArrayInEnglish[countryArrayIndex!]
             let index = countryArray.firstIndex(of: word)

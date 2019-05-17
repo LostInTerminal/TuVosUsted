@@ -104,13 +104,21 @@ class Transition {
         
     }
     
-    func animateOut(currentVC: ViewController, xTranslation: CGFloat) {
+    func translateElements(currentVC: ViewController, xTranslation: CGFloat) {
         
-        currentVC.countriesTextButtonCenterXAnchor.constant += xTranslation
+        var tertiaryTextButtonCenterXAnchor: NSLayoutConstraint?
+        
+        let countriesTextButtonCenterXAnchor = getCenterXAnchor(textButton: currentVC.countriesTextButton)
+        countriesTextButtonCenterXAnchor.constant += xTranslation
+        
+        let peopleTextButtonCenterXAnchor = getCenterXAnchor(textButton: currentVC.peopleTextButton)
+        peopleTextButtonCenterXAnchor.constant += xTranslation
+        
         if currentVC.tertiaryTextButton != nil {
-            currentVC.tertiaryTextButtonCenterXAnchor?.constant += xTranslation
+            tertiaryTextButtonCenterXAnchor = getCenterXAnchor(textButton: currentVC.tertiaryTextButton!)
+            tertiaryTextButtonCenterXAnchor!.constant += xTranslation
         }
-        currentVC.peopleTextButtonCenterXAnchor.constant += xTranslation
+        
         UIView.animate(withDuration: 0.5, animations: {
             currentVC.view.layoutIfNeeded()
         })
@@ -119,19 +127,29 @@ class Transition {
     
     func animateIn(nextVC: ViewController, xTranslation: CGFloat) {
         
-        nextVC.countriesTextButtonCenterXAnchor.constant += xTranslation
-        nextVC.peopleTextButtonCenterXAnchor.constant += xTranslation
-        if nextVC.tertiaryTextButton != nil && UserDefaults.standard.string(forKey: "language") == "Espanol" {
-            nextVC.tertiaryTextButtonCenterXAnchor?.constant += xTranslation
+        var tertiaryTextButtonCenterXAnchor: NSLayoutConstraint?
+        
+        let countriesTextButtonCenterXAnchor = getCenterXAnchor(textButton: nextVC.countriesTextButton)
+        countriesTextButtonCenterXAnchor.constant += xTranslation
+        
+        let peopleTextButtonCenterXAnchor = getCenterXAnchor(textButton: nextVC.peopleTextButton)
+        peopleTextButtonCenterXAnchor.constant += xTranslation
+        
+        if nextVC.tertiaryTextButton != nil && UserDefaults.standard.string(forKey: "language") == "Español" {
+            tertiaryTextButtonCenterXAnchor = getCenterXAnchor(textButton: nextVC.tertiaryTextButton!)
+            tertiaryTextButtonCenterXAnchor!.constant += xTranslation
         }
+        
         nextVC.view.layoutIfNeeded()
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-            nextVC.countriesTextButtonCenterXAnchor.constant -= xTranslation
-            nextVC.peopleTextButtonCenterXAnchor.constant -= xTranslation
-            if nextVC.tertiaryTextButton != nil {
-                nextVC.tertiaryTextButtonCenterXAnchor?.constant -= xTranslation
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            countriesTextButtonCenterXAnchor.constant -= xTranslation
+            peopleTextButtonCenterXAnchor.constant -= xTranslation
+            
+            if nextVC.tertiaryTextButton != nil && UserDefaults.standard.string(forKey: "language") == "Español" {
+                tertiaryTextButtonCenterXAnchor!.constant -= xTranslation
             }
+            
             UIView.animate(withDuration: 0.5, animations: {
                 nextVC.view.layoutIfNeeded()
             })
@@ -139,17 +157,15 @@ class Transition {
         
     }
     
-    // SIMPLIFICATION FUNCTION
-    func translateAllTextButtons(vc: ViewController, xTranslation: CGFloat) {
+    func getCenterXAnchor(textButton: UIButton) -> NSLayoutConstraint {
         
-        vc.countriesTextButtonCenterXAnchor.constant += xTranslation
-        if vc.tertiaryTextButton != nil {
-            vc.tertiaryTextButtonCenterXAnchor?.constant += xTranslation
+        for constraint in textButton.constraintsAffectingLayout(for: .horizontal) {
+            if constraint.constant == 0 {
+                return constraint
+            }
         }
-        vc.peopleTextButtonCenterXAnchor.constant += xTranslation
-        UIView.animate(withDuration: 0.5, animations: {
-            vc.view.layoutIfNeeded()
-        })
+        
+        return textButton.constraintsAffectingLayout(for: .horizontal).first!
         
     }
     
