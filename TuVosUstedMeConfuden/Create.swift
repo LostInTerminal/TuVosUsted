@@ -25,13 +25,15 @@ class Create {
             
         case vc.countriesTextButton:
             
-            vc.countriesTextButton.anchor(top: vc.view.topAnchor, left: nil, bottom: nil, right: nil, centerX: vc.view.centerXAnchor, centerY: nil, padding: UIEdgeInsets(top: Style.AnchorValues.topTextButtonTop, left: 0, bottom: 0, right: 0), centerXConstant: 0, centerYConstant: 0, size: CGSize(width: Style.Size.boxWidth, height: Style.Size.boxHeight))
+            vc.countriesTextButton.anchor(top: vc.view.topAnchor, left: nil, bottom: nil, right: nil, centerX: vc.view.centerXAnchor, centerY: nil, padding: UIEdgeInsets(top: Style.AnchorValues.textButtonTopPadding, left: 0, bottom: 0, right: 0), centerXConstant: 0, centerYConstant: 0, size: CGSize(width: Style.Size.boxWidth, height: Style.Size.boxHeight))
             
             vc.countriesDropdown.anchor(top: vc.countriesTextButton.bottomAnchor, left: nil, bottom: nil, right: nil, centerX: vc.view.centerXAnchor, centerY: nil, padding: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0), centerXConstant: 0, centerYConstant: 0, size: CGSize(width: Style.Size.boxWidth, height: (Style.Size.boxHeight * subviewCount) / 2))
             
         case vc.peopleTextButton:
             
-            vc.peopleTextButton.anchor(top: nil, left: nil, bottom: nil, right: nil, centerX: vc.view.centerXAnchor, centerY: vc.view.centerYAnchor, padding: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0), centerXConstant: 0, centerYConstant: Style.AnchorValues.bottomTextButtonCenterY, size: CGSize(width: Style.Size.boxWidth, height: Style.Size.boxHeight))
+            //vc.peopleTextButton.anchor(top: vc.view.topAnchor, left: nil, bottom: nil, right: nil, centerX: vc.view.centerXAnchor, centerY: nil, padding: UIEdgeInsets(top: 100, left: 0, bottom: 0, right: 0), centerXConstant: 0, centerYConstant: 0, size: CGSize(width: Style.Size.boxWidth, height: Style.Size.boxHeight))
+            
+            vc.peopleTextButton.anchor(top: nil, left: nil, bottom: nil, right: nil, centerX: vc.view.centerXAnchor, centerY: vc.view.centerYAnchor, padding: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0), centerXConstant: 0, centerYConstant: Style.AnchorValues.bottomTextButtonCenterYPadding, size: CGSize(width: Style.Size.boxWidth, height: Style.Size.boxHeight))
             
             vc.peopleDropdown.anchor(top: vc.peopleTextButton.bottomAnchor, left: nil, bottom: nil, right: nil, centerX: vc.view.centerXAnchor, centerY: nil, padding: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0), centerXConstant: 0, centerYConstant: 0, size: CGSize(width: Style.Size.boxWidth, height: Style.Size.boxHeight * subviewCount))
             
@@ -39,19 +41,17 @@ class Create {
             
             if newElementsPosition == 2 {
                 
-                vc.tertiaryTextButton?.anchor(top: nil, left: nil, bottom: nil, right: nil, centerX: vc.view.centerXAnchor, centerY: vc.view.topAnchor, padding: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0), centerXConstant: 0, centerYConstant: Style.AnchorValues.middleTextButtonCenterY, size: CGSize(width: Style.Size.boxWidth, height: Style.Size.boxHeight))
+                vc.tertiaryTextButton?.anchor(top: nil, left: nil, bottom: nil, right: nil, centerX: vc.view.centerXAnchor, centerY: vc.view.topAnchor, padding: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0), centerXConstant: 0, centerYConstant: Style.AnchorValues.middleTextButtonCenterYPadding, size: CGSize(width: Style.Size.boxWidth, height: Style.Size.boxHeight))
                 
                 vc.tertiaryDropdown?.anchor(top: vc.tertiaryTextButton!.bottomAnchor, left: nil, bottom: nil, right: nil, centerX: vc.view.centerXAnchor, centerY: nil, padding: nil, centerXConstant: 0, centerYConstant: 0, size: CGSize(width: Style.Size.boxWidth, height: Style.Size.boxHeight * subviewCount))
                 
             } else if newElementsPosition == 3 {
                 
-                vc.tertiaryTextButton?.anchor(top: nil, left: nil, bottom: nil, right: nil, centerX: vc.view.centerXAnchor, centerY: vc.view.centerYAnchor, padding: nil, centerXConstant: 0, centerYConstant: Style.AnchorValues.bottomTextButtonCenterY, size: CGSize(width: Style.Size.boxWidth, height: Style.Size.boxHeight))
+                vc.tertiaryTextButton?.anchor(top: nil, left: nil, bottom: nil, right: nil, centerX: vc.view.centerXAnchor, centerY: vc.view.centerYAnchor, padding: nil, centerXConstant: 0, centerYConstant: Style.AnchorValues.bottomTextButtonCenterYPadding, size: CGSize(width: Style.Size.boxWidth, height: Style.Size.boxHeight))
                 
                 vc.tertiaryDropdown?.anchor(top: vc.tertiaryTextButton!.bottomAnchor, left: nil, bottom: nil, right: nil, centerX: vc.view.centerXAnchor, centerY: nil, padding: nil, centerXConstant: 0, centerYConstant: 0, size: CGSize(width: Style.Size.boxWidth, height: Style.Size.boxHeight * subviewCount))
                 
             }
-            
-            UserDefaults.standard.set(true, forKey: "tertiaryItemsAreOnScreen")
             
         default:
             return
@@ -59,9 +59,23 @@ class Create {
         
         vc.populateDropdown(buttonTitles: buttonTitles, dropdown: dropdown)
         
-        textButton.addDividers(heightMultiplier: 0.01)
+        var maxOptionSize: CGFloat = 0
         
-        print("created")
+        // get font from the other dropdowns
+        for case let button as UIButton in vc.peopleDropdown.subviews {
+            button.titleLabel?.font = button.titleLabel?.determineFontSizesBasedOnScreen(textType: "answer")
+            let font = button.titleLabel?.determineStringSize(button: button, font: button.titleLabel!.font, myString: button.titleLabel?.text ?? "")
+            maxOptionSize = max(font!.pointSize, maxOptionSize)
+        }
+        
+        if dropdown == vc.tertiaryDropdown {
+            for case let button as UIButton in dropdown.subviews {
+                button.titleLabel?.font = UIFont(name: "Meteoritox", size: maxOptionSize)!
+            }
+        }
+        //
+        
+        //textButton.addDividers()
         
     }
     
@@ -70,7 +84,7 @@ class Create {
         vc.formOfYouLabel.isHidden = true
         vc.view.addSubview(vc.formOfYouLabel)
         
-        vc.formOfYouLabel.anchor(top: vc.view.bottomAnchor, left: nil, bottom: nil, right: nil, centerX: vc.view.centerXAnchor, centerY: nil, padding: UIEdgeInsets(top: Style.AnchorValues.formOfYouLabelTop, left: 0, bottom: 0, right: 0), centerXConstant: 0, centerYConstant: 0, size: CGSize(width: Style.Size.boxWidth, height: Style.Size.resultHeight))
+        vc.formOfYouLabel.anchor(top: vc.view.bottomAnchor, left: nil, bottom: nil, right: nil, centerX: vc.view.centerXAnchor, centerY: nil, padding: UIEdgeInsets(top: Style.AnchorValues.formOfYouLabelTopPadding, left: 0, bottom: 0, right: 0), centerXConstant: 0, centerYConstant: 0)
         
     }
     
@@ -80,15 +94,32 @@ class Create {
         button.titleLabel?.font = Style.Fonts.answer!
         vc.view.addSubview(button)
         
+        var englishButtonRightPadding: CGFloat!
+        var spanishButtonRightPadding: CGFloat!
+        
+        if UIScreen.main.bounds.width < 768 {
+            englishButtonRightPadding = Style.AnchorValues.englishButtonRightPaddingIPhone
+            spanishButtonRightPadding = Style.AnchorValues.spanishButtonRightPaddingIPhone
+        } else {
+            englishButtonRightPadding = Style.AnchorValues.englishButtonRightPaddingIPad
+            spanishButtonRightPadding = Style.AnchorValues.spanishButtonRightPaddingIPad
+        }
+        
+        if Style.DeviceTypeSizes.smallIPhone {
+            spanishButtonRightPadding = Style.AnchorValues.spanishButtonRightPaddingSmallIPhone
+        } else if Style.DeviceTypeSizes.mediumIPhone {
+            spanishButtonRightPadding = -15
+        }
+        
         switch button {
             
         case vc.spanishButton:
             
-            vc.spanishButton.anchor(top: nil, left: nil, bottom: nil, right: vc.view.rightAnchor, centerX: nil, centerY: vc.view.topAnchor, padding: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: Style.AnchorValues.spanishButtonRight), centerXConstant: 0, centerYConstant: Style.AnchorValues.languageButtonCenter, size: CGSize(width: Style.Size.languageWidth, height: Style.Size.languageHeight))
+            vc.spanishButton.anchor(top: vc.view.topAnchor, left: nil, bottom: nil, right: vc.view.rightAnchor, centerX: nil, centerY: nil, padding: UIEdgeInsets(top: Style.AnchorValues.languageButtonTopPadding, left: 0, bottom: 0, right: spanishButtonRightPadding), centerXConstant: 0, centerYConstant: Style.AnchorValues.languageButtonTopPadding, size: CGSize(width: Style.Size.languageWidth, height: Style.Size.languageHeight))
             
         case vc.englishButton:
             
-            vc.englishButton.anchor(top: nil, left: nil, bottom: nil, right: vc.spanishButton.leftAnchor, centerX: nil, centerY: vc.view.topAnchor, padding: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: Style.AnchorValues.englishButtonRight), centerXConstant: 0, centerYConstant: Style.AnchorValues.languageButtonCenter, size: CGSize(width: Style.Size.languageWidth, height: Style.Size.languageHeight))
+            vc.englishButton.anchor(top: vc.view.topAnchor, left: nil, bottom: nil, right: vc.spanishButton.leftAnchor, centerX: nil, centerY: nil, padding: UIEdgeInsets(top: Style.AnchorValues.languageButtonTopPadding, left: 0, bottom: 0, right: englishButtonRightPadding), centerXConstant: 0, centerYConstant: Style.AnchorValues.languageButtonTopPadding, size: CGSize(width: Style.Size.languageWidth, height: Style.Size.languageHeight))
             
         default:
             return

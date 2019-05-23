@@ -27,6 +27,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UserDefaults.standard.set(true, forKey: "baseElementsNeeded")
         UserDefaults.standard.set(false, forKey: "transitionOccuring")
         
+        window = UIWindow(frame: UIScreen.main.bounds)
+        window?.makeKeyAndVisible()
+        window?.rootViewController = ViewController()
+        
         return true
     }
 

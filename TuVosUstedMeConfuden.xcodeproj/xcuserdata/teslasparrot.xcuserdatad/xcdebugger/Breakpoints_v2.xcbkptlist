@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TuVosUstedMeConfuden/ViewController.swift"
-            timestampString = "579747965.349816"
+            timestampString = "580337089.7073669"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "342"
-            endingLineNumber = "342"
+            startingLineNumber = "373"
+            endingLineNumber = "373"
             landmarkName = "populateDropdown(buttonTitles:dropdown:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -26,11 +26,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TuVosUstedMeConfuden/ViewController.swift"
-            timestampString = "579747965.3499039"
+            timestampString = "580337089.707976"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "343"
-            endingLineNumber = "343"
+            startingLineNumber = "374"
+            endingLineNumber = "374"
             landmarkName = "populateDropdown(buttonTitles:dropdown:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -42,11 +42,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TuVosUstedMeConfuden/ViewController.swift"
-            timestampString = "579747965.349961"
+            timestampString = "580337089.708379"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "181"
-            endingLineNumber = "181"
+            startingLineNumber = "194"
+            endingLineNumber = "194"
             landmarkName = "englishButtonSelected()"
             landmarkType = "7">
          </BreakpointContent>
@@ -58,11 +58,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TuVosUstedMeConfuden/ViewController.swift"
-            timestampString = "579747965.350035"
+            timestampString = "580337089.70872"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "178"
-            endingLineNumber = "178"
+            startingLineNumber = "191"
+            endingLineNumber = "191"
             landmarkName = "englishButtonSelected()"
             landmarkType = "7">
          </BreakpointContent>
@@ -74,11 +74,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TuVosUstedMeConfuden/ViewController.swift"
-            timestampString = "579747965.350166"
+            timestampString = "580337089.709008"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "162"
-            endingLineNumber = "162"
+            startingLineNumber = "175"
+            endingLineNumber = "175"
             landmarkName = "englishButtonSelected()"
             landmarkType = "7">
          </BreakpointContent>
@@ -90,13 +90,61 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TuVosUstedMeConfuden/ViewController.swift"
-            timestampString = "579747965.350228"
+            timestampString = "580337089.709293"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "164"
-            endingLineNumber = "164"
+            startingLineNumber = "177"
+            endingLineNumber = "177"
             landmarkName = "englishButtonSelected()"
             landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TuVosUstedMeConfuden/Style.swift"
+            timestampString = "580337089.709578"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "88"
+            endingLineNumber = "88"
+            landmarkName = "DeviceTypeSizes"
+            landmarkType = "14">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "globalinit_33_D97F451AA73047F166F99A45236290CB_func44"
+                  moduleName = "TuVosUstedMeConfuden"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/teslasparrot/Library/Mobile%20Documents/com~apple~CloudDocs/iOS%20Projects/my%20Apps/TuVosUstedMeConfuden/TuVosUstedMeConfuden/Style.swift"
+                  timestampString = "580323703.130492"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "87"
+                  endingLineNumber = "87"
+                  offsetFromSymbolStart = "11">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "TuVosUstedMeConfuden.Style.DeviceTypeSizes.largeIPhone.unsafeMutableAddressor : Swift.Bool"
+                  moduleName = "TuVosUstedMeConfuden"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/teslasparrot/Library/Mobile%20Documents/com~apple~CloudDocs/iOS%20Projects/my%20Apps/TuVosUstedMeConfuden/TuVosUstedMeConfuden/Style.swift"
+                  timestampString = "580323703.13755"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "87"
+                  endingLineNumber = "87"
+                  offsetFromSymbolStart = "4">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

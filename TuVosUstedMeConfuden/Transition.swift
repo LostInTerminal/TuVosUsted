@@ -47,7 +47,6 @@ class Transition {
             let translatedQuestion = translate.question(language: UserDefaults.standard.string(forKey: "language")!, question: currentVC.countriesTextButton.titleLabel!.text!)
             nextVC.countriesTextButton.setTitle(translatedQuestion, for: .normal)
         } else {
-            print("null")
             nextVC.countriesTextButton.setTitle(nextVC.country, for: .normal)
         }
         

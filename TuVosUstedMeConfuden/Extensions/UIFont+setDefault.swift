@@ -12,7 +12,6 @@ extension UIFont {
     
     @objc class func mySystemFont(ofSize size: CGFloat) -> UIFont {
         return UIFont(name: "Meteoritox", size: 17)!
-        //return UIFont(name: "Noteworthy", size: 17)!
     }
     
     @objc convenience init(myCoder aDecoder: NSCoder) {

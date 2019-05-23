@@ -43,9 +43,6 @@ class Translate {
             
         } else if language == "Español" {
             
-            print(language)
-            print(word)
-            
             let index = countries.inEnglish.firstIndex(of: word)
             translatedCountry = countries.inSpanish_EnglishOrder[index!]
             

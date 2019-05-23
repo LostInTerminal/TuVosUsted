@@ -13,89 +13,89 @@ class Determine {
     func formOfYou(country: String, person: String, tertiaryDatum: String?) -> String {
         
         if country == "Argentina" || country == "Paraguay" {
-            return "Vos"
+            return "Vos "
         } else if country == "Uruguay" {
             if tertiaryDatum == "Rocha, Rivera, or areas bordering Brazil" || tertiaryDatum == "Rocha, Rivera, o zonas limítrofes con Brasil" {
-                return "Tu"
+                return "Tú "
             } else {
-                return "Vos"
+                return "Vos "
             }
-        } else if country == "Spain" || country == "Equatorial Guinea" || country == "Dominican Republic" || country == "Panama" {
-            return "Tú"
-        } else if country == "Peru" {
+        } else if country == "Spain" || country == "España" || country == "Equatorial Guinea" || country == "Guinea Equatorial" || country == "Dominican Republic" || country == "República Dominicana" || country == "Panama" || country == "Panamá" {
+            return "Tú "
+        } else if country == "Peru" || country == "Perú" {
             if tertiaryDatum == "Andean regions or Cajamarca" || tertiaryDatum == "Regiones andinas o cajamarca" {
-                return "Vos"
+                return "Vos "
             } else {
                 if person == "Colleague in a formal setting" || person == "An elder" || person == "Colega en una ambiente formal" || person == "Un anciano" {
-                    return "Usted"
+                    return "Usted "
                 } else {
-                    return "Tú"
+                    return "Tú "
                 }
             }
-        } else if country == "Mexico" {
+        } else if country == "Mexico" || country == "México" || country == "United States" || country == "Estados Unidos" {
             if tertiaryDatum == "Indigenous villages in Chiapas, Tabasco, Yucatán, or Quintana Roo" || tertiaryDatum == "Pueblos indígenas en Chiapas, Tabasco, Yucatán o Quintana Roo" {
-                return "Vos"
+                return "Vos "
             } else {
                 if person == "Colleague in a formal setting" || person == "An elder" || person == "Colega en una ambiente formal" || person == "Un anciano" {
-                    return "Usted"
+                    return "Usted "
                 } else {
-                    return "Tú"
+                    return "Tú "
                 }
             }
         } else if country == "Chile" || country == "Bolivia" {
             if person == "Colleague in a formal setting" || person == "An elder" || person == "Colega en una ambiente formal" || person == "Un anciano" {
-                return "Tú"
+                return "Tú "
             } else {
-                return "Vos"
+                return "Vos "
             }
         } else if country == "Colombia" {
             if tertiaryDatum == "Caribbean coast" || tertiaryDatum == "Costa caribeña" {
-                return "Tú"
+                return "Tú "
             } else if tertiaryDatum == "Quindío, Risaldo, Antioquia, or Risaralda States" || tertiaryDatum == "Pacific coast" || tertiaryDatum == "Estados de Quindío, Risaldo, Antioquia, o Risaralda" || tertiaryDatum == "Costa pacifica" {
-                return "Vos"
+                return "Vos "
             } else {
-                return "Usted"
+                return "Usted "
             }
         } else if country == "Ecuador" {
             if tertiaryDatum == "North and Central Mountainous Regions" || tertiaryDatum == "Regiones montañosas del norte y centro" {
-                return "Vos"
+                return "Vos "
             } else {
-                return "Tu"
+                return "Tú "
             }
         } else if country == "Nicaragua" || country == "Costa Rica" {
             if person == "Colleague in a formal setting" || person == "An elder" || person == "Colega en una ambiente formal" || person == "Un anciano" {
-                return "Usted"
+                return "Usted "
             } else {
-                return "Vos"
+                return "Vos "
             }
         } else if country == "Guatemala" || country == "Honduras" {
             if person == "Colleague in a formal setting" || person == "An elder" || person == "Colega en una ambiente formal" || person == "Un anciano" {
                 if tertiaryDatum == "Yes" || tertiaryDatum == "Sí" {
-                    return "Usted"
+                    return "Usted "
                 } else {
-                    return "Tu"
+                    return "Tu "
                 }
             } else {
-                return "Vos"
+                return "Vos "
             }
         } else if country == "El Salvador" {
             if person == "Colleague in a formal setting" || person == "An elder" || person == "Colega en una ambiente formal" || person == "Un anciano" {
-                return "Usted"
+                return "Usted "
             } else {
                 if tertiaryDatum == "Yes" || tertiaryDatum == "Sí" {
-                    return "Vos"
+                    return "Vos "
                 } else {
-                    return "Tú"
+                    return "Tú "
                 }
             }
         } else if country == "Cuba" {
             if person == "An elder" || person == "Un anciano" {
-                return "Vos"
+                return "Vos "
             } else {
                 if tertiaryDatum == "Mountainous region or countryside" || tertiaryDatum == "Regiones montañosas o el campo" {
-                    return "Vos"
+                    return "Vos "
                 } else {
-                    return "Tú"
+                    return "Tú "
                 }
             }
         } else if country == "Puerto Rico" {
@@ -103,16 +103,16 @@ class Determine {
                 return "Usted"
             } else {
                 if tertiaryDatum == "Eastern end of island" {
-                    return "Vos"
+                    return "Vos "
                 } else {
-                    return "Tú"
+                    return "Tú "
                 }
             }
         } else if country == "Venezuela" {
             if tertiaryDatum == "Zalia State" || tertiaryDatum == "Estado Zalia" {
-                return "Vos"
+                return "Vos "
             } else {
-                return "Tu"
+                return "Tú "
             }
         }
         return ""
@@ -182,6 +182,8 @@ class Determine {
         }
         
         UserDefaults.standard.set(false, forKey: "tertiaryItemsAreOnScreen")
+        print("look")
+        print(UserDefaults.standard.bool(forKey: "tertiaryItemsAreOnScreen"))
         
         UIView.animate(withDuration: 0.5, animations: {
             vc.view.layoutIfNeeded()

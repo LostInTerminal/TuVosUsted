@@ -12,11 +12,11 @@ class ViewController: UIViewController {
     
     let englishButton = UIButton()
     let spanishButton = UIButton()
-    let countriesTextButton = TitleButton()
+    let countriesTextButton = QuestionButton()
     let countriesDropdown = UIStackView()
-    let peopleTextButton = TitleButton()
+    let peopleTextButton = QuestionButton()
     let peopleDropdown = UIStackView()
-    let formOfYouLabel = CustomLabel()
+    let formOfYouLabel = FormOfYouLabel()
     
     let transition = Transition()
     
@@ -32,16 +32,21 @@ class ViewController: UIViewController {
     var person: String!
     var tertiaryDatum: String?
     
-    var tertiaryTextButton: TitleButton?
+    var tertiaryTextButton: QuestionButton?
     var tertiaryDropdown: UIStackView?
     
     override func viewWillAppear(_ animated: Bool) {
+        
+        view.backgroundColor = UIColor(red: 56/255, green: 161/255, blue: 243/255, alpha: 1)
         
         super.viewWillAppear(true)
         
         if UserDefaults.standard.bool(forKey: "baseElementsNeeded") && UserDefaults.standard.string(forKey: "language") == "English" {
             create.UIElementGroup(vc: self, dropdown: countriesDropdown, textButton: countriesTextButton, sectionTitle: questions.inEnglish[0], buttonTitles: countries.inEnglish, newElementsPosition: 1)
             create.UIElementGroup(vc: self, dropdown: peopleDropdown, textButton: peopleTextButton, sectionTitle: questions.inEnglish[1], buttonTitles: people.inEnglish, newElementsPosition: 2)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                self.matchAllFontSizes()
+            }
             UserDefaults.standard.set(false, forKey: "baseElementsNeeded")
         } else if UserDefaults.standard.string(forKey: "language") == "Español" {
             create.UIElementGroup(vc: self, dropdown: countriesDropdown, textButton: countriesTextButton, sectionTitle: questions.inSpanish[0], buttonTitles: countries.inSpanish, newElementsPosition: 1)
@@ -58,6 +63,14 @@ class ViewController: UIViewController {
         englishButton.addTarget(self, action: #selector(englishButtonSelected), for: .touchUpInside)
         
         create.formOfYouLabel(vc: self)
+        
+        /*DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            self.matchAllFontSizes()
+        }*/
+        
+        print("look")
+        print(UIScreen.main.bounds.width)
+        print(UIScreen.main.bounds.height)
         
     }
     
@@ -183,6 +196,9 @@ class ViewController: UIViewController {
                 
                 vc.calculateFormOfYou(vc: vc)
                 
+                print(UserDefaults.standard.bool(forKey: "transitionOccuring"))
+                vc.animate.textFieldsVertically(vc: vc, country: vc.country)
+                
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                     self.dismiss(animated: false, completion: {
                         vc.transition.translateElements(currentVC: vc, xTranslation: -Style.Ratios.twoTimesScreenWidth)
@@ -215,9 +231,7 @@ class ViewController: UIViewController {
             
             transition.setNewDropdownOptions(currentVC: self, nextVC: vc)
             
-            //DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                self.transition.translateElements(currentVC: self, xTranslation: Style.Ratios.twoTimesScreenWidth)
-            //}
+            transition.translateElements(currentVC: self, xTranslation: Style.Ratios.twoTimesScreenWidth)
                 
             self.transition.changeActiveButton(oldInactiveButton: self.spanishButton, oldActiveButton: self.englishButton, newActiveButton: vc.spanishButton, newInactiveButton: vc.englishButton)
             
@@ -230,7 +244,14 @@ class ViewController: UIViewController {
                     if self.tertiaryTextButton != nil && vc.tertiaryTextButton == nil {
                         //DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                         vc.formTertiaryElements(vc: vc, country: vc.country)
-                        //vc.resizeTextButtonsForSpanish()
+                        if UserDefaults.standard.bool(forKey: "tertiaryItemsAreOnScreen") && UserDefaults.standard.bool(forKey: "transitionOccuring") && self.itemsToResize.countriesWithLargeTertiaryQuestions.contains(self.country) {
+                            for constraint in vc.peopleTextButton.constraintsAffectingLayout(for: .vertical) {
+                                if floor(constraint.constant) == floor(Style.AnchorValues.bottomTextButtonCenterYPadding) {
+                                    constraint.constant -= Style.AnchorValues.verticalTranslation
+                                }
+                            }
+                        }
+                        //self.animate.textFieldsVertically(vc: vc, country: vc.country)
                         //}
                         //vc.updateUIIfNeeded()
                     }
@@ -239,7 +260,11 @@ class ViewController: UIViewController {
                 })
             }
             
-            UserDefaults.standard.set(false, forKey: "transitionOccuring")
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
+                vc.resizeTextButtonsForSpanish()
+                UserDefaults.standard.set(false, forKey: "transitionOccuring")
+            }
+            
             
         }
         
@@ -250,10 +275,15 @@ class ViewController: UIViewController {
         if tertiaryTextButton != nil {
             changeTertiaryDropdown()
         } else if tertiaryTextButton == nil && country != nil && (tertiary.countriesInEnglish.contains(country) || tertiary.countriesInSpanish.contains(country)) {
+            print("forming")
             formTertiaryElements(vc: self, country: self.country)
+            if UserDefaults.standard.string(forKey: "language") == "English" && UserDefaults.standard.bool(forKey: "transitionOccuring") {
+                tertiaryTextButton?.transform = CGAffineTransform(translationX: UIScreen.main.bounds.width * 2, y: 0)
+            }
+            animate.textFieldsVertically(vc: self, country: country)
         }
         
-        if UserDefaults.standard.string(forKey: "language") == "Espanol" {
+        if UserDefaults.standard.string(forKey: "language") == "Español" {
             resizeTextButtonsForSpanish()
         }
         
@@ -275,6 +305,7 @@ class ViewController: UIViewController {
                 tertiaryArray.popLast()
                 let buttonTitles = tertiaryArray
                 populateDropdown(buttonTitles: buttonTitles, dropdown: tertiaryDropdown!)
+                tertiaryDropdown!.updateOptionText(peopleDropdown: peopleDropdown)
             }
             
         }
@@ -289,12 +320,12 @@ class ViewController: UIViewController {
             tertiaryArray.remove(at: 0)
             let newElementsPosition = Int((tertiaryArray.popLast())!)
             let buttonTitles = tertiaryArray
-            tertiaryTextButton = TitleButton()
+            tertiaryTextButton = QuestionButton()
             tertiaryDropdown = UIStackView()
             create.UIElementGroup(vc: vc, dropdown: tertiaryDropdown!, textButton: tertiaryTextButton!, sectionTitle: sectionTitle, buttonTitles: buttonTitles, newElementsPosition: newElementsPosition!)
+            tertiaryTextButton?.titleLabel?.font = countriesTextButton.titleLabel?.font
             tertiaryTextButton?.addTarget(vc, action: #selector(activateTertiaryDropdown), for: .touchUpInside)
             animate.tertiaryElements(vc: vc, language: UserDefaults.standard.string(forKey: "language")!, country: country)
-            animate.textFieldsVertically(vc: vc, country: country)
         }
         
     }
@@ -357,7 +388,7 @@ class ViewController: UIViewController {
                 option.setTitle(item, for: .normal)
                 option.addTarget(self, action: #selector(countryClicked(sender:)), for: .touchUpInside)
                 
-                option.addDividers(heightMultiplier: 0.01)
+                option.addDividersForOptionViews()
                 option.backgroundColor = view.backgroundColor
                 
                 button += 1
@@ -376,7 +407,7 @@ class ViewController: UIViewController {
                 option.backgroundColor = view.backgroundColor//UIColor(red: 56/255, green: 161/255, blue: 243/255, alpha: 1)//UIColor.clear
                 option.setTitle(title, for: .normal)
                 
-                option.addDividers(heightMultiplier: 0.01)
+                option.addDividersForOptionViews()
                 
                 button += 1
             }
@@ -397,9 +428,7 @@ class ViewController: UIViewController {
             determine.ifAdditionalTextFieldIsNotNeeded(vc: self, language: UserDefaults.standard.string(forKey: "language")!, country: country)
             
             // This rearranges the text field if the new question requires it
-            //if UserDefaults.standard.bool(forKey: "additionalInfoTertiaryWasActive") {
-                animate.textFieldsVertically(vc: self, country: country)
-            //}
+            animate.textFieldsVertically(vc: self, country: country)
             
             // this adjusted (now theres an issue with the dividers) the dividers if one country was changed to one of these three
             checkIfTertiaryTextButtonShouldBeResized()
@@ -410,7 +439,6 @@ class ViewController: UIViewController {
     
     func checkIfTertiaryTextButtonShouldBeResized() {
         
-        var heightMultiplier: CGFloat!
         var constraintToUpdate: NSLayoutConstraint!
         
         for constraint in tertiaryTextButton!.constraintsAffectingLayout(for: .vertical) {
@@ -421,23 +449,17 @@ class ViewController: UIViewController {
         
         if (itemsToResize.countriesWithLargeTertiaryQuestions.contains(country) && questions.inEnglish.contains(tertiaryTextButton!.titleLabel!.text!)) || questions.inSpanish.contains(tertiaryTextButton!.titleLabel!.text!) || itemsToResize.mediumRegions.contains(tertiaryDatum ?? "") {
             constraintToUpdate.constant = Style.Size.boxHeight * 1.8//Style.Size.boxHeight * 2
-            heightMultiplier = 0.005
         } else if itemsToResize.largeRegions.contains(tertiaryDatum ?? "") {
             constraintToUpdate.constant = Style.Size.boxHeight * 2.6//Style.Size.boxHeight * 3
-            heightMultiplier = 0.0033
         } else {
             constraintToUpdate.constant = Style.Size.boxHeight
-            heightMultiplier = 0.01
         }
         self.view.layoutIfNeeded()
-        tertiaryTextButton?.removeSubviews()
-        tertiaryTextButton?.addDividers(heightMultiplier: heightMultiplier)
         
     }
     
     func resizeTextButtonsForSpanish() {
         
-        let heightMultiplier: CGFloat = 0.005
         let originalSize: CGFloat = Style.Size.boxHeight
         let newSize: CGFloat = Style.Size.boxHeight * 1.8
         
@@ -465,8 +487,86 @@ class ViewController: UIViewController {
         }
         
         self.view.layoutIfNeeded()
-        tertiaryTextButton?.removeSubviews()
-        tertiaryTextButton?.addDividers(heightMultiplier: heightMultiplier)
+        
+    }
+    
+    func matchAllFontSizes() {
+        
+        // it would probably be better to make arrays/collections/whatever of difference types (e.g. language, option, question, etc.)
+        // this long shitty function is not needed if i switch to the other thing
+        
+        var minQuestionsSize: CGFloat = .greatestFiniteMagnitude
+        var minLanguageSize: CGFloat = .greatestFiniteMagnitude
+        var minOptionSize: CGFloat = .greatestFiniteMagnitude
+        
+        for case let button as UIButton in self.view.subviews {
+            if button.titleLabel!.text!.count < 8 {
+                for case let label as UILabel in button.subviews {
+                    label.font = label.determineFontSizesBasedOnScreen(textType: "language")
+                    let font = label.determineStringSize(button: button, font: label.font, myString: label.text ?? "")
+                    minLanguageSize = min(font.pointSize, minLanguageSize)
+                }
+            } else {
+                for case let label as UILabel in button.subviews {
+                    label.font = label.determineFontSizesBasedOnScreen(textType: "question")
+                    let font = label.determineStringSize(button: button, font: label.font, myString: label.text ?? "")
+                    minQuestionsSize = min(font.pointSize, minQuestionsSize)
+                }
+            }
+         }
+        
+        for case let button as UIButton in self.view.subviews {
+            if button.titleLabel!.text!.count < 8 {
+                for case let label as UILabel in button.subviews {
+                    label.font = label.font.withSize(minLanguageSize)
+                }
+            } else {
+                for case let label as UILabel in button.subviews {
+                    label.font = label.font.withSize(minQuestionsSize)
+                }
+            }
+        }
+        
+        // THIS IS GOING TO DEAL WITH THE DROPDOWN MENUS, MAKE ANOTHER THING FOR COUNTRIESDROPDOWN
+        for case let dropdown as UIStackView in self.view.subviews {
+            if dropdown == countriesDropdown {
+                for subview in dropdown.subviews {
+                    for case let button as UIButton in subview.subviews {
+                        for case let label as UILabel in button.subviews {
+                            label.font = label.determineFontSizesBasedOnScreen(textType: "answer")
+                            let font = label.determineStringSize(button: button, font: label.font, myString: label.text ?? "")
+                            minOptionSize = min(font.pointSize, minOptionSize)
+                        }
+                    }
+                }
+            } else {
+                for case let button as UIButton in dropdown.subviews {
+                    for case let label as UILabel in button.subviews {
+                        label.font = label.determineFontSizesBasedOnScreen(textType: "answer")
+                        let font = label.determineStringSize(button: button, font: label.font, myString: label.text ?? "")
+                        minOptionSize = min(font.pointSize, minOptionSize)
+                    }
+                }
+            }
+        }
+        
+        for case let dropdown as UIStackView in self.view.subviews {
+            if dropdown == countriesDropdown {
+                for subview in dropdown.subviews {
+                    for case let button as UIButton in subview.subviews {
+                        for case let label as UILabel in button.subviews {
+                            label.font = label.font.withSize(minOptionSize)
+                        }
+                    }
+                }
+            } else {
+                for case let button as UIButton in dropdown.subviews {
+                    for case let label as UILabel in button.subviews {
+                        label.font = label.font.withSize(minOptionSize)
+                    }
+                }
+            }
+        }
         
     }
     
