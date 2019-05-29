@@ -28,6 +28,7 @@ class ViewController: UIViewController {
     let tertiary = Tertiary()
     let itemsToResize = ItemsToResize()
     let animate = Animation()
+    let resize = Resize()
     var country: String!
     var person: String!
     var tertiaryDatum: String?
@@ -64,14 +65,6 @@ class ViewController: UIViewController {
         
         create.formOfYouLabel(vc: self)
         
-        /*DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-            self.matchAllFontSizes()
-        }*/
-        
-        print("look")
-        print(UIScreen.main.bounds.width)
-        print(UIScreen.main.bounds.height)
-        
     }
     
     @objc func countryClicked(sender: UIButton) {
@@ -96,6 +89,8 @@ class ViewController: UIViewController {
         
         updateUIIfNeeded()
         
+        resize.peopleTextButtonIfNeeded(vc: self)
+        
     }
     
     @objc func tertiaryButtonClicked(sender: UIButton) {
@@ -108,7 +103,7 @@ class ViewController: UIViewController {
         
         updateUIIfNeeded()
         
-        checkIfTertiaryTextButtonShouldBeResized()
+        resize.tertiaryTextButtonIfNeeded(vc: self)
         
     }
     
@@ -197,15 +192,22 @@ class ViewController: UIViewController {
                 vc.calculateFormOfYou(vc: vc)
                 
                 print(UserDefaults.standard.bool(forKey: "transitionOccuring"))
-                vc.animate.textFieldsVertically(vc: vc, country: vc.country)
+                vc.animate.textFieldsVertically(vc: vc, country: vc.country ?? "")
                 
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                     self.dismiss(animated: false, completion: {
                         vc.transition.translateElements(currentVC: vc, xTranslation: -Style.Ratios.twoTimesScreenWidth)
                         vc.transition.setNewButtonText(currentVC: self, nextVC: vc)
-                        UserDefaults.standard.set(false, forKey: "transitionOccuring")
                     })
                 }
+                
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.6, execute: {
+                    vc.resize.peopleTextButtonIfNeeded(vc: vc)
+                    if vc.tertiaryTextButton != nil {
+                        vc.resize.tertiaryTextButtonIfNeeded(vc: vc)
+                    }
+                    UserDefaults.standard.set(false, forKey: "transitionOccuring")
+                })
             }
             
         }
@@ -241,8 +243,8 @@ class ViewController: UIViewController {
             
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                 self.present(vc, animated: false, completion: {
+                    //vc.resizeTextButtonsForSpanish()
                     if self.tertiaryTextButton != nil && vc.tertiaryTextButton == nil {
-                        //DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                         vc.formTertiaryElements(vc: vc, country: vc.country)
                         if UserDefaults.standard.bool(forKey: "tertiaryItemsAreOnScreen") && UserDefaults.standard.bool(forKey: "transitionOccuring") && self.itemsToResize.countriesWithLargeTertiaryQuestions.contains(self.country) {
                             for constraint in vc.peopleTextButton.constraintsAffectingLayout(for: .vertical) {
@@ -251,17 +253,14 @@ class ViewController: UIViewController {
                                 }
                             }
                         }
-                        //self.animate.textFieldsVertically(vc: vc, country: vc.country)
-                        //}
-                        //vc.updateUIIfNeeded()
                     }
                     self.transition.animateIn(nextVC: vc, xTranslation: -Style.Ratios.twoTimesScreenWidth)
                     self.transition.setNewButtonText(currentVC: self, nextVC: vc)
                 })
             }
             
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
-                vc.resizeTextButtonsForSpanish()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
+                vc.resize.allTextButtonsForSpanish(vc: vc)
                 UserDefaults.standard.set(false, forKey: "transitionOccuring")
             }
             
@@ -275,7 +274,6 @@ class ViewController: UIViewController {
         if tertiaryTextButton != nil {
             changeTertiaryDropdown()
         } else if tertiaryTextButton == nil && country != nil && (tertiary.countriesInEnglish.contains(country) || tertiary.countriesInSpanish.contains(country)) {
-            print("forming")
             formTertiaryElements(vc: self, country: self.country)
             if UserDefaults.standard.string(forKey: "language") == "English" && UserDefaults.standard.bool(forKey: "transitionOccuring") {
                 tertiaryTextButton?.transform = CGAffineTransform(translationX: UIScreen.main.bounds.width * 2, y: 0)
@@ -284,7 +282,7 @@ class ViewController: UIViewController {
         }
         
         if UserDefaults.standard.string(forKey: "language") == "Español" {
-            resizeTextButtonsForSpanish()
+            resize.allTextButtonsForSpanish(vc: self)
         }
         
         calculateFormOfYou(vc: self)
@@ -413,6 +411,13 @@ class ViewController: UIViewController {
             }
             
         }
+        
+        if dropdown == tertiaryDropdown {
+            print("NEXT")
+            for subview in dropdown.subviews {
+                print(subview)
+            }
+        }
     
     }
     
@@ -431,62 +436,11 @@ class ViewController: UIViewController {
             animate.textFieldsVertically(vc: self, country: country)
             
             // this adjusted (now theres an issue with the dividers) the dividers if one country was changed to one of these three
-            checkIfTertiaryTextButtonShouldBeResized()
+            if tertiaryTextButton != nil {
+                resize.tertiaryTextButtonIfNeeded(vc: self)
+            }
             
         }
-        
-    }
-    
-    func checkIfTertiaryTextButtonShouldBeResized() {
-        
-        var constraintToUpdate: NSLayoutConstraint!
-        
-        for constraint in tertiaryTextButton!.constraintsAffectingLayout(for: .vertical) {
-            if constraint.constant == Style.Size.boxHeight || constraint.constant == Style.Size.boxHeight * 1.8 || constraint.constant == Style.Size.boxHeight * 2.6 {
-                constraintToUpdate = constraint
-            }
-        }
-        
-        if (itemsToResize.countriesWithLargeTertiaryQuestions.contains(country) && questions.inEnglish.contains(tertiaryTextButton!.titleLabel!.text!)) || questions.inSpanish.contains(tertiaryTextButton!.titleLabel!.text!) || itemsToResize.mediumRegions.contains(tertiaryDatum ?? "") {
-            constraintToUpdate.constant = Style.Size.boxHeight * 1.8//Style.Size.boxHeight * 2
-        } else if itemsToResize.largeRegions.contains(tertiaryDatum ?? "") {
-            constraintToUpdate.constant = Style.Size.boxHeight * 2.6//Style.Size.boxHeight * 3
-        } else {
-            constraintToUpdate.constant = Style.Size.boxHeight
-        }
-        self.view.layoutIfNeeded()
-        
-    }
-    
-    func resizeTextButtonsForSpanish() {
-        
-        let originalSize: CGFloat = Style.Size.boxHeight
-        let newSize: CGFloat = Style.Size.boxHeight * 1.8
-        
-        for constraint in countriesTextButton.constraintsAffectingLayout(for: .vertical) {
-            if constraint.constant == originalSize || constraint.constant == newSize {
-                let constraintToUpdate = constraint
-                constraintToUpdate.constant = questions.inSpanish.contains(countriesTextButton.titleLabel!.text!) ? newSize : originalSize
-            }
-        }
-        
-        for constraint in peopleTextButton.constraintsAffectingLayout(for: .vertical) {
-            if constraint.constant == originalSize || constraint.constant == newSize {
-                let constraintToUpdate = constraint
-                constraintToUpdate.constant = questions.inSpanish.contains(peopleTextButton.titleLabel!.text!) ? newSize : originalSize
-            }
-        }
-        
-        if tertiaryTextButton != nil {
-            for constraint in tertiaryTextButton!.constraintsAffectingLayout(for: .vertical) {
-                if constraint.constant == originalSize || constraint.constant == newSize {
-                    let constraintToUpdate = constraint
-                    constraintToUpdate.constant = questions.inSpanish.contains(peopleTextButton.titleLabel!.text!) ? newSize : originalSize
-                }
-            }
-        }
-        
-        self.view.layoutIfNeeded()
         
     }
     

@@ -91,7 +91,7 @@ class Create {
     func languageButton(vc: ViewController, button: UIButton, buttonTitle: String) {
         
         button.setTitle(buttonTitle, for: .normal)
-        button.titleLabel?.font = Style.Fonts.answer!
+        button.titleLabel?.font = Style.Fonts.language!
         vc.view.addSubview(button)
         
         var englishButtonRightPadding: CGFloat!

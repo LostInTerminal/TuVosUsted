@@ -20,7 +20,7 @@ struct Tertiary {
     
     let countriesInEnglish = ["Colombia", "Cuba", "Ecuador", "El Salvador", "Guatemala", "Honduras", "Mexico", "Peru", "Puerto Rico", "Uruguay", "Venezuela"]
     
-    let colombiaOptionsInEnglish = ["Caribbean coast", "Quindío, Risaldo, Antioquia, or Risaralda States", "Pacific coast", "Anywhere Else"]
+    let colombiaOptionsInEnglish = ["Caribbean coast", "Pacific coast", "Quindío, Risaldo, Antioquia, or Risaralda States", "Anywhere Else"]
     let cubaOptionsInEnglish = ["Mountainous region or countryside", "Anywhere else"]
     let ecuadorOptionsInEnglish = ["North and Central Mountainous Regions", "Anywhere else"]
     let elSalvadorOptionsInEnglish = ["Yes", "No"]
