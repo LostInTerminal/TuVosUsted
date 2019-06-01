@@ -12,6 +12,8 @@ class Create {
     
     func UIElementGroup(vc: ViewController, dropdown: UIStackView, textButton: UIButton, sectionTitle: String, buttonTitles: [String], newElementsPosition: Int) {
         
+        let populate = Populate()
+        
         let subviewCount = CGFloat(buttonTitles.count)
         
         dropdown.isHidden = true
@@ -57,7 +59,11 @@ class Create {
             return
         }
         
-        vc.populateDropdown(buttonTitles: buttonTitles, dropdown: dropdown)
+        if dropdown == vc.countriesDropdown {
+            populate.dropdownWithExtraLayer(vc: vc, buttonTitles: buttonTitles, dropdown: dropdown)
+        } else {
+            populate.regularDropdown(vc: vc, buttonTitles: buttonTitles, dropdown: dropdown)
+        }
         
         var maxOptionSize: CGFloat = 0
         
@@ -73,9 +79,6 @@ class Create {
                 button.titleLabel?.font = UIFont(name: "Meteoritox", size: maxOptionSize)!
             }
         }
-        //
-        
-        //textButton.addDividers()
         
     }
     

@@ -13,6 +13,35 @@ import UIKit
 class Transition {
     
     let translate = Translate()
+    let determine = Determine()
+    
+    func manage(currentVC: ViewController, nextVC: ViewController, xTranslation: CGFloat) {
+        
+        UserDefaults.standard.set(true, forKey: "transitionOccuring")
+        
+        for case let dropdown as UIStackView in currentVC.view.subviews {
+            if !dropdown.isHidden {
+                dropdown.isHidden = true
+            }
+        }
+        
+        translateElements(currentVC: currentVC, xTranslation: xTranslation)
+        
+        if UserDefaults.standard.string(forKey: "language") == "English" {
+            
+            currentVC.transition.changeActiveButton(oldInactiveButton: currentVC.englishButton, oldActiveButton: currentVC.spanishButton, newActiveButton: nextVC.spanishButton, newInactiveButton: nextVC.englishButton)
+            
+        } else if UserDefaults.standard.string(forKey: "language") == "Español" {
+            
+            currentVC.transition.changeActiveButton(oldInactiveButton: currentVC.spanishButton, oldActiveButton: currentVC.englishButton, newActiveButton: nextVC.englishButton, newInactiveButton: nextVC.spanishButton)
+            
+        }
+        
+        determine.ifFormOfYouShouldBeCalculated(vc: nextVC)
+        
+        setNewVariables(currentVC: currentVC, nextVC: nextVC)
+        
+    }
     
     func changeActiveButton(oldInactiveButton: UIButton, oldActiveButton: UIButton, newActiveButton: UIButton, newInactiveButton: UIButton) {
         

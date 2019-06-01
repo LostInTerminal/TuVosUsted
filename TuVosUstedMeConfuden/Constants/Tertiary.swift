@@ -6,8 +6,6 @@
 //  Copyright © 2019 Matthew Beynon. All rights reserved.
 //
 
-// ADD GUATEMALA, EL SALVADOR, HONDURAS TO AN ARRAY?
-
 import Foundation
 
 struct Tertiary {
@@ -47,6 +45,9 @@ struct Tertiary {
     let puertoRicoOptionsInSpanish = ["Extremo oriental de la isla", "Cualquier otro lugar"]
     let uruguayOptionsInSpanish = ["Rocha, Rivera, o zonas limítrofes con Brasil", "Cualquier otro lugar"]
     let venezuelaOptionsInSpanish = ["Estado Zalia", "Cualquier otro lugar"]
+    
+    // COUNTRIES THAT REQUIRE "UNORTHODOX UI ELEMENT POSITIONING"
+    let specialOptions = ["El Salvador", "Guatemala", "Honduras"]
     
     init() {
         

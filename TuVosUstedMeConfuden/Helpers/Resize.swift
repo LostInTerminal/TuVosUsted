@@ -12,6 +12,7 @@ class Resize {
     
     let itemsToResize = ItemsToResize()
     let questions = Questions()
+    let tertiary = Tertiary()
     
     func countryTextButtonIfNeeded(vc: ViewController) {
         
@@ -50,9 +51,9 @@ class Resize {
         if vc.person != nil {
             if itemsToResize.peopleToResize.contains(vc.person) {
                 constraintToUpdate.constant = Style.Size.boxHeight * 1.8
+            } else {
+                constraintToUpdate.constant = Style.Size.boxHeight
             }
-        } else {
-            constraintToUpdate.constant = Style.Size.boxHeight
         }
         
         vc.view.layoutIfNeeded()
@@ -70,7 +71,7 @@ class Resize {
         }
         
         // it should be double if the question is showing
-        if (itemsToResize.countriesWithLargeTertiaryQuestions.contains(vc.country) && questions.inEnglish.contains(vc.tertiaryTextButton!.titleLabel!.text!)) || questions.inSpanish.contains(vc.tertiaryTextButton!.titleLabel!.text!) || itemsToResize.mediumRegions.contains(vc.tertiaryDatum ?? "") {
+        if (tertiary.specialOptions.contains(vc.country) && questions.inEnglish.contains(vc.tertiaryTextButton!.titleLabel!.text!)) || questions.inSpanish.contains(vc.tertiaryTextButton!.titleLabel!.text!) || itemsToResize.mediumRegions.contains(vc.tertiaryDatum ?? "") {
             constraintToUpdate.constant = Style.Size.boxHeight * 1.8
         } else if itemsToResize.largeRegions.contains(vc.tertiaryDatum ?? "") {
             constraintToUpdate.constant = Style.Size.boxHeight * 2.6
@@ -89,8 +90,6 @@ class Resize {
         let newSize: CGFloat = Style.Size.boxHeight * 1.8
         
         for constraint in vc.countriesTextButton.constraintsAffectingLayout(for: .vertical) {
-            print("imp")
-            print(vc.countriesTextButton.titleLabel!.text!)
             if questions.inEnglish.contains(vc.countriesTextButton.titleLabel!.text!) || questions.inSpanish.contains(vc.countriesTextButton.titleLabel!.text!) {
                 if constraint.constant == originalSize || constraint.constant == newSize {
                     let constraintToUpdate = constraint

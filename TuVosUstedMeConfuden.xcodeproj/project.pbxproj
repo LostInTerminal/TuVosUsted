@@ -11,17 +11,21 @@
 		3B11682822263CFD00C2B71A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B11682722263CFD00C2B71A /* ViewController.swift */; };
 		3B11682D22263CFE00C2B71A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3B11682C22263CFE00C2B71A /* Assets.xcassets */; };
 		3B11683022263CFE00C2B71A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3B11682E22263CFE00C2B71A /* LaunchScreen.storyboard */; };
+		3B36D02F229F277000554756 /* Match.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B36D02E229F277000554756 /* Match.swift */; };
+		3B36D031229F353800554756 /* Respond.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B36D030229F353800554756 /* Respond.swift */; };
+		3B36D033229F52B300554756 /* Obtain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B36D032229F52B300554756 /* Obtain.swift */; };
+		3B36D035229F592200554756 /* Populate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B36D034229F592200554756 /* Populate.swift */; };
 		3B40C1D4222848A9007A93C5 /* Meteoritox.otf in Resources */ = {isa = PBXBuildFile; fileRef = 3B40C1D3222848A9007A93C5 /* Meteoritox.otf */; };
 		3B47666D228F66B60064F8AC /* UILabel+determineStringSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B47666C228F66B60064F8AC /* UILabel+determineStringSize.swift */; };
 		3B5B53322229C3DB00A7377B /* Determine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B5B53312229C3DB00A7377B /* Determine.swift */; };
 		3B6FC0D722848861000CAC96 /* Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B6FC0D622848861000CAC96 /* Style.swift */; };
-		3B6FC0D922848AF4000CAC96 /* OptionLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B6FC0D822848AF4000CAC96 /* OptionLabel.swift */; };
+		3B6FC0D922848AF4000CAC96 /* OptionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B6FC0D822848AF4000CAC96 /* OptionButton.swift */; };
 		3B824A2D22975B8E0087A419 /* Resize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B824A2C22975B8E0087A419 /* Resize.swift */; };
 		3B93972B228B31A80028B96B /* Create.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B93972A228B31A70028B96B /* Create.swift */; };
 		3B93972D228B367E0028B96B /* ItemsToResize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B93972C228B367E0028B96B /* ItemsToResize.swift */; };
 		3B93972F228B3ED90028B96B /* UIView+addDividers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B93972E228B3ED90028B96B /* UIView+addDividers.swift */; };
 		3B939731228B3F020028B96B /* UIView+anchoringFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B939730228B3F020028B96B /* UIView+anchoringFunctions.swift */; };
-		3BA4F01922809E440012ACE3 /* Animate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BA4F01822809E440012ACE3 /* Animate.swift */; };
+		3BA4F01922809E440012ACE3 /* Animation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BA4F01822809E440012ACE3 /* Animation.swift */; };
 		3BC92EDF229728DA00C88E86 /* FormOfYouLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BC92EDE229728DA00C88E86 /* FormOfYouLabel.swift */; };
 		3BC92EE12297290500C88E86 /* QuestionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BC92EE02297290500C88E86 /* QuestionButton.swift */; };
 		3BD6CA30227603E2005B5885 /* Countries.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BD6CA2F227603E2005B5885 /* Countries.swift */; };
@@ -30,9 +34,6 @@
 		3BD6CA3A2276055F005B5885 /* Translate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BD6CA392276055F005B5885 /* Translate.swift */; };
 		3BD6CA3C2276431A005B5885 /* Transition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BD6CA3B2276431A005B5885 /* Transition.swift */; };
 		3BDBED9722720D8F00BDF141 /* UIFont+setDefault.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BDBED9622720D8F00BDF141 /* UIFont+setDefault.swift */; };
-		3BDBED9922721D4900BDF141 /* ViewController+UIViewControllerAnimatedTransitioning.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BDBED9822721D4900BDF141 /* ViewController+UIViewControllerAnimatedTransitioning.swift */; };
-		3BDBED9B22721E1600BDF141 /* ViewController+UIViewControllerTransitioningDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BDBED9A22721E1600BDF141 /* ViewController+UIViewControllerTransitioningDelegate.swift */; };
-		3BEACCF62274C1B500AF8182 /* NSObject+copyObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BEACCF52274C1B500AF8182 /* NSObject+copyObject.swift */; };
 		3BEACCF92274D42200AF8182 /* Tertiary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BEACCF82274D42200AF8182 /* Tertiary.swift */; };
 		3BF396A122906ED9003F3DCA /* CGFloat+dp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BF396A022906ED9003F3DCA /* CGFloat+dp.swift */; };
 		3BF396A32290A51D003F3DCA /* UILabel+customizationFunctionsBasedOnSubclass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BF396A22290A51D003F3DCA /* UILabel+customizationFunctionsBasedOnSubclass.swift */; };
@@ -45,17 +46,21 @@
 		3B11682C22263CFE00C2B71A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3B11682F22263CFE00C2B71A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		3B11683122263CFE00C2B71A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3B36D02E229F277000554756 /* Match.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Match.swift; sourceTree = "<group>"; };
+		3B36D030229F353800554756 /* Respond.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Respond.swift; sourceTree = "<group>"; };
+		3B36D032229F52B300554756 /* Obtain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Obtain.swift; sourceTree = "<group>"; };
+		3B36D034229F592200554756 /* Populate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Populate.swift; sourceTree = "<group>"; };
 		3B40C1D3222848A9007A93C5 /* Meteoritox.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Meteoritox.otf; sourceTree = "<group>"; };
 		3B47666C228F66B60064F8AC /* UILabel+determineStringSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+determineStringSize.swift"; sourceTree = "<group>"; };
 		3B5B53312229C3DB00A7377B /* Determine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Determine.swift; sourceTree = "<group>"; };
 		3B6FC0D622848861000CAC96 /* Style.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Style.swift; sourceTree = "<group>"; };
-		3B6FC0D822848AF4000CAC96 /* OptionLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionLabel.swift; sourceTree = "<group>"; };
+		3B6FC0D822848AF4000CAC96 /* OptionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionButton.swift; sourceTree = "<group>"; };
 		3B824A2C22975B8E0087A419 /* Resize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Resize.swift; sourceTree = "<group>"; };
 		3B93972A228B31A70028B96B /* Create.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Create.swift; sourceTree = "<group>"; };
 		3B93972C228B367E0028B96B /* ItemsToResize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemsToResize.swift; sourceTree = "<group>"; };
 		3B93972E228B3ED90028B96B /* UIView+addDividers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+addDividers.swift"; sourceTree = "<group>"; };
 		3B939730228B3F020028B96B /* UIView+anchoringFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+anchoringFunctions.swift"; sourceTree = "<group>"; };
-		3BA4F01822809E440012ACE3 /* Animate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Animate.swift; sourceTree = "<group>"; };
+		3BA4F01822809E440012ACE3 /* Animation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Animation.swift; sourceTree = "<group>"; };
 		3BC92EDE229728DA00C88E86 /* FormOfYouLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormOfYouLabel.swift; sourceTree = "<group>"; };
 		3BC92EE02297290500C88E86 /* QuestionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionButton.swift; sourceTree = "<group>"; };
 		3BD6CA2F227603E2005B5885 /* Countries.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Countries.swift; sourceTree = "<group>"; };
@@ -64,9 +69,6 @@
 		3BD6CA392276055F005B5885 /* Translate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Translate.swift; sourceTree = "<group>"; };
 		3BD6CA3B2276431A005B5885 /* Transition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transition.swift; sourceTree = "<group>"; };
 		3BDBED9622720D8F00BDF141 /* UIFont+setDefault.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+setDefault.swift"; sourceTree = "<group>"; };
-		3BDBED9822721D4900BDF141 /* ViewController+UIViewControllerAnimatedTransitioning.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewController+UIViewControllerAnimatedTransitioning.swift"; sourceTree = "<group>"; };
-		3BDBED9A22721E1600BDF141 /* ViewController+UIViewControllerTransitioningDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewController+UIViewControllerTransitioningDelegate.swift"; sourceTree = "<group>"; };
-		3BEACCF52274C1B500AF8182 /* NSObject+copyObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSObject+copyObject.swift"; sourceTree = "<group>"; };
 		3BEACCF82274D42200AF8182 /* Tertiary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tertiary.swift; sourceTree = "<group>"; };
 		3BF396A022906ED9003F3DCA /* CGFloat+dp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGFloat+dp.swift"; sourceTree = "<group>"; };
 		3BF396A22290A51D003F3DCA /* UILabel+customizationFunctionsBasedOnSubclass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+customizationFunctionsBasedOnSubclass.swift"; sourceTree = "<group>"; };
@@ -104,14 +106,14 @@
 			children = (
 				3B11682522263CFD00C2B71A /* AppDelegate.swift */,
 				3B11682722263CFD00C2B71A /* ViewController.swift */,
+				3B36D029229F15EE00554756 /* Animation */,
+				3BEACCF72274D40B00AF8182 /* Constants */,
 				3BEACCF42274C19800AF8182 /* Extensions */,
 				3B11683722263DC400C2B71A /* Fonts */,
 				3B36D02A229F161A00554756 /* Helpers */,
 				3BC92EDD229728AE00C88E86 /* Subclasses */,
 				3B36D028229F159300554756 /* Supporting Files */,
 				3B36D02B229F168D00554756 /* UI */,
-				3B36D029229F15EE00554756 /* Animation */,
-				3BEACCF72274D40B00AF8182 /* Constants */,
 			);
 			path = TuVosUstedMeConfuden;
 			sourceTree = "<group>";
@@ -137,7 +139,7 @@
 		3B36D029229F15EE00554756 /* Animation */ = {
 			isa = PBXGroup;
 			children = (
-				3BA4F01822809E440012ACE3 /* Animate.swift */,
+				3BA4F01822809E440012ACE3 /* Animation.swift */,
 				3BD6CA3B2276431A005B5885 /* Transition.swift */,
 				3BD6CA392276055F005B5885 /* Translate.swift */,
 			);
@@ -147,8 +149,12 @@
 		3B36D02A229F161A00554756 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				3B36D030229F353800554756 /* Respond.swift */,
 				3B824A2C22975B8E0087A419 /* Resize.swift */,
 				3B5B53312229C3DB00A7377B /* Determine.swift */,
+				3B36D02E229F277000554756 /* Match.swift */,
+				3B36D032229F52B300554756 /* Obtain.swift */,
+				3B36D034229F592200554756 /* Populate.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -167,7 +173,7 @@
 			children = (
 				3BC92EDE229728DA00C88E86 /* FormOfYouLabel.swift */,
 				3BC92EE02297290500C88E86 /* QuestionButton.swift */,
-				3B6FC0D822848AF4000CAC96 /* OptionLabel.swift */,
+				3B6FC0D822848AF4000CAC96 /* OptionButton.swift */,
 			);
 			path = Subclasses;
 			sourceTree = "<group>";
@@ -175,10 +181,7 @@
 		3BEACCF42274C19800AF8182 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				3BEACCF52274C1B500AF8182 /* NSObject+copyObject.swift */,
 				3BDBED9622720D8F00BDF141 /* UIFont+setDefault.swift */,
-				3BDBED9A22721E1600BDF141 /* ViewController+UIViewControllerTransitioningDelegate.swift */,
-				3BDBED9822721D4900BDF141 /* ViewController+UIViewControllerAnimatedTransitioning.swift */,
 				3B93972E228B3ED90028B96B /* UIView+addDividers.swift */,
 				3B939730228B3F020028B96B /* UIView+anchoringFunctions.swift */,
 				3B47666C228F66B60064F8AC /* UILabel+determineStringSize.swift */,
@@ -274,7 +277,8 @@
 			files = (
 				3BD6CA3422760473005B5885 /* Questions.swift in Sources */,
 				3BD6CA30227603E2005B5885 /* Countries.swift in Sources */,
-				3BDBED9922721D4900BDF141 /* ViewController+UIViewControllerAnimatedTransitioning.swift in Sources */,
+				3B36D031229F353800554756 /* Respond.swift in Sources */,
+				3B36D033229F52B300554756 /* Obtain.swift in Sources */,
 				3B824A2D22975B8E0087A419 /* Resize.swift in Sources */,
 				3B11682822263CFD00C2B71A /* ViewController.swift in Sources */,
 				3BD6CA3C2276431A005B5885 /* Transition.swift in Sources */,
@@ -282,18 +286,18 @@
 				3BF396A32290A51D003F3DCA /* UILabel+customizationFunctionsBasedOnSubclass.swift in Sources */,
 				3B93972D228B367E0028B96B /* ItemsToResize.swift in Sources */,
 				3BD6CA322276043B005B5885 /* People.swift in Sources */,
-				3B6FC0D922848AF4000CAC96 /* OptionLabel.swift in Sources */,
+				3B6FC0D922848AF4000CAC96 /* OptionButton.swift in Sources */,
+				3B36D02F229F277000554756 /* Match.swift in Sources */,
 				3BDBED9722720D8F00BDF141 /* UIFont+setDefault.swift in Sources */,
 				3B5B53322229C3DB00A7377B /* Determine.swift in Sources */,
 				3B11682622263CFD00C2B71A /* AppDelegate.swift in Sources */,
 				3BC92EDF229728DA00C88E86 /* FormOfYouLabel.swift in Sources */,
-				3BDBED9B22721E1600BDF141 /* ViewController+UIViewControllerTransitioningDelegate.swift in Sources */,
-				3BEACCF62274C1B500AF8182 /* NSObject+copyObject.swift in Sources */,
 				3B93972B228B31A80028B96B /* Create.swift in Sources */,
 				3BEACCF92274D42200AF8182 /* Tertiary.swift in Sources */,
-				3BA4F01922809E440012ACE3 /* Animate.swift in Sources */,
+				3BA4F01922809E440012ACE3 /* Animation.swift in Sources */,
 				3B47666D228F66B60064F8AC /* UILabel+determineStringSize.swift in Sources */,
 				3BD6CA3A2276055F005B5885 /* Translate.swift in Sources */,
+				3B36D035229F592200554756 /* Populate.swift in Sources */,
 				3B6FC0D722848861000CAC96 /* Style.swift in Sources */,
 				3BC92EE12297290500C88E86 /* QuestionButton.swift in Sources */,
 				3B939731228B3F020028B96B /* UIView+anchoringFunctions.swift in Sources */,
@@ -437,7 +441,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 5BVMTP3M84;
-				INFOPLIST_FILE = TuVosUstedMeConfuden/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/TuVosUstedMeConfuden/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -455,7 +459,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 5BVMTP3M84;
-				INFOPLIST_FILE = TuVosUstedMeConfuden/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/TuVosUstedMeConfuden/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

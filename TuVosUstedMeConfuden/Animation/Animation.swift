@@ -125,11 +125,11 @@ class Animation {
         
     }
     
-    func textFieldsVertically(vc: ViewController, country: String) {
+    func labelsVertically(vc: ViewController, country: String) {
         
         let tertiary = Tertiary()
         
-        if country != "El Salvador" && country != "Guatemala" && country != "Honduras" {
+        if !tertiary.specialOptions.contains(country) {
             
             for constraint in vc.peopleTextButton.constraintsAffectingLayout(for: .vertical) {
                 if constraint.constant == Style.Ratios.middleCenterYRatio {
@@ -150,9 +150,10 @@ class Animation {
             }
             UserDefaults.standard.set(false, forKey: "additionalInfoTertiaryWasActive")
             
-        } else if country == "El Salvador" || country == "Guatemala" || country == "Honduras" {
+        } else if tertiary.specialOptions.contains(country) {
             
-            if !UserDefaults.standard.bool(forKey: "tertiaryItemsAreOnScreen") {
+            // can't remember what the first part of if statement is for...
+            if !UserDefaults.standard.bool(forKey: "tertiaryItemsAreOnScreen") || (UserDefaults.standard.bool(forKey: "transitionOccuring") && UserDefaults.standard.bool(forKey: "additionalInfoTertiaryWasActive")) {
                 for constraint in vc.peopleTextButton.constraintsAffectingLayout(for: .vertical) {
                     if floor(constraint.constant) == floor(Style.AnchorValues.bottomTextButtonCenterYPadding) {
                         constraint.constant -= Style.AnchorValues.verticalTranslation
@@ -160,7 +161,6 @@ class Animation {
                     }
                 }
             } else if UserDefaults.standard.bool(forKey: "tertiaryItemsAreOnScreen") && !UserDefaults.standard.bool(forKey: "additionalInfoTertiaryWasActive") {
-                print("op2")
                 for constraint in vc.tertiaryTextButton!.constraintsAffectingLayout(for: .vertical) {
                     if floor(constraint.constant) == floor(Style.Ratios.middleCenterYRatio) || floor(constraint.constant) == floor(Style.AnchorValues.middleTextButtonCenterYPadding) {
                         constraint.constant += Style.AnchorValues.verticalTranslation
@@ -172,8 +172,6 @@ class Animation {
                     }
                 }
             }
-            
-            UserDefaults.standard.set(true, forKey: "additionalInfoTertiaryWasActive")
             
         } else { return }
         

@@ -38,7 +38,7 @@ class LangugeButton: UIButton {
         titleLabel?.textAlignment = .center
         titleLabel?.numberOfLines = 3
         //titleLabel?.adjustsFontSizeToFitWidth = true
-        addDividers()
+        //addDividers()
         
     }
     
