@@ -11,9 +11,8 @@ import UIKit
 extension UIView {
     
     func addDividers() {
-        // .999 INSTEAD OF .99 DOESNT GIVE DOUBLED LOOK FOR SHARED BOTTOM/TOP
         
-        //Style.Size.boxHeight * 0.01
+        let size = Style.Size()
         
         let topBorderView = UIView()
         topBorderView.backgroundColor = UIColor.white
@@ -22,7 +21,7 @@ extension UIView {
         bringSubviewToFront(topBorderView)
         topBorderView.topAnchor.constraint(equalTo: topAnchor).isActive = true
         topBorderView.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
-        topBorderView.widthAnchor.constraint(equalToConstant: Style.Size.boxWidth).isActive = true
+        topBorderView.widthAnchor.constraint(equalToConstant: size.boxWidth).isActive = true
         topBorderView.heightAnchor.constraint(equalToConstant: 1).isActive = true
         
         let bottomBorderView = UIView()
@@ -34,8 +33,6 @@ extension UIView {
         bottomBorderView.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
         bottomBorderView.widthAnchor.constraint(equalTo: widthAnchor).isActive = true
         bottomBorderView.heightAnchor.constraint(equalToConstant: 1).isActive = true
-        
-        //print("YOU SHOULD BE SEEING ME")
         
     }
     

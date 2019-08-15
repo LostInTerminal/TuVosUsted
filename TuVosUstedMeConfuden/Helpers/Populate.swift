@@ -10,28 +10,30 @@ import UIKit
 
 class Populate {
     
-    func regularDropdown(vc: ViewController, buttonTitles: [String], dropdown: UIStackView) {
+    static func regularDropdown(vc: ViewController, buttonTitles: [String], dropdown: UIStackView) {
+        
+        let size = Style.Size()
         
         var button: CGFloat = 0
         
         buttonTitles.forEach { (title) in
-            let option = OptionButton(frame: CGRect(x: 0, y: button * Style.Size.boxHeight, width: Style.Size.boxWidth, height: Style.Size.boxHeight))
+            let option = OptionButton(frame: CGRect(x: 0, y: button * size.boxHeight, width: size.boxWidth, height: size.boxHeight))
             
             dropdown.addSubview(option)
-            option.anchor(top: dropdown.topAnchor, left: nil, bottom: nil, right: nil, centerX: dropdown.centerXAnchor, centerY: nil, padding: UIEdgeInsets(top: button * Style.Size.boxHeight, left: 0, bottom: 0, right: 0), centerXConstant: 0, centerYConstant: 0, size: CGSize(width: Style.Size.boxWidth, height: Style.Size.boxHeight))
+            option.anchor(top: dropdown.topAnchor, left: nil, bottom: nil, right: nil, centerX: dropdown.centerXAnchor, centerY: nil, padding: UIEdgeInsets(top: button * size.boxHeight, left: 0, bottom: 0, right: 0), centerXConstant: 0, centerYConstant: 0, size: CGSize(width: size.boxWidth, height: size.boxHeight))
             option.backgroundColor = vc.view.backgroundColor//UIColor(red: 56/255, green: 161/255, blue: 243/255, alpha: 1)//UIColor.clear
             option.setTitle(title, for: .normal)
             
             option.addDividersForOptionViews()
             
             button += 1
-            
-            //addBorderView(button: CGFloat(button), dropdown: dropdown)
         }
         
     }
     
-    func dropdownWithExtraLayer(vc: ViewController, buttonTitles: [String], dropdown: UIStackView) {
+    static func dropdownWithExtraLayer(vc: ViewController, buttonTitles: [String], dropdown: UIStackView) {
+        
+        let size = Style.Size()
         
         var button = 0.0
         var x = 0
@@ -44,43 +46,31 @@ class Populate {
                 row = UIView()
                 row?.backgroundColor = vc.view.backgroundColor
                 dropdown.addSubview(row!)
-                row?.anchor(top: dropdown.topAnchor, left: dropdown.leftAnchor, bottom: nil, right: dropdown.rightAnchor, centerX: vc.view.centerXAnchor, centerY: nil, padding: UIEdgeInsets(top: CGFloat(floor(button / 2)) * Style.Size.boxHeight, left: 0, bottom: 0, right: 0), centerXConstant: 0, centerYConstant: 0, size: CGSize(width: Style.Size.boxWidth, height: Style.Size.boxHeight))
+                row?.anchor(top: dropdown.topAnchor, left: dropdown.leftAnchor, bottom: nil, right: dropdown.rightAnchor, centerX: vc.view.centerXAnchor, centerY: nil, padding: UIEdgeInsets(top: CGFloat(floor(button / 2)) * size.boxHeight, left: 0, bottom: 0, right: 0), centerXConstant: 0, centerYConstant: 0, size: CGSize(width: size.boxWidth, height: size.boxHeight))
             } else {
-                x = Int(Style.Size.boxWidth / 2)
+                x = Int(size.boxWidth / 2)
             }
             
             let option = OptionButton()
-            option.translatesAutoresizingMaskIntoConstraints = false
             
             var centerXAnchorConstant: CGFloat?
             if x == 0 {
-                centerXAnchorConstant = -Style.Size.boxWidth / 4
-            } else if x == Int(Style.Size.boxWidth / 2) {
-                centerXAnchorConstant = Style.Size.boxWidth / 4
+                centerXAnchorConstant = -size.boxWidth / 4
+            } else if x == Int(size.boxWidth / 2) {
+                centerXAnchorConstant = size.boxWidth / 4
             }
             row?.addSubview(option)
             
-            option.anchor(top: row!.topAnchor, left: nil, bottom: nil, right: nil, centerX: dropdown.centerXAnchor, centerY: nil, padding: nil, centerXConstant: centerXAnchorConstant!, centerYConstant: 0, size: CGSize(width: Style.Size.boxWidth / 2, height: Style.Size.boxHeight))
+            option.anchor(top: row!.topAnchor, left: nil, bottom: nil, right: nil, centerX: dropdown.centerXAnchor, centerY: nil, padding: nil, centerXConstant: centerXAnchorConstant!, centerYConstant: 0, size: CGSize(width: size.boxWidth / 2, height: size.boxHeight))
             option.setTitle(item, for: .normal)
-            option.addTarget(self, action: #selector(vc.countryClicked(sender:)), for: .touchUpInside)
             
             option.addDividersForOptionViews()
             option.backgroundColor = vc.view.backgroundColor
             
             button += 1
             
-            //addBorderView(button: CGFloat(button), dropdown: dropdown)
-            
         }
         
-    }
-    
-    func addBorderView(button: CGFloat, dropdown: UIStackView) {
-        
-        let borderView = UIView()
-        dropdown.addSubview(borderView)
-        borderView.backgroundColor = UIColor.white
-        borderView.anchor(top: dropdown.topAnchor, left: nil, bottom: nil, right: nil, centerX: dropdown.centerXAnchor, centerY: nil, padding: UIEdgeInsets(top: button * Style.Size.boxHeight, left: 0, bottom: 0, right: 0), centerXConstant: 0, centerYConstant: 0, size: CGSize(width: Style.Size.boxWidth, height: Style.Size.boxHeight * 0.01))
     }
     
 }

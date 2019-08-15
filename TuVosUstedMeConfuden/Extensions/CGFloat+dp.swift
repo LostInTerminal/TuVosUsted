@@ -22,9 +22,12 @@ extension CGFloat {
         }
     }
     
-    // this is only being used for formOfYou label at this point
-    var adjWidth2: CGFloat {
-        return (self / 1024) * UIScreen.main.bounds.width
+    var adjHeight: CGFloat {
+        return (self / 1366) * UIScreen.main.bounds.width
     }
+    
+    /*var adjWidth2: CGFloat {
+        return (self / 1024) * UIScreen.main.bounds.width
+    }*/
     
 }

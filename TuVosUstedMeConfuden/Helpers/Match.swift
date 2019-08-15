@@ -10,10 +10,7 @@ import UIKit
 
 class Match {
     
-    func allFontSizes(vc: ViewController) {
-        
-        // it would probably be better to make arrays/collections/whatever of difference types (e.g. language, option, question, etc.)
-        // this long shitty function is not needed if i switch to the other thing
+    static func allFontSizes(vc: ViewController) {
         
         var minQuestionsSize: CGFloat = .greatestFiniteMagnitude
         var minLanguageSize: CGFloat = .greatestFiniteMagnitude
@@ -49,7 +46,7 @@ class Match {
         
         // THIS IS GOING TO DEAL WITH THE DROPDOWN MENUS, MAKE ANOTHER THING FOR COUNTRIESDROPDOWN
         for case let dropdown as UIStackView in vc.view.subviews {
-            if dropdown == vc.countriesDropdown {
+            if dropdown == vc.uiElements.countriesDropdown {
                 for subview in dropdown.subviews {
                     for case let button as UIButton in subview.subviews {
                         for case let label as UILabel in button.subviews {
@@ -71,7 +68,7 @@ class Match {
         }
         
         for case let dropdown as UIStackView in vc.view.subviews {
-            if dropdown == vc.countriesDropdown {
+            if dropdown == vc.uiElements.countriesDropdown {
                 for subview in dropdown.subviews {
                     for case let button as UIButton in subview.subviews {
                         for case let label as UILabel in button.subviews {

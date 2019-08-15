@@ -10,12 +10,12 @@ import UIKit
 
 class Determine {
     
-    func ifAdditionalTextFieldIsNotNeeded(vc: ViewController, language: String, country: String) {
+    static func ifAdditionalTextFieldIsNotNeeded(vc: ViewController, language: String, country: String) {
         
         let tertiary = Tertiary()
         let translation = Style.Ratios.twoTimesScreenWidth
         
-        for constraint in vc.tertiaryTextButton!.constraintsAffectingLayout(for: .horizontal) {
+        for constraint in vc.uiElements.tertiaryTextButton!.constraintsAffectingLayout(for: .horizontal) {
             if constraint.constant == 0 {
                 if language == "English" && !tertiary.countriesInEnglish.contains(vc.country!) {
                     constraint.constant += translation
@@ -30,13 +30,13 @@ class Determine {
         UIView.animate(withDuration: 0.5, animations: {
             vc.view.layoutIfNeeded()
         }, completion: { (Bool) in
-            vc.tertiaryTextButton = nil
-            vc.tertiaryDropdown = nil
+            vc.uiElements.tertiaryTextButton = nil
+            vc.uiElements.tertiaryDropdown = nil
         })
         
     }
     
-    func ifDropdownOptionsShouldBeChanged(language: String, country: String, tertiaryDatum: String) -> Bool {
+    static func ifDropdownOptionsShouldBeChanged(language: String, country: String, tertiaryDatum: String) -> Bool {
         
         let tertiary = Tertiary()
         var dropdownOptionsShouldBeChanged = false
@@ -59,7 +59,7 @@ class Determine {
         
     }
     
-    func ifTertiaryQuestionMatchesValue(language: String, country: String) -> String {
+    static func ifTertiaryQuestionMatchesValue(language: String, country: String) -> String {
         
         var question: String!
         let questions = Questions()
@@ -84,37 +84,31 @@ class Determine {
         
     }
     
-    func ifTertiaryElementsAreNeeded(vc: ViewController, country: String) {
+    static func ifTertiaryElementsAreNeeded(vc: ViewController, country: String) {
         
-        let create = Create()
-        let animate = Animation()
-        let obtain = Obtain()
-        
-        var tertiaryArray = obtain.tertiaryData(language: UserDefaults.standard.string(forKey: "language")!, country: country)
+        var tertiaryArray = Obtain.tertiaryData(language: UserDefaults.standard.string(forKey: "language")!, country: country)
         if tertiaryArray != [] {
             let sectionTitle = tertiaryArray[0]
             tertiaryArray.remove(at: 0)
             let newElementsPosition = Int((tertiaryArray.popLast())!)
             let buttonTitles = tertiaryArray
-            vc.tertiaryTextButton = QuestionButton()
-            vc.tertiaryDropdown = UIStackView()
-            create.UIElementGroup(vc: vc, dropdown: vc.tertiaryDropdown!, textButton: vc.tertiaryTextButton!, sectionTitle: sectionTitle, buttonTitles: buttonTitles, newElementsPosition: newElementsPosition!)
-            vc.tertiaryTextButton?.titleLabel?.font = vc.countriesTextButton.titleLabel?.font
-            vc.tertiaryTextButton?.addTarget(vc, action: #selector(vc.activateTertiaryDropdown), for: .touchUpInside)
-            animate.tertiaryElements(vc: vc, language: UserDefaults.standard.string(forKey: "language")!, country: country)
+            vc.uiElements.tertiaryTextButton = QuestionButton()
+            vc.uiElements.tertiaryDropdown = UIStackView()
+            Create.uiElementGroup(vc: vc, dropdown: vc.uiElements.tertiaryDropdown!, textButton: vc.uiElements.tertiaryTextButton!, sectionTitle: sectionTitle, buttonTitles: buttonTitles, newElementsPosition: newElementsPosition!)
+            vc.uiElements.tertiaryTextButton?.titleLabel?.font = vc.uiElements.countriesTextButton.titleLabel?.font
+            Animate.tertiaryElements(vc: vc, language: UserDefaults.standard.string(forKey: "language")!, country: country)
         }
         
     }
     
-    func ifFormOfYouShouldBeCalculated(vc: ViewController) {
+    static func ifFormOfYouShouldBeCalculated(vc: ViewController) {
         
         let tertiary = Tertiary()
-        let obtain = Obtain()
         
         let calculateFormOfYou = DispatchWorkItem {
             if vc.country != nil && vc.person != nil {
-                vc.formOfYouLabel.text = obtain.formOfYou(country: vc.country, person: vc.person, tertiaryDatum: vc.tertiaryDatum)
-                vc.formOfYouLabel.isHidden = false
+                vc.uiElements.formOfYouLabel.text = Obtain.formOfYou(country: vc.country, person: vc.person, tertiaryDatum: vc.tertiaryDatum)
+                vc.uiElements.formOfYouLabel.isHidden = false
             }
         }
         

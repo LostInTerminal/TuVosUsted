@@ -10,14 +10,15 @@ import UIKit
 
 class FormOfYouLabel: UILabel {
     
+    let fonts = Style.Fonts()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
         textColor = Style.Colors.result
-        font = Style.Fonts.result
+        font = determineFontSizesBasedOnScreen(textType: "result")
         textAlignment = .center
         numberOfLines = 2
-        translatesAutoresizingMaskIntoConstraints = false
         
     }
     

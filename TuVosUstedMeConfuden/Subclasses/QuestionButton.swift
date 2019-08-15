@@ -10,15 +10,18 @@ import UIKit
 
 class QuestionButton: UIButton {
     
+    let fonts = Style.Fonts()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
         setTitleColor(Style.Colors.question, for: .normal)
-        titleLabel?.font = Style.Fonts.question
+        titleLabel?.font = titleLabel?.determineFontSizesBasedOnScreen(textType: "question")
         titleLabel?.textAlignment = .center
         titleLabel?.numberOfLines = 3
-        //titleLabel?.adjustsFontSizeToFitWidth = true
-        addDividers()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            self.addDividers()
+        }
         
     }
     
@@ -30,15 +33,15 @@ class QuestionButton: UIButton {
 
 class LangugeButton: UIButton {
     
+    let fonts = Style.Fonts()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
         setTitleColor(Style.Colors.question, for: .normal)
-        titleLabel?.font = Style.Fonts.question
+        titleLabel?.font = titleLabel?.determineFontSizesBasedOnScreen(textType: "question")
         titleLabel?.textAlignment = .center
         titleLabel?.numberOfLines = 3
-        //titleLabel?.adjustsFontSizeToFitWidth = true
-        //addDividers()
         
     }
     
